@@ -287,6 +287,76 @@
     .registration-card p { color:var(--muted); margin-bottom:22px; }
     .registration-card .btn { width:100%; }
 
+
+    .native-forms { background: white; }
+    .form-tabs {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      background:var(--bg);
+      padding:7px;
+      border-radius:16px;
+      margin-bottom:28px;
+    }
+    .form-tab {
+      border:0;
+      background:transparent;
+      padding:14px 12px;
+      border-radius:11px;
+      font:inherit;
+      font-weight:800;
+      color:var(--muted);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .form-tab.active { background:var(--dark); color:white; box-shadow:var(--shadow); }
+    .form-shell {
+      max-width:920px;
+      margin:0 auto;
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:36px;
+      box-shadow:var(--shadow);
+    }
+    .form-intro { margin-bottom:24px; }
+    .form-intro h3 { color:var(--dark); font-size:28px; margin-bottom:7px; }
+    .form-intro p { color:var(--muted); }
+    .native-form { display:none; }
+    .native-form.active { display:block; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:17px; }
+    .field { display:flex; flex-direction:column; gap:7px; }
+    .field.full { grid-column:1/-1; }
+    .field label { color:var(--dark); font-size:12px; font-weight:850; }
+    .field input, .field select, .field textarea {
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:11px;
+      background:white;
+      color:var(--text);
+      padding:13px 14px;
+      font:inherit;
+      outline:none;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color:var(--green);
+      box-shadow:0 0 0 3px rgba(30,107,69,.08);
+    }
+    .field textarea { min-height:110px; resize:vertical; }
+    .form-help { color:var(--muted); font-size:11px; margin-top:2px; }
+    .form-submit { width:100%; margin-top:22px; }
+    .form-status {
+      display:none;
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:11px;
+      font-size:13px;
+      font-weight:700;
+    }
+    .form-status.success { display:block; background:var(--green-light); color:var(--green-dark); }
+    .form-status.error { display:block; background:#fff1ef; color:#8a3328; }
+    .privacy-note { color:var(--muted); font-size:11px; text-align:center; margin-top:12px; }
+
     .cta { padding: 88px 0; }
     .cta-box { background: var(--green); border-radius:28px; padding:62px; text-align:center; color:white; }
     .cta-box h2 { color:white; max-width:760px; margin:0 auto 16px; }
@@ -315,7 +385,10 @@
       .hero { padding:64px 0; }
       .hero-buttons, .cta-actions { flex-direction:column; }
       .hero-buttons .btn, .cta-actions .btn { width:100%; }
-      .solutions-grid, .cards-grid, .registration-grid, .steps, .category-grid { grid-template-columns:1fr; }
+      .solutions-grid, .cards-grid, .registration-grid, .steps, .category-grid, .form-grid { grid-template-columns:1fr; }
+      .field.full { grid-column:auto; }
+      .form-tabs { grid-template-columns:1fr; }
+      .form-shell { padding:24px; }
       .trust-row { flex-direction:column; }
       .block-title-row, .footer-grid { flex-direction:column; align-items:flex-start; }
       .cta-box { padding:44px 24px; }
@@ -335,7 +408,7 @@
         <a href="#como-funciona">Como funciona</a>
         <a href="#oportunidades">Oportunidades</a>
         <a href="#materiais">Materiais</a>
-        <a href="#participar" class="nav-button">Cadastrar empresa</a>
+        <a href="#cadastro" class="nav-button">Cadastrar empresa</a>
       </nav>
     </div>
   </header>
@@ -532,7 +605,7 @@
                 <li><strong>Lote:</strong> a partir de 1.000 kg</li>
                 <li><strong>Logística:</strong> possibilidade de retirada conforme o lote</li>
               </ul>
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog" target="_blank" class="btn btn-primary">Tenho este material →</a>
+              <a href="#cadastro" class="btn btn-primary" onclick="showForm('sell')">Tenho este material →</a>
             </div>
 
             <div class="opp-card">
@@ -544,7 +617,7 @@
                 <li><strong>Frequência:</strong> demanda recorrente</li>
                 <li><strong>Formato:</strong> especificação sob avaliação</li>
               </ul>
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog" target="_blank" class="btn btn-primary">Tenho este material →</a>
+              <a href="#cadastro" class="btn btn-primary" onclick="showForm('sell')">Tenho este material →</a>
             </div>
           </div>
         </div>
@@ -567,7 +640,7 @@
                 <li><strong>Frequência:</strong> a cada 15 dias</li>
                 <li><strong>Condição comercial:</strong> aceita propostas</li>
               </ul>
-              <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Tenho interesse →</a>
+              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
             </div>
 
             <div class="opp-card">
@@ -579,7 +652,7 @@
                 <li><strong>Frequência:</strong> a cada 15 dias</li>
                 <li><strong>Condição comercial:</strong> aceita propostas</li>
               </ul>
-              <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Tenho interesse →</a>
+              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
             </div>
 
             <div class="opp-card">
@@ -591,7 +664,7 @@
                 <li><strong>Frequência:</strong> recorrente</li>
                 <li><strong>Condição comercial:</strong> aceita propostas</li>
               </ul>
-              <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Tenho interesse →</a>
+              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
             </div>
 
             <div class="opp-card">
@@ -603,7 +676,7 @@
                 <li><strong>Frequência:</strong> a cada 15 dias</li>
                 <li><strong>Condição comercial:</strong> aceita propostas</li>
               </ul>
-              <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Tenho interesse →</a>
+              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
             </div>
 
             <div class="opp-card">
@@ -615,7 +688,7 @@
                 <li><strong>Frequência:</strong> a cada 15 dias</li>
                 <li><strong>Condição comercial:</strong> aceita propostas</li>
               </ul>
-              <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Tenho interesse →</a>
+              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
             </div>
 
             <div class="opp-card">
@@ -627,7 +700,7 @@
                 <li><strong>Frequência:</strong> a cada 15 dias</li>
                 <li><strong>Condição comercial:</strong> aceita propostas</li>
               </ul>
-              <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Tenho interesse →</a>
+              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
             </div>
           </div>
         </div>
@@ -650,7 +723,7 @@
                 <li><strong>Volume:</strong> em levantamento</li>
                 <li><strong>Objetivo:</strong> reaproveitamento ou destinação adequada</li>
               </ul>
-              <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Tenho solução →</a>
+              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho solução →</a>
             </div>
           </div>
         </div>
@@ -661,35 +734,87 @@
       </div>
     </section>
 
-    <section class="registration" id="participar">
+    <section class="native-forms" id="cadastro">
       <div class="container">
         <div class="section-heading">
-          <div class="section-label">Faça parte</div>
-          <h2>Cadastre sua necessidade gratuitamente.</h2>
-          <p class="section-description">Quanto mais preciso o perfil da empresa, melhor o filtro das oportunidades que serão encaminhadas.</p>
+          <div class="section-label">Cadastro direto</div>
+          <h2>Comprar, vender ou destinar sem sair da Circular B2B.</h2>
+          <p class="section-description">Preencha sua necessidade. Os dados entram na nossa base para análise e matching comercial.</p>
         </div>
 
-        <div class="registration-grid">
-          <div class="registration-card">
-            <div class="solution-icon">🏭</div>
-            <h3>Tenho material</h3>
-            <p>Informe material, quantidade, localização, frequência e condição comercial.</p>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog" target="_blank" class="btn btn-primary">Cadastrar material →</a>
+        <div class="form-shell">
+          <div class="form-tabs">
+            <button type="button" class="form-tab active" data-form="sell" onclick="showForm('sell')">🏭 Quero vender</button>
+            <button type="button" class="form-tab" data-form="buy" onclick="showForm('buy')">🔎 Quero comprar</button>
+            <button type="button" class="form-tab" data-form="dispose" onclick="showForm('dispose')">♻️ Preciso destinar</button>
           </div>
 
-          <div class="registration-card">
-            <div class="solution-icon">🔎</div>
-            <h3>Quero comprar</h3>
-            <p>Cadastre os materiais, formatos, volumes mínimos e região de interesse.</p>
-            <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Cadastrar demanda →</a>
-          </div>
+          <form class="native-form active" id="sellForm" data-type="Venda">
+            <div class="form-intro"><h3>Tenho material disponível</h3><p>Cadastre matéria-prima, sobra de produção, apara, refugo ou estoque excedente.</p></div>
+            <div class="form-grid">
+              <div class="field"><label>Empresa *</label><input name="empresa" required></div>
+              <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
+              <div class="field"><label>WhatsApp *</label><input name="whatsapp" type="tel" required placeholder="(19) 99999-9999"></div>
+              <div class="field"><label>E-mail</label><input name="email" type="email"></div>
+              <div class="field"><label>Cidade *</label><input name="cidade" required></div>
+              <div class="field"><label>UF *</label><select name="uf" required><option value="">Selecione</option><option>SP</option><option>MG</option><option>PR</option><option>SC</option><option>RJ</option><option>RS</option><option>GO</option><option>ES</option><option>BA</option><option>Outro</option></select></div>
+              <div class="field"><label>Material *</label><input name="material" required placeholder="Ex.: PEAD, PP branco, papelão"></div>
+              <div class="field"><label>Quantidade *</label><input name="quantidade" required placeholder="Ex.: 1.000 kg"></div>
+              <div class="field"><label>Frequência</label><select name="frequencia"><option>Disponibilidade pontual</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Recorrência variável</option></select></div>
+              <div class="field"><label>Condição/formato</label><input name="condicao" placeholder="Apara, peça, borra, moído, fardo..."></div>
+              <div class="field"><label>Preço pretendido</label><input name="preco" placeholder="R$/kg ou aceita propostas"></div>
+              <div class="field"><label>Retirada</label><select name="retirada"><option value="">Selecione</option><option>Comprador deve retirar</option><option>Podemos entregar</option><option>A combinar</option></select></div>
+              <div class="field full"><label>Observações</label><textarea name="observacoes" placeholder="Cor, pureza, contaminação, especificação, disponibilidade, fotos/link etc."></textarea></div>
+            </div>
+            <button class="btn btn-primary form-submit" type="submit">Cadastrar material →</button>
+            <div class="form-status" aria-live="polite"></div>
+            <div class="privacy-note">Seus dados comerciais não serão exibidos publicamente sem autorização.</div>
+          </form>
 
-          <div class="registration-card">
-            <div class="solution-icon">♻️</div>
-            <h3>Preciso destinar</h3>
-            <p>Informe o material que sua empresa não consegue reaproveitar e as características da sobra.</p>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog" target="_blank" class="btn btn-secondary">Cadastrar para análise →</a>
-          </div>
+          <form class="native-form" id="buyForm" data-type="Compra">
+            <div class="form-intro"><h3>Procuro material</h3><p>Informe o perfil de compra para receber somente oportunidades compatíveis.</p></div>
+            <div class="form-grid">
+              <div class="field"><label>Empresa *</label><input name="empresa" required></div>
+              <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
+              <div class="field"><label>WhatsApp *</label><input name="whatsapp" type="tel" required></div>
+              <div class="field"><label>E-mail</label><input name="email" type="email"></div>
+              <div class="field"><label>Cidade *</label><input name="cidade" required></div>
+              <div class="field"><label>UF *</label><select name="uf" required><option value="">Selecione</option><option>SP</option><option>MG</option><option>PR</option><option>SC</option><option>RJ</option><option>RS</option><option>GO</option><option>ES</option><option>BA</option><option>Outro</option></select></div>
+              <div class="field"><label>Material procurado *</label><input name="material" required placeholder="Ex.: PP, PEAD, ABS"></div>
+              <div class="field"><label>Volume mínimo</label><input name="quantidade" placeholder="Ex.: 1 tonelada"></div>
+              <div class="field"><label>Condições aceitas</label><input name="condicao" placeholder="Aparas, peças, moído, granulado..."></div>
+              <div class="field"><label>Frequência de compra</label><select name="frequencia"><option>Conforme disponibilidade</option><option>Compra pontual</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Recorrente</option></select></div>
+              <div class="field"><label>Região de interesse</label><input name="regiao" placeholder="Ex.: até 150 km de Piracicaba"></div>
+              <div class="field"><label>Logística</label><select name="retirada"><option value="">Selecione</option><option>Fazemos retirada</option><option>Precisamos receber</option><option>Depende do lote</option></select></div>
+              <div class="field full"><label>Especificações / faixa de preço</label><textarea name="observacoes" placeholder="Informe cor, qualidade, restrições, faixa de preço de referência ou outras exigências."></textarea></div>
+            </div>
+            <button class="btn btn-primary form-submit" type="submit">Cadastrar demanda →</button>
+            <div class="form-status" aria-live="polite"></div>
+            <div class="privacy-note">Entraremos em contato apenas quando houver oportunidade compatível ou necessidade de confirmar informações.</div>
+          </form>
+
+          <form class="native-form" id="disposeForm" data-type="Destinacao">
+            <div class="form-intro"><h3>Preciso destinar um material</h3><p>Cadastre uma sobra ou resíduo que sua empresa não consegue reaproveitar internamente.</p></div>
+            <div class="form-grid">
+              <div class="field"><label>Empresa *</label><input name="empresa" required></div>
+              <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
+              <div class="field"><label>WhatsApp *</label><input name="whatsapp" type="tel" required></div>
+              <div class="field"><label>E-mail</label><input name="email" type="email"></div>
+              <div class="field"><label>Cidade *</label><input name="cidade" required></div>
+              <div class="field"><label>UF *</label><select name="uf" required><option value="">Selecione</option><option>SP</option><option>MG</option><option>PR</option><option>SC</option><option>RJ</option><option>RS</option><option>GO</option><option>ES</option><option>BA</option><option>Outro</option></select></div>
+              <div class="field"><label>Material/resíduo *</label><input name="material" required placeholder="Ex.: baquelite"></div>
+              <div class="field"><label>Quantidade aproximada *</label><input name="quantidade" required></div>
+              <div class="field"><label>Frequência de geração</label><select name="frequencia"><option>Pontual</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Contínua</option></select></div>
+              <div class="field"><label>Condição do material</label><input name="condicao" placeholder="Limpo, misturado, pó, peça, sólido..."></div>
+              <div class="field"><label>Situação atual *</label><select name="situacao_atual" required><option value="">Selecione</option><option>Vendemos atualmente</option><option>Doamos</option><option>Retiram sem custo</option><option>Pagamos pela destinação</option><option>Não temos destinação definida</option></select></div>
+              <div class="field"><label>Custo atual de destinação</label><input name="custo_atual" placeholder="Opcional — R$/mês ou R$/kg"></div>
+              <div class="field full"><label>Há contaminação ou mistura com outros materiais?</label><textarea name="contaminacao" placeholder="Descreva rapidamente ou informe 'não'."></textarea></div>
+              <div class="field full"><label>Observações</label><textarea name="observacoes" placeholder="Processo que gera a sobra, embalagem, armazenamento, fotos/link e outras informações."></textarea></div>
+            </div>
+            <button class="btn btn-primary form-submit" type="submit">Cadastrar para análise →</button>
+            <div class="form-status" aria-live="polite"></div>
+            <div class="privacy-note">A Circular B2B buscará alternativas comerciais ou de destinação compatíveis com as informações fornecidas.</div>
+          </form>
         </div>
       </div>
     </section>
@@ -700,8 +825,8 @@
           <h2>Sua empresa compra, vende ou descarta materiais industriais?</h2>
           <p>Cadastre gratuitamente sua necessidade. A Circular B2B procura oportunidades compatíveis dentro da rede e entra em contato quando houver potencial de negócio.</p>
           <div class="cta-actions">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog" target="_blank" class="btn">Tenho material →</a>
-            <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn">Procuro material →</a>
+            <a href="#cadastro" class="btn" onclick="showForm('sell')">Tenho material →</a>
+            <a href="#cadastro" class="btn" onclick="showForm('buy')">Procuro material →</a>
           </div>
         </div>
       </div>
@@ -723,12 +848,75 @@
           <a href="#como-funciona">Como funciona</a>
           <a href="#oportunidades">Oportunidades</a>
           <a href="#materiais">Materiais</a>
-          <a href="#participar">Cadastrar</a>
+          <a href="#cadastro">Cadastrar</a>
         </div>
       </div>
 
       <div class="copyright">© 2026 Circular B2B. Todos os direitos reservados.</div>
     </div>
   </footer>
+
+  <script>
+    // Cole aqui a URL do Web App do Google Apps Script no próximo passo.
+    const APPS_SCRIPT_URL = "COLE_AQUI_A_URL_DO_APPS_SCRIPT";
+
+    function showForm(type) {
+      const map = { sell: 'sellForm', buy: 'buyForm', dispose: 'disposeForm' };
+      document.querySelectorAll('.native-form').forEach(f => f.classList.remove('active'));
+      document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+      const form = document.getElementById(map[type] || 'sellForm');
+      if (form) form.classList.add('active');
+      const tab = document.querySelector(`.form-tab[data-form="${type}"]`);
+      if (tab) tab.classList.add('active');
+      setTimeout(() => document.getElementById('cadastro')?.scrollIntoView({behavior:'smooth', block:'start'}), 10);
+    }
+
+    function formToObject(form) {
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.tipo = form.dataset.type;
+      data.data_envio = new Date().toISOString();
+      data.origem = window.location.href;
+      return data;
+    }
+
+    document.querySelectorAll('.native-form').forEach(form => {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const status = form.querySelector('.form-status');
+        const button = form.querySelector('button[type="submit"]');
+
+        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('COLE_AQUI')) {
+          status.className = 'form-status error';
+          status.textContent = 'O formulário já está pronto no site, mas falta conectar o Google Sheets. Configure a URL do Apps Script antes de publicar esta versão.';
+          return;
+        }
+
+        button.disabled = true;
+        const oldText = button.textContent;
+        button.textContent = 'Enviando...';
+        status.className = 'form-status';
+        status.textContent = '';
+
+        try {
+          await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(formToObject(form))
+          });
+          status.className = 'form-status success';
+          status.textContent = 'Cadastro recebido! Vamos analisar as informações e entrar em contato quando houver uma oportunidade compatível.';
+          form.reset();
+        } catch (error) {
+          status.className = 'form-status error';
+          status.textContent = 'Não foi possível enviar agora. Tente novamente em alguns instantes.';
+        } finally {
+          button.disabled = false;
+          button.textContent = oldText;
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
