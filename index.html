@@ -1,832 +1,795 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Circular B2B — Compra, venda e destinação de materiais industriais</title>
-  <meta name="description" content="A Circular B2B conecta empresas que compram, vendem ou precisam encontrar destinação para matérias-primas, excedentes, resíduos e materiais industriais.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#071711" />
+  <meta name="description" content="Circular B2B conecta empresas que compram, vendem ou precisam destinar materiais industriais, excedentes e resíduos." />
+  <meta property="og:title" content="Circular B2B — Mercado inteligente de materiais industriais" />
+  <meta property="og:description" content="Conectamos oferta, demanda e destinação de materiais industriais em uma rede B2B." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://circular-b2b.vercel.app/" />
+  <title>Circular B2B — Mercado inteligente de materiais industriais</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%2315a36f%22/><text x=%2250%22 y=%2267%22 font-size=%2258%22 text-anchor=%22middle%22 fill=%22white%22>↻</text></svg>">
 
   <style>
-    :root {
-      --bg: #f7f8f5;
-      --surface: #ffffff;
-      --dark: #142019;
-      --text: #26342c;
-      --muted: #68756d;
-      --line: #dfe5df;
-      --green: #1e6b45;
-      --green-dark: #155236;
-      --green-light: #e7f2eb;
-      --lime: #b7d96b;
-      --blue-light: #e9f1f6;
-      --blue: #2e647d;
-      --orange-light: #fff1df;
-      --orange: #9a5d14;
-      --shadow: 0 20px 60px rgba(20, 32, 25, 0.08);
-      --radius: 20px;
+    :root{
+      --bg:#06120e;
+      --bg-2:#0a1913;
+      --surface:#0e2119;
+      --surface-2:#122a20;
+      --paper:#f4f7f5;
+      --white:#ffffff;
+      --text:#0c1d16;
+      --muted:#6a7b73;
+      --muted-dark:#9bb0a6;
+      --line:rgba(255,255,255,.10);
+      --line-dark:#dce6e0;
+      --green:#19b978;
+      --green-2:#39d995;
+      --green-3:#a6f0cb;
+      --amber:#f5b84b;
+      --blue:#59b5ff;
+      --radius:22px;
+      --shadow:0 30px 80px rgba(0,0,0,.18);
+      --shadow-soft:0 16px 50px rgba(6,18,14,.08);
+      --container:1180px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(247,248,245,.95);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(223,229,223,.8);
-    }
-    .nav {
-      height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 21px;
-      font-weight: 800;
-      letter-spacing: -.7px;
-      color: var(--dark);
-    }
-    .logo-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 11px;
-      background: var(--green);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-    }
-    nav { display: flex; gap: 24px; align-items: center; }
-    nav a { font-size: 14px; font-weight: 700; color: var(--muted); }
-    nav a:hover { color: var(--green); }
-    .nav-button {
-      background: var(--dark);
-      color: white !important;
-      padding: 11px 17px;
-      border-radius: 10px;
-    }
-
-    .btn {
-      border: none;
-      cursor: pointer;
-      padding: 15px 22px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 14px;
-      transition: .2s ease;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-primary { background: var(--green); color: white; }
-    .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
-    .btn-secondary { background: white; color: var(--dark); border: 1px solid var(--line); }
-    .btn-secondary:hover { border-color: var(--green); transform: translateY(-2px); }
-    .btn-dark { background: var(--dark); color: white; }
-
-    .hero { padding: 92px 0 78px; overflow: hidden; }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 64px;
-      align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--green-light);
-      color: var(--green-dark);
-      border: 1px solid #d2e6d9;
-      padding: 7px 12px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .7px;
-      margin-bottom: 24px;
-    }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
-    h1 {
-      font-size: clamp(44px, 6vw, 74px);
-      line-height: .99;
-      letter-spacing: -3.8px;
-      color: var(--dark);
-      margin-bottom: 28px;
-    }
-    h1 span { color: var(--green); }
-    .hero-text {
-      font-size: 19px;
-      line-height: 1.65;
-      color: var(--muted);
-      max-width: 690px;
-      margin-bottom: 32px;
-    }
-    .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
-
-    .hero-card {
-      background: var(--dark);
-      color: white;
-      border-radius: 28px;
-      padding: 30px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      background: var(--green);
-      opacity: .22;
-      right: -110px;
-      top: -110px;
-    }
-    .hero-card-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      align-items: center;
-      margin-bottom: 22px;
-      position: relative;
-    }
-    .status {
-      background: rgba(183,217,107,.14);
-      color: var(--lime);
-      border: 1px solid rgba(183,217,107,.25);
-      border-radius: 100px;
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 800;
-    }
-    .listing {
-      background: rgba(255,255,255,.065);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 15px;
-      padding: 18px;
-      margin-bottom: 12px;
-      position: relative;
-    }
-    .listing:last-child { margin-bottom: 0; }
-    .listing-top { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 8px; }
-    .listing-title { font-weight: 800; font-size: 16px; }
-    .listing-label { color: var(--lime); font-weight: 800; font-size: 12px; white-space: nowrap; }
-    .listing-info { color: rgba(255,255,255,.58); font-size: 12px; }
-
-    .trust {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      padding: 27px 0;
-      background: white;
-    }
-    .trust-row { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-    .trust-item { display: flex; gap: 10px; align-items: center; color: var(--muted); font-size: 13px; font-weight: 700; }
-    .trust-icon { width: 30px; height: 30px; border-radius: 9px; background: var(--green-light); display: grid; place-items: center; }
-
-    section { padding: 96px 0; }
-    .section-heading { max-width: 760px; margin-bottom: 46px; }
-    .section-label {
-      color: var(--green);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      font-weight: 900;
-      margin-bottom: 12px;
-    }
-    h2 {
-      color: var(--dark);
-      font-size: clamp(34px, 4vw, 52px);
-      line-height: 1.05;
-      letter-spacing: -2px;
-      margin-bottom: 17px;
-    }
-    .section-description { color: var(--muted); font-size: 17px; }
-
-    .solutions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .solution-card {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 34px;
-      transition: .2s;
-    }
-    .solution-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-    .solution-icon { width: 54px; height: 54px; border-radius: 15px; background: var(--green-light); display: grid; place-items: center; font-size: 26px; margin-bottom: 22px; }
-    .solution-card h3 { font-size: 24px; letter-spacing: -.7px; color: var(--dark); margin-bottom: 10px; }
-    .solution-card p { color: var(--muted); margin-bottom: 20px; }
-    .check-list { list-style: none; margin-bottom: 26px; }
-    .check-list li { margin: 9px 0; font-size: 14px; }
-    .check-list li::before { content: "✓"; color: var(--green); font-weight: 900; margin-right: 9px; }
-
-    .categories { background: var(--dark); color: white; }
-    .categories h2 { color: white; }
-    .categories .section-description { color: rgba(255,255,255,.6); }
-    .category-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-    .category { padding: 23px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); border-radius: 15px; }
-    .category strong { display:block; margin-bottom:5px; font-size:16px; }
-    .category span { font-size:12px; color:rgba(255,255,255,.5); }
-
-    .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
-    .step { padding: 28px; background: white; border: 1px solid var(--line); border-radius: 18px; }
-    .step-number { font-size: 12px; font-weight: 900; color: var(--green); margin-bottom: 36px; }
-    .step h3 { font-size: 19px; color: var(--dark); margin-bottom: 9px; }
-    .step p { color: var(--muted); font-size: 13px; }
-
-    .opportunities { background: #eef1ed; }
-    .opportunity-block { margin-bottom: 58px; }
-    .opportunity-block:last-child { margin-bottom: 0; }
-    .block-title-row { display:flex; justify-content:space-between; gap:20px; align-items:end; margin-bottom:22px; }
-    .block-title h3 { font-size: 28px; color: var(--dark); letter-spacing: -1px; margin-bottom: 5px; }
-    .block-title p { color: var(--muted); font-size: 14px; }
-    .cards-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-    .opp-card { background:white; border:1px solid var(--line); border-radius:18px; padding:24px; display:flex; flex-direction:column; min-height:290px; }
-    .opp-top { display:flex; justify-content:space-between; gap:12px; align-items:start; margin-bottom:16px; }
-    .badge { display:inline-flex; padding:6px 9px; border-radius:100px; font-size:10px; font-weight:900; text-transform:uppercase; letter-spacing:.5px; }
-    .badge-buy { background:var(--green-light); color:var(--green-dark); }
-    .badge-sell { background:var(--orange-light); color:var(--orange); }
-    .badge-dest { background:var(--blue-light); color:var(--blue); }
-    .opp-card h4 { font-size:23px; color:var(--dark); line-height:1.15; margin-bottom:14px; }
-    .opp-meta { list-style:none; margin-bottom:22px; }
-    .opp-meta li { padding:6px 0; color:var(--muted); font-size:13px; border-bottom:1px solid #eef0ed; }
-    .opp-meta li:last-child { border-bottom:none; }
-    .opp-meta strong { color:var(--text); }
-    .opp-card .btn { margin-top:auto; width:100%; }
-
-    .network-note {
-      margin-top: 24px;
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 18px 20px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .registration { background: white; }
-    .registration-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-    .registration-card { border:1px solid var(--line); border-radius:22px; padding:32px; }
-    .registration-card h3 { color:var(--dark); font-size:23px; margin:14px 0 10px; }
-    .registration-card p { color:var(--muted); margin-bottom:22px; }
-    .registration-card .btn { width:100%; }
-
-
-    .native-forms { background: white; }
-    .form-tabs {
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      background:var(--bg);
-      padding:7px;
-      border-radius:16px;
-      margin-bottom:28px;
-    }
-    .form-tab {
-      border:0;
-      background:transparent;
-      padding:14px 12px;
-      border-radius:11px;
-      font:inherit;
-      font-weight:800;
-      color:var(--muted);
-      cursor:pointer;
-      transition:.2s ease;
-    }
-    .form-tab.active { background:var(--dark); color:white; box-shadow:var(--shadow); }
-    .form-shell {
-      max-width:920px;
-      margin:0 auto;
-      background:var(--surface);
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:36px;
-      box-shadow:var(--shadow);
-    }
-    .form-intro { margin-bottom:24px; }
-    .form-intro h3 { color:var(--dark); font-size:28px; margin-bottom:7px; }
-    .form-intro p { color:var(--muted); }
-    .native-form { display:none; }
-    .native-form.active { display:block; }
-    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:17px; }
-    .field { display:flex; flex-direction:column; gap:7px; }
-    .field.full { grid-column:1/-1; }
-    .field label { color:var(--dark); font-size:12px; font-weight:850; }
-    .field input, .field select, .field textarea {
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:11px;
-      background:white;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:var(--paper);
       color:var(--text);
-      padding:13px 14px;
-      font:inherit;
-      outline:none;
+      line-height:1.55;
+      overflow-x:hidden;
     }
-    .field input:focus, .field select:focus, .field textarea:focus {
-      border-color:var(--green);
-      box-shadow:0 0 0 3px rgba(30,107,69,.08);
+    body.menu-open{overflow:hidden}
+    a{text-decoration:none;color:inherit}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    .container{width:min(var(--container),calc(100% - 40px));margin:0 auto}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+      color:#0e7f54;
     }
-    .field textarea { min-height:110px; resize:vertical; }
-    .form-help { color:var(--muted); font-size:11px; margin-top:2px; }
-    .form-submit { width:100%; margin-top:22px; }
-    .form-status {
-      display:none;
-      margin-top:16px;
-      padding:14px 16px;
-      border-radius:11px;
-      font-size:13px;
-      font-weight:700;
+    .eyebrow::before{content:"";width:7px;height:7px;border-radius:999px;background:var(--green)}
+    .section-head{max-width:760px;margin-bottom:44px}
+    .section-head h2{
+      font-size:clamp(34px,4.7vw,58px);
+      line-height:1.02;letter-spacing:-.045em;
+      margin:12px 0 16px;color:#0a1b14;
     }
-    .form-status.success { display:block; background:var(--green-light); color:var(--green-dark); }
-    .form-status.error { display:block; background:#fff1ef; color:#8a3328; }
-    .privacy-note { color:var(--muted); font-size:11px; text-align:center; margin-top:12px; }
+    .section-head p{font-size:18px;color:var(--muted);max-width:690px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      min-height:48px;padding:0 19px;border-radius:12px;border:1px solid transparent;
+      font-size:14px;font-weight:800;transition:.22s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--green);color:#04120c;box-shadow:0 12px 26px rgba(25,185,120,.24)}
+    .btn-primary:hover{background:var(--green-2)}
+    .btn-dark{background:#0b1d16;color:#fff}
+    .btn-ghost{background:#fff;border-color:#d9e4de;color:#102219}
+    .btn-ghost:hover{border-color:#a9c5b7}
+    .btn-light{background:#fff;color:#0b1c15}
+    .btn-sm{min-height:40px;padding:0 14px;font-size:13px}
 
-    .cta { padding: 88px 0; }
-    .cta-box { background: var(--green); border-radius:28px; padding:62px; text-align:center; color:white; }
-    .cta-box h2 { color:white; max-width:760px; margin:0 auto 16px; }
-    .cta-box p { max-width:650px; margin:0 auto 27px; color:rgba(255,255,255,.78); }
-    .cta-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-    .cta-box .btn { background:white; color:var(--green-dark); }
+    /* top */
+    .topline{
+      background:#04100c;color:#bdd1c8;border-bottom:1px solid rgba(255,255,255,.08);
+      font-size:12px;
+    }
+    .topline-inner{
+      min-height:34px;display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;
+    }
+    .pulse{width:7px;height:7px;border-radius:50%;background:var(--green-2);box-shadow:0 0 0 0 rgba(57,217,149,.55);animation:pulse 2s infinite}
+    @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(57,217,149,0)}100%{box-shadow:0 0 0 0 rgba(57,217,149,0)}}
 
-    footer { background:var(--dark); color:white; padding:45px 0; }
-    .footer-grid { display:flex; justify-content:space-between; gap:30px; align-items:flex-start; }
-    .footer-brand p { color:rgba(255,255,255,.5); max-width:440px; font-size:13px; margin-top:12px; }
-    .footer-links { display:flex; gap:24px; color:rgba(255,255,255,.6); font-size:13px; flex-wrap:wrap; }
-    .copyright { margin-top:35px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08); color:rgba(255,255,255,.35); font-size:11px; }
+    header{
+      position:sticky;top:0;z-index:60;
+      background:rgba(244,247,245,.87);backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(10,27,20,.08);
+    }
+    .nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:38px;height:38px;border-radius:12px;background:#0c2118;color:var(--green-2);
+      display:grid;place-items:center;font-size:21px;border:1px solid rgba(255,255,255,.08);
+    }
+    .nav-links{display:flex;align-items:center;gap:26px}
+    .nav-links a{font-size:13px;font-weight:700;color:#4e6258;transition:.2s}
+    .nav-links a:hover{color:#0e1f17}
+    .nav-actions{display:flex;align-items:center;gap:10px}
+    .hamb{display:none;width:42px;height:42px;border-radius:11px;border:1px solid #d7e1dc;background:#fff}
+    .mobile-menu{display:none}
 
-    @media (max-width: 900px) {
-      nav { display:none; }
-      .hero-grid { grid-template-columns:1fr; gap:42px; }
-      .solutions-grid, .cards-grid, .registration-grid { grid-template-columns:1fr 1fr; }
-      .steps { grid-template-columns:1fr 1fr; }
-      .category-grid { grid-template-columns:1fr 1fr; }
+    /* hero */
+    .hero{
+      position:relative;background:
+        radial-gradient(circle at 82% 22%, rgba(27,185,120,.23), transparent 27%),
+        radial-gradient(circle at 10% 80%, rgba(89,181,255,.10), transparent 24%),
+        linear-gradient(180deg,#071711 0%,#091a14 100%);
+      color:#fff;overflow:hidden;padding:96px 0 82px;
+    }
+    .hero::after{
+      content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;
+      background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+      background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 90%);
+    }
+    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:68px;align-items:center}
+    .hero .eyebrow{color:var(--green-3)}
+    .hero .eyebrow::before{background:var(--green-2)}
+    .hero h1{
+      font-size:clamp(46px,6.8vw,80px);line-height:.94;letter-spacing:-.058em;
+      max-width:800px;margin:18px 0 24px;font-weight:900;
+    }
+    .hero h1 span{color:var(--green-2)}
+    .hero-copy{font-size:19px;color:#b8cbc2;max-width:690px;line-height:1.7;margin-bottom:30px}
+    .hero-actions{display:flex;gap:11px;flex-wrap:wrap}
+    .hero-note{margin-top:20px;font-size:12px;color:#78988a;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .hero-note span{display:inline-flex;align-items:center;gap:6px}
+    .hero-note i{width:5px;height:5px;border-radius:50%;background:#5e7e70}
+
+    .network-card{
+      position:relative;border-radius:28px;padding:24px;min-height:450px;
+      background:linear-gradient(145deg,rgba(255,255,255,.095),rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 100px rgba(0,0,0,.30);
+      backdrop-filter:blur(10px);overflow:hidden;
+    }
+    .network-card::before{
+      content:"";position:absolute;width:300px;height:300px;border-radius:50%;filter:blur(10px);
+      background:rgba(25,185,120,.16);right:-130px;top:-130px;
+    }
+    .net-head{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+    .net-title{font-size:13px;font-weight:800;color:#d8e8e0}
+    .live-pill{font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--green-3);background:rgba(25,185,120,.12);border:1px solid rgba(57,217,149,.22);padding:7px 9px;border-radius:999px}
+    .network-canvas{position:relative;height:325px;margin-top:18px}
+    .node{
+      position:absolute;z-index:3;border:1px solid rgba(255,255,255,.12);background:#10281e;
+      color:#e9f5ef;border-radius:14px;padding:11px 13px;min-width:115px;
+      box-shadow:0 14px 36px rgba(0,0,0,.20);animation:float 5s ease-in-out infinite;
+    }
+    .node strong{display:block;font-size:12px;margin-bottom:2px}
+    .node small{font-size:10px;color:#83a494}
+    .node.b{animation-delay:-1.4s}.node.c{animation-delay:-2.6s}.node.d{animation-delay:-3.8s}
+    .n1{left:3%;top:18%}.n2{right:1%;top:10%}.n3{left:12%;bottom:11%}.n4{right:6%;bottom:14%}
+    .hub{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;
+      width:105px;height:105px;border-radius:26px;background:linear-gradient(135deg,var(--green),var(--green-2));
+      color:#04140d;display:grid;place-items:center;text-align:center;font-size:13px;font-weight:900;
+      box-shadow:0 22px 60px rgba(25,185,120,.26);
+    }
+    .hub::before{content:"↻";display:block;font-size:30px;line-height:1}
+    .line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(57,217,149,.6),transparent);transform-origin:left center;z-index:1}
+    .l1{width:170px;left:25%;top:37%;transform:rotate(18deg)}
+    .l2{width:180px;left:48%;top:39%;transform:rotate(-18deg)}
+    .l3{width:165px;left:27%;top:63%;transform:rotate(-16deg)}
+    .l4{width:180px;left:49%;top:61%;transform:rotate(16deg)}
+    @keyframes float{50%{transform:translateY(-7px)}}
+    .net-foot{position:absolute;left:24px;right:24px;bottom:20px;display:flex;gap:8px;flex-wrap:wrap}
+    .micro-tag{padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:10px;color:#9db5a9}
+
+    /* metrics */
+    .metrics{position:relative;z-index:3;margin-top:-28px}
+    .metrics-grid{
+      background:#fff;border:1px solid #dbe5e0;border-radius:20px;box-shadow:var(--shadow-soft);
+      display:grid;grid-template-columns:repeat(3,1fr);overflow:hidden;
+    }
+    .metric{padding:24px 28px;border-right:1px solid #e2e9e5}
+    .metric:last-child{border-right:0}
+    .metric strong{display:block;font-size:28px;letter-spacing:-.04em;color:#0c2118}
+    .metric span{font-size:12px;color:#74847c;font-weight:700}
+
+    section{padding:96px 0}
+    .section-soft{background:#eef3f0}
+
+    /* value */
+    .value-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .value-card{
+      background:#fff;border:1px solid #dce6e1;border-radius:18px;padding:25px;box-shadow:0 12px 35px rgba(9,26,19,.04);
+      transition:.22s ease;
+    }
+    .value-card:hover{transform:translateY(-5px);box-shadow:0 22px 50px rgba(9,26,19,.09)}
+    .value-icon{
+      width:44px;height:44px;border-radius:12px;background:#e6f6ee;color:#0c7a51;display:grid;place-items:center;
+      font-weight:900;margin-bottom:22px;
+    }
+    .value-card h3{font-size:17px;margin-bottom:8px;letter-spacing:-.02em}
+    .value-card p{font-size:13px;color:#718178;line-height:1.65}
+
+    /* marketplace */
+    .market-toolbar{
+      display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px;flex-wrap:wrap;
+    }
+    .tabs{display:inline-flex;gap:4px;background:#e5ece8;padding:4px;border-radius:12px}
+    .tab{
+      border:0;background:transparent;border-radius:9px;padding:10px 14px;font-size:12px;font-weight:850;color:#617169;
+    }
+    .tab.active{background:#fff;color:#0d2017;box-shadow:0 4px 14px rgba(6,18,14,.07)}
+    .searchbox{position:relative;min-width:260px}
+    .searchbox input{
+      width:100%;height:44px;border:1px solid #d4dfda;border-radius:12px;background:#fff;padding:0 14px 0 40px;outline:0;
+    }
+    .searchbox::before{content:"⌕";position:absolute;left:14px;top:9px;color:#7a8a82;font-size:20px}
+    .opportunity-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .opp{
+      background:#fff;border:1px solid #dce5e0;border-radius:18px;padding:22px;position:relative;
+      transition:.2s ease;display:flex;flex-direction:column;min-height:260px;
+    }
+    .opp:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(8,25,18,.08);border-color:#c5d7ce}
+    .opp-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:20px}
+    .type-pill{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:8px}
+    .type-demand{background:#e6f8ef;color:#08744b}
+    .type-offer{background:#fff4db;color:#8a5c00}
+    .type-dest{background:#e8f3ff;color:#1766a8}
+    .status-dot{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:800;color:#728178}
+    .status-dot::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green)}
+    .opp h3{font-size:22px;line-height:1.1;letter-spacing:-.03em;margin-bottom:8px}
+    .opp-sub{font-size:12px;color:#718178;margin-bottom:18px}
+    .opp-data{display:grid;gap:9px;margin-bottom:22px}
+    .opp-data div{display:flex;align-items:flex-start;gap:9px;font-size:12px;color:#43554b}
+    .opp-data b{min-width:20px;color:#0e2118}
+    .opp .btn{margin-top:auto;width:100%}
+    .empty-state{display:none;text-align:center;padding:50px 20px;color:#708078;background:#fff;border:1px dashed #ccd9d2;border-radius:18px;grid-column:1/-1}
+
+    /* process */
+    .process{background:#071711;color:#fff;position:relative;overflow:hidden}
+    .process .section-head h2{color:#fff}
+    .process .section-head p{color:#97aca2}
+    .process .eyebrow{color:var(--green-3)}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .step{
+      border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);border-radius:18px;padding:24px;min-height:230px;
+    }
+    .step-num{font-size:11px;color:var(--green-3);font-weight:900;letter-spacing:.12em;margin-bottom:48px}
+    .step h3{font-size:19px;margin-bottom:8px}
+    .step p{font-size:13px;color:#91a79c;line-height:1.65}
+
+    /* forms */
+    .forms-shell{
+      background:#fff;border:1px solid #dbe5e0;border-radius:26px;box-shadow:var(--shadow-soft);overflow:hidden;
+      display:grid;grid-template-columns:310px 1fr;
+    }
+    .form-nav{background:#0b1d16;padding:28px;color:#fff}
+    .form-nav h3{font-size:24px;letter-spacing:-.04em;margin-bottom:8px}
+    .form-nav p{font-size:13px;color:#8fa59a;margin-bottom:24px}
+    .form-choice{
+      width:100%;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#b9ccc2;
+      border-radius:13px;padding:14px;text-align:left;margin-bottom:8px;font-weight:800;font-size:13px;transition:.2s;
+    }
+    .form-choice.active{background:#153528;color:#fff;border-color:rgba(57,217,149,.35)}
+    .form-choice small{display:block;font-weight:500;color:#789186;margin-top:3px}
+    .form-pane-wrap{padding:34px}
+    .form-pane{display:none}
+    .form-pane.active{display:block;animation:fade .2s ease}
+    @keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+    .form-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:26px}
+    .form-head h3{font-size:28px;letter-spacing:-.04em}
+    .form-head p{font-size:13px;color:#76867e;margin-top:5px}
+    .secure-note{font-size:10px;color:#688078;background:#edf6f1;border:1px solid #d7e9df;padding:7px 9px;border-radius:9px;white-space:nowrap}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+    .field{display:flex;flex-direction:column;gap:7px}
+    .field.full{grid-column:1/-1}
+    .field label{font-size:11px;font-weight:850;color:#33483e}
+    .field input,.field select,.field textarea{
+      width:100%;border:1px solid #d6e1db;background:#fbfdfc;border-radius:11px;padding:12px 13px;outline:0;color:#102219;
+      transition:.2s;
+    }
+    .field textarea{min-height:92px;resize:vertical}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:#5bb68c;box-shadow:0 0 0 3px rgba(25,185,120,.10);background:#fff}
+    .submit-row{display:flex;align-items:center;gap:14px;margin-top:22px;flex-wrap:wrap}
+    .form-disclaimer{font-size:10px;color:#809087;max-width:440px}
+    .success-box{
+      display:none;margin-top:18px;border-radius:13px;padding:14px 15px;background:#eaf8f1;border:1px solid #ccebdc;color:#116642;
+      font-size:13px;font-weight:750;
     }
 
-    @media (max-width: 620px) {
-      .container { width:min(100% - 28px, 1160px); }
-      section { padding:70px 0; }
-      h1 { letter-spacing:-2.4px; }
-      .hero { padding:64px 0; }
-      .hero-buttons, .cta-actions { flex-direction:column; }
-      .hero-buttons .btn, .cta-actions .btn { width:100%; }
-      .solutions-grid, .cards-grid, .registration-grid, .steps, .category-grid, .form-grid { grid-template-columns:1fr; }
-      .field.full { grid-column:auto; }
-      .form-tabs { grid-template-columns:1fr; }
-      .form-shell { padding:24px; }
-      .trust-row { flex-direction:column; }
-      .block-title-row, .footer-grid { flex-direction:column; align-items:flex-start; }
-      .cta-box { padding:44px 24px; }
+    /* FAQ */
+    .faq-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:60px;align-items:start}
+    .faq-list{border-top:1px solid #d8e2dd}
+    details{border-bottom:1px solid #d8e2dd;padding:18px 0}
+    summary{cursor:pointer;font-weight:800;list-style:none;display:flex;justify-content:space-between;gap:20px}
+    summary::after{content:"+";font-size:20px;color:#5e7469}
+    details[open] summary::after{content:"–"}
+    details p{font-size:13px;color:#708078;line-height:1.7;padding:12px 30px 0 0}
+
+    /* CTA */
+    .cta-band{
+      background:linear-gradient(135deg,#0d2b20,#0b1d16 58%,#123a2a);
+      color:#fff;border-radius:28px;padding:50px;display:flex;align-items:center;justify-content:space-between;gap:36px;
+      box-shadow:0 30px 70px rgba(5,22,14,.18);position:relative;overflow:hidden;
+    }
+    .cta-band::after{content:"↻";position:absolute;right:2%;top:-35%;font-size:220px;color:rgba(57,217,149,.06);font-weight:900}
+    .cta-band h2{font-size:clamp(30px,4vw,50px);letter-spacing:-.05em;line-height:1.05;max-width:680px}
+    .cta-band p{color:#9db3a8;max-width:600px;margin-top:10px}
+    .cta-actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:2}
+
+    footer{background:#04100c;color:#8ca398;padding:52px 0 28px;margin-top:96px}
+    .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
+    .footer-brand .brand{color:#fff;margin-bottom:14px}
+    .footer-brand p{font-size:12px;max-width:420px;line-height:1.7}
+    .footer-col h4{font-size:11px;color:#d5e4dc;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .footer-col a{display:block;font-size:12px;margin:9px 0;color:#8ca398}
+    .footer-bottom{margin-top:38px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;gap:20px;font-size:10px}
+
+    /* reveal */
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    @media(max-width:980px){
+      .hero-grid{grid-template-columns:1fr}.network-card{min-height:390px}
+      .value-grid{grid-template-columns:1fr 1fr}
+      .opportunity-grid{grid-template-columns:1fr 1fr}
+      .steps{grid-template-columns:1fr 1fr}
+      .forms-shell{grid-template-columns:1fr}.form-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.form-nav h3,.form-nav p{grid-column:1/-1}.form-choice{margin:0}
+      .faq-grid{grid-template-columns:1fr;gap:30px}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:760px){
+      .container{width:min(var(--container),calc(100% - 26px))}
+      .nav-links,.nav-actions .btn{display:none}.hamb{display:block}
+      .mobile-menu{
+        position:fixed;inset:106px 0 0;background:#f4f7f5;z-index:55;padding:24px;display:none;
+      }
+      .mobile-menu.open{display:block}
+      .mobile-menu a,.mobile-menu button{display:block;width:100%;padding:15px 0;border:0;border-bottom:1px solid #dce6e1;background:transparent;text-align:left;font-weight:800}
+      .hero{padding:70px 0 68px}
+      .hero h1{font-size:clamp(42px,13vw,62px)}
+      .hero-actions .btn{width:100%}
+      .network-card{min-height:360px}
+      .node{min-width:100px;padding:9px}.n1{left:0}.n2{right:0}.n3{left:3%}.n4{right:0}
+      .hub{width:92px;height:92px}
+      .metrics-grid{grid-template-columns:1fr}.metric{border-right:0;border-bottom:1px solid #e2e9e5}.metric:last-child{border-bottom:0}
+      section{padding:72px 0}
+      .value-grid,.opportunity-grid,.steps{grid-template-columns:1fr}
+      .market-toolbar{align-items:stretch}.tabs{width:100%;overflow-x:auto}.tab{flex:1;white-space:nowrap}.searchbox{min-width:100%}
+      .forms-shell{border-radius:20px}.form-nav{grid-template-columns:1fr}.form-pane-wrap{padding:22px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
+      .form-head{flex-direction:column}.secure-note{white-space:normal}
+      .cta-band{padding:34px 24px;flex-direction:column;align-items:flex-start}
+      .footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+      .reveal{opacity:1;transform:none}
     }
   </style>
 </head>
 
 <body>
+  <div class="topline">
+    <div class="container topline-inner">
+      <span class="pulse"></span>
+      Piloto regional em operação • Piracicaba e Limeira
+    </div>
+  </div>
+
   <header>
     <div class="container nav">
-      <a href="#" class="logo">
-        <div class="logo-mark">↻</div>
-        Circular B2B
+      <a class="brand" href="#top" aria-label="Circular B2B">
+        <span class="brand-mark">↻</span>
+        <span>Circular B2B</span>
       </a>
 
-      <nav>
-        <a href="#como-funciona">Como funciona</a>
+      <nav class="nav-links" aria-label="Navegação principal">
         <a href="#oportunidades">Oportunidades</a>
-        <a href="#materiais">Materiais</a>
-        <a href="#cadastro" class="nav-button">Cadastrar empresa</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#solucoes">Soluções</a>
+        <a href="#cadastro">Cadastrar</a>
       </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openForm('compra')">Quero comprar</button>
+        <button class="btn btn-dark btn-sm" onclick="openForm('venda')">Tenho material</button>
+        <button class="hamb" id="hamb" aria-label="Abrir menu">☰</button>
+      </div>
     </div>
   </header>
 
-  <main>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#oportunidades">Oportunidades</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#solucoes">Soluções</a>
+    <button onclick="openForm('venda')">Tenho material</button>
+    <button onclick="openForm('compra')">Quero comprar</button>
+    <button onclick="openForm('destinacao')">Preciso destinar</button>
+  </div>
+
+  <main id="top">
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow"><span class="dot"></span> Economia circular B2B</div>
-
-          <h1>
-            O material que <span>sobra</span> em uma empresa pode ser exatamente o que outra procura.
-          </h1>
-
-          <p class="hero-text">
-            A Circular B2B conecta empresas que <strong>compram, vendem ou precisam encontrar destinação</strong> para matérias-primas, excedentes, sobras e materiais industriais. Mapeamos ofertas e demandas e aproximamos oportunidades compatíveis.
+          <div class="eyebrow">Infraestrutura comercial para economia circular</div>
+          <h1>Materiais industriais <span>encontram destino.</span> Empresas encontram oportunidades.</h1>
+          <p class="hero-copy">
+            A Circular B2B conecta oferta, demanda e destinação de materiais industriais em uma única rede.
+            Mapeamos necessidades, filtramos compatibilidade e aproximamos empresas quando existe potencial real de negócio.
           </p>
-
-          <div class="hero-buttons">
-            <a href="#cadastro" class="btn btn-primary" onclick="showForm('sell')">Tenho material →</a>
-            <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Procuro material</a>
-            <a href="#cadastro" class="btn btn-secondary" onclick="showForm('dispose')">Preciso destinar</a>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="openForm('venda')">Tenho material disponível <span>→</span></button>
+            <button class="btn btn-light" onclick="openForm('compra')">Procuro material</button>
+            <button class="btn btn-ghost" style="background:transparent;color:#dceae3;border-color:rgba(255,255,255,.18)" onclick="openForm('destinacao')">Preciso destinar</button>
+          </div>
+          <div class="hero-note">
+            <span>✓ Cadastro gratuito no piloto</span><i></i>
+            <span>✓ Empresas anonimizadas nas oportunidades públicas</span><i></i>
+            <span>✓ Matching acompanhado pela Circular</span>
           </div>
         </div>
 
-        <div class="hero-card">
-          <div class="hero-card-header">
-            <strong>Oportunidades reais da rede</strong>
-            <span class="status">● ATIVAS</span>
+        <div class="network-card" aria-label="Representação visual da rede Circular B2B">
+          <div class="net-head">
+            <div class="net-title">Rede Circular B2B</div>
+            <div class="live-pill">● OPORTUNIDADES REAIS</div>
           </div>
-
-          <div class="listing">
-            <div class="listing-top">
-              <div class="listing-title">PP · PEAD · PEBD · PET</div>
-              <div class="listing-label">COMPRA</div>
-            </div>
-            <div class="listing-info">Piracicaba/SP · peças e aparas · a partir de 1.000 kg</div>
+          <div class="network-canvas">
+            <div class="node n1"><strong>Fornecedor</strong><small>Aparas • Piracicaba</small></div>
+            <div class="node n2 b"><strong>Comprador</strong><small>PP • PEAD • PET</small></div>
+            <div class="node n3 c"><strong>Indústria</strong><small>Excedente recorrente</small></div>
+            <div class="node n4 d"><strong>Destinação</strong><small>Baquelite • Limeira</small></div>
+            <div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="line l4"></div>
+            <div class="hub">Circular<br>B2B</div>
           </div>
-
-          <div class="listing">
-            <div class="listing-top">
-              <div class="listing-title">Papelão</div>
-              <div class="listing-label">OFERTA</div>
-            </div>
-            <div class="listing-info">Piracicaba/SP · 10 toneladas · recorrência quinzenal</div>
-          </div>
-
-          <div class="listing">
-            <div class="listing-top">
-              <div class="listing-title">Baquelite</div>
-              <div class="listing-label">DESTINAÇÃO</div>
-            </div>
-            <div class="listing-info">Limeira/SP · sobra de processo industrial · volume em levantamento</div>
+          <div class="net-foot">
+            <span class="micro-tag">Oferta</span>
+            <span class="micro-tag">Demanda</span>
+            <span class="micro-tag">Destinação</span>
+            <span class="micro-tag">Matching</span>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="trust">
-      <div class="container trust-row">
-        <div class="trust-item"><div class="trust-icon">🏭</div> Rede B2B industrial</div>
-        <div class="trust-item"><div class="trust-icon">🔎</div> Matching de oferta e demanda</div>
-        <div class="trust-item"><div class="trust-icon">📍</div> Oportunidades por região</div>
-        <div class="trust-item"><div class="trust-icon">♻</div> Reaproveitamento e destinação</div>
+    <div class="metrics">
+      <div class="container">
+        <div class="metrics-grid reveal">
+          <div class="metric"><strong data-count="9">9</strong><span>materiais com demanda mapeada</span></div>
+          <div class="metric"><strong data-count="6">6</strong><span>ofertas recorrentes confirmadas</span></div>
+          <div class="metric"><strong data-count="2">2</strong><span>cidades no piloto inicial</span></div>
+        </div>
       </div>
     </div>
 
-    <section>
+    <section id="solucoes">
       <div class="container">
-        <div class="section-heading">
-          <div class="section-label">Para empresas</div>
-          <h2>Três necessidades. Uma rede.</h2>
-          <p class="section-description">A Circular B2B organiza oportunidades para quem precisa vender, comprar ou encontrar uma solução para materiais que hoje não são reaproveitados internamente.</p>
+        <div class="section-head reveal">
+          <div class="eyebrow">Uma rede, três necessidades</div>
+          <h2>Menos material parado. Mais conexão comercial.</h2>
+          <p>A Circular organiza um mercado fragmentado para tornar oportunidades industriais mais fáceis de encontrar, comparar e encaminhar.</p>
         </div>
 
-        <div class="solutions-grid">
-          <div class="solution-card">
-            <div class="solution-icon">🏭</div>
-            <h3>Tenho material</h3>
-            <p>Cadastre excedentes, aparas, refugos, estoques parados ou matérias-primas disponíveis.</p>
-            <ul class="check-list">
-              <li>Sobras de produção</li>
-              <li>Matéria-prima excedente</li>
-              <li>Estoque parado</li>
-              <li>Materiais recicláveis</li>
-            </ul>
-            <a href="#cadastro" class="btn btn-primary" onclick="showForm('sell')">Cadastrar oferta →</a>
-          </div>
-
-          <div class="solution-card">
-            <div class="solution-icon">🔎</div>
-            <h3>Procuro material</h3>
-            <p>Informe o que sua empresa compra e receba oportunidades compatíveis com seu perfil.</p>
-            <ul class="check-list">
-              <li>Material e especificação</li>
-              <li>Formato aceito</li>
-              <li>Volume de interesse</li>
-              <li>Região de compra</li>
-            </ul>
-            <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Cadastrar demanda →</a>
-          </div>
-
-          <div class="solution-card">
-            <div class="solution-icon">♻️</div>
-            <h3>Preciso destinar</h3>
-            <p>Tem um material que sua empresa não consegue reutilizar? Buscamos possíveis soluções dentro da rede.</p>
-            <ul class="check-list">
-              <li>Sobras sem reaproveitamento</li>
-              <li>Resíduos industriais</li>
-              <li>Materiais de difícil saída</li>
-              <li>Alternativas de destinação</li>
-            </ul>
-            <a href="#cadastro" class="btn btn-secondary" onclick="showForm('dispose')">Cadastrar material →</a>
-          </div>
+        <div class="value-grid">
+          <article class="value-card reveal">
+            <div class="value-icon">01</div>
+            <h3>Vender excedentes</h3>
+            <p>Cadastre aparas, refugos, estoques parados, matérias-primas e outros materiais disponíveis para avaliação da rede.</p>
+          </article>
+          <article class="value-card reveal">
+            <div class="value-icon">02</div>
+            <h3>Encontrar matéria-prima</h3>
+            <p>Informe especificação, condição, volume e região. Quando surgir compatibilidade, a Circular aproxima a oportunidade.</p>
+          </article>
+          <article class="value-card reveal">
+            <div class="value-icon">03</div>
+            <h3>Buscar destinação</h3>
+            <p>Mapeamos resíduos e sobras que não são reaproveitados internamente e buscamos alternativas compatíveis.</p>
+          </article>
+          <article class="value-card reveal">
+            <div class="value-icon">↗</div>
+            <h3>Inteligência de mercado</h3>
+            <p>Cada oferta e demanda ajuda a formar uma base estruturada de materiais, volumes, frequência e regiões de interesse.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="categories" id="materiais">
+    <section class="section-soft" id="oportunidades">
       <div class="container">
-        <div class="section-heading">
-          <div class="section-label">Categorias</div>
-          <h2>Materiais que podem circular na rede</h2>
-          <p class="section-description">A plataforma começa por materiais industriais e recicláveis, com expansão progressiva conforme novas demandas e ofertas forem cadastradas.</p>
+        <div class="section-head reveal">
+          <div class="eyebrow">Radar de oportunidades</div>
+          <h2>O que está circulando na rede agora.</h2>
+          <p>As empresas permanecem anonimizadas. A Circular apresenta as partes quando existe aderência comercial.</p>
         </div>
 
-        <div class="category-grid">
-          <div class="category"><strong>♻️ Plásticos</strong><span>PP, PEAD, PEBD, PET, ABS, PSAI, TPV, POM, PA6, PVC e outros</span></div>
-          <div class="category"><strong>🔩 Metais</strong><span>Alumínio, cobre, aço, latão, aparas e outros metais</span></div>
-          <div class="category"><strong>📦 Papel & papelão</strong><span>Papelão industrial, aparas, caixas e bobinas</span></div>
-          <div class="category"><strong>🧪 Materiais técnicos</strong><span>Baquelite e outros materiais que exigem soluções específicas</span></div>
-          <div class="category"><strong>🪵 Madeira & MDF</strong><span>Chapas, pallets, sobras e madeira industrial</span></div>
-          <div class="category"><strong>⚙️ Estoques industriais</strong><span>Peças, componentes, embalagens e matérias-primas excedentes</span></div>
+        <div class="market-toolbar reveal">
+          <div class="tabs" role="tablist">
+            <button class="tab active" data-filter="all">Todas</button>
+            <button class="tab" data-filter="demanda">Demandas</button>
+            <button class="tab" data-filter="oferta">Ofertas</button>
+            <button class="tab" data-filter="destinacao">Destinação</button>
+          </div>
+          <div class="searchbox">
+            <label class="sr-only" for="marketSearch">Buscar material</label>
+            <input id="marketSearch" type="search" placeholder="Buscar material..." autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="opportunity-grid" id="opportunityGrid">
+          <article class="opp reveal" data-type="demanda" data-search="pp pead pebd pet piracicaba peças aparas">
+            <div class="opp-top"><span class="type-pill type-demand">Demanda</span><span class="status-dot">Ativa</span></div>
+            <h3>PP • PEAD • PEBD • PET</h3>
+            <div class="opp-sub">Perfil de compra mapeado</div>
+            <div class="opp-data">
+              <div><b>📍</b><span>Piracicaba/SP</span></div>
+              <div><b>📦</b><span>A partir de 1.000 kg</span></div>
+              <div><b>♻</b><span>Peças e aparas</span></div>
+              <div><b>🚚</b><span>Possibilidade de retirada, conforme o lote</span></div>
+            </div>
+            <button class="btn btn-dark" onclick="prefillAndOpen('venda','PP / PEAD / PEBD / PET')">Tenho este material</button>
+          </article>
+
+          <article class="opp reveal" data-type="demanda" data-search="pp pead pebd abs psai tpv pom pa6 piracicaba recorrente">
+            <div class="opp-top"><span class="type-pill type-demand">Demanda</span><span class="status-dot">Recorrente</span></div>
+            <h3>PP • PEAD • PEBD • ABS • PSAI • TPV • POM • PA6</h3>
+            <div class="opp-sub">Demanda industrial recorrente</div>
+            <div class="opp-data">
+              <div><b>📍</b><span>Região de Piracicaba/SP</span></div>
+              <div><b>🔄</b><span>Compra recorrente</span></div>
+              <div><b>🧪</b><span>Diferentes formatos sob avaliação</span></div>
+            </div>
+            <button class="btn btn-dark" onclick="prefillAndOpen('venda','PP / PEAD / PEBD / ABS / PSAI / TPV / POM / PA6')">Tenho material compatível</button>
+          </article>
+
+          <article class="opp reveal" data-type="oferta" data-search="apara colorida piracicaba 1000 kg 15 dias">
+            <div class="opp-top"><span class="type-pill type-offer">Oferta</span><span class="status-dot">Recorrente</span></div>
+            <h3>Apara colorida</h3>
+            <div class="opp-sub">Oferta recorrente</div>
+            <div class="opp-data">
+              <div><b>📍</b><span>Piracicaba/SP</span></div>
+              <div><b>📦</b><span>1.000 kg</span></div>
+              <div><b>🔄</b><span>A cada 15 dias</span></div>
+              <div><b>💬</b><span>Aceita propostas</span></div>
+            </div>
+            <button class="btn btn-ghost" onclick="prefillAndOpen('compra','Apara colorida')">Tenho interesse</button>
+          </article>
+
+          <article class="opp reveal" data-type="oferta" data-search="apara branca piracicaba 500 kg 15 dias">
+            <div class="opp-top"><span class="type-pill type-offer">Oferta</span><span class="status-dot">Recorrente</span></div>
+            <h3>Apara branca</h3>
+            <div class="opp-sub">Oferta recorrente</div>
+            <div class="opp-data">
+              <div><b>📍</b><span>Piracicaba/SP</span></div>
+              <div><b>📦</b><span>500 kg</span></div>
+              <div><b>🔄</b><span>A cada 15 dias</span></div>
+              <div><b>💬</b><span>Aceita propostas</span></div>
+            </div>
+            <button class="btn btn-ghost" onclick="prefillAndOpen('compra','Apara branca')">Tenho interesse</button>
+          </article>
+
+          <article class="opp reveal" data-type="oferta" data-search="pead piracicaba 300 kg semana recorrente">
+            <div class="opp-top"><span class="type-pill type-offer">Oferta</span><span class="status-dot">Semanal</span></div>
+            <h3>PEAD</h3>
+            <div class="opp-sub">Disponibilidade recorrente</div>
+            <div class="opp-data">
+              <div><b>📍</b><span>Piracicaba/SP</span></div>
+              <div><b>📦</b><span>300 kg / semana</span></div>
+              <div><b>🔄</b><span>Geração semanal</span></div>
+              <div><b>💬</b><span>Aceita propostas</span></div>
+            </div>
+            <button class="btn btn-ghost" onclick="prefillAndOpen('compra','PEAD')">Tenho interesse</button>
+          </article>
+
+          <article class="opp reveal" data-type="oferta" data-search="papelão papelao piracicaba 10 toneladas 15 dias">
+            <div class="opp-top"><span class="type-pill type-offer">Oferta</span><span class="status-dot">Recorrente</span></div>
+            <h3>Papelão</h3>
+            <div class="opp-sub">Oferta de alto volume</div>
+            <div class="opp-data">
+              <div><b>📍</b><span>Piracicaba/SP</span></div>
+              <div><b>📦</b><span>10 toneladas</span></div>
+              <div><b>🔄</b><span>A cada 15 dias</span></div>
+              <div><b>💬</b><span>Aceita propostas</span></div>
+            </div>
+            <button class="btn btn-ghost" onclick="prefillAndOpen('compra','Papelão')">Tenho interesse</button>
+          </article>
+
+          <article class="opp reveal" data-type="oferta" data-search="vidro piracicaba 1 tonelada 15 dias">
+            <div class="opp-top"><span class="type-pill type-offer">Oferta</span><span class="status-dot">Recorrente</span></div>
+            <h3>Vidro</h3>
+            <div class="opp-sub">Oferta recorrente</div>
+            <div class="opp-data">
+              <div><b>📍</b><span>Piracicaba/SP</span></div>
+              <div><b>📦</b><span>1 tonelada</span></div>
+              <div><b>🔄</b><span>A cada 15 dias</span></div>
+              <div><b>💬</b><span>Aceita propostas</span></div>
+            </div>
+            <button class="btn btn-ghost" onclick="prefillAndOpen('compra','Vidro')">Tenho interesse</button>
+          </article>
+
+          <article class="opp reveal" data-type="oferta" data-search="latinha aluminio alumínio piracicaba 50 kg 15 dias">
+            <div class="opp-top"><span class="type-pill type-offer">Oferta</span><span class="status-dot">Recorrente</span></div>
+            <h3>Latinhas de alumínio</h3>
+            <div class="opp-sub">Oferta recorrente</div>
+            <div class="opp-data">
+              <div><b>📍</b><span>Piracicaba/SP</span></div>
+              <div><b>📦</b><span>50 kg</span></div>
+              <div><b>🔄</b><span>A cada 15 dias</span></div>
+              <div><b>💬</b><span>Aceita propostas</span></div>
+            </div>
+            <button class="btn btn-ghost" onclick="prefillAndOpen('compra','Latinhas de alumínio')">Tenho interesse</button>
+          </article>
+
+          <article class="opp reveal" data-type="destinacao" data-search="baquelite limeira destinação destinacao sobra industrial">
+            <div class="opp-top"><span class="type-pill type-dest">Destinação</span><span class="status-dot">Em análise</span></div>
+            <h3>Baquelite</h3>
+            <div class="opp-sub">Sobra de processo industrial</div>
+            <div class="opp-data">
+              <div><b>📍</b><span>Limeira/SP</span></div>
+              <div><b>🏭</b><span>Material não totalmente reaproveitado internamente</span></div>
+              <div><b>📦</b><span>Volume em levantamento</span></div>
+              <div><b>🔎</b><span>Buscando solução compatível</span></div>
+            </div>
+            <button class="btn btn-ghost" onclick="prefillSolution('Baquelite')">Tenho uma solução</button>
+          </article>
+
+          <div class="empty-state" id="emptyState">Nenhuma oportunidade encontrada para esse filtro.</div>
         </div>
       </div>
     </section>
 
-    <section id="como-funciona">
+    <section class="process" id="como-funciona">
       <div class="container">
-        <div class="section-heading">
-          <div class="section-label">Como funciona</div>
-          <h2>Da informação à oportunidade.</h2>
-          <p class="section-description">A Circular B2B centraliza os dados necessários para filtrar oportunidades antes de colocar empresas em negociação.</p>
+        <div class="section-head reveal">
+          <div class="eyebrow">Como funciona</div>
+          <h2>Da necessidade ao matching, com contexto comercial.</h2>
+          <p>A Circular não é apenas um mural de anúncios. Estruturamos as informações para aumentar a qualidade das conexões.</p>
         </div>
 
         <div class="steps">
-          <div class="step">
-            <div class="step-number">01 / CADASTRE</div>
-            <h3>Informe sua necessidade</h3>
-            <p>Cadastre um material disponível, uma demanda de compra ou uma necessidade de destinação.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">02 / MATCHING</div>
-            <h3>Cruzamos os perfis</h3>
-            <p>Analisamos material, condição, volume, localização e características da operação.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">03 / OPORTUNIDADE</div>
-            <h3>Encontramos compatibilidade</h3>
-            <p>Quando surge uma combinação viável, entramos em contato com as empresas envolvidas.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">04 / NEGOCIAÇÃO</div>
-            <h3>Acompanhamos a conexão</h3>
-            <p>A Circular organiza a oportunidade e acompanha a evolução comercial entre as partes.</p>
+          <div class="step reveal"><div class="step-num">01 / PERFIL</div><h3>Você informa a necessidade</h3><p>Compra, venda ou destinação, com material, volume, frequência, condição e localização.</p></div>
+          <div class="step reveal"><div class="step-num">02 / TRIAGEM</div><h3>Organizamos os dados</h3><p>Padronizamos as informações para reduzir contatos irrelevantes e facilitar a comparação entre oportunidades.</p></div>
+          <div class="step reveal"><div class="step-num">03 / MATCHING</div><h3>Buscamos compatibilidade</h3><p>Cruzamos oferta e demanda considerando material, condição, volume, recorrência, região e logística.</p></div>
+          <div class="step reveal"><div class="step-num">04 / CONEXÃO</div><h3>Acompanhamos a oportunidade</h3><p>Quando existe aderência, a Circular aproxima as empresas para avançar na avaliação comercial.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cadastro">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">Entre na rede</div>
+          <h2>Conectamos sua empresa às oportunidades certas.</h2>
+          <p>Informe o que sua empresa precisa comprar, vender ou destinar. Nós analisamos o perfil e buscamos conexões compatíveis.</p>
+        </div>
+
+        <div class="forms-shell reveal">
+          <aside class="form-nav">
+            <h3>Qual é sua necessidade?</h3>
+            <p>Escolha uma opção e cadastre as informações essenciais.</p>
+            <button class="form-choice active" data-form="venda">🏭 Vender material<small>Excedentes, aparas e estoques</small></button>
+            <button class="form-choice" data-form="compra">🔎 Comprar material<small>Demandas e fornecimento</small></button>
+            <button class="form-choice" data-form="destinacao">♻ Destinar material<small>Resíduos e sobras</small></button>
+          </aside>
+
+          <div class="form-pane-wrap">
+            <!-- VENDA -->
+            <form class="form-pane active" id="form-venda" data-type="venda">
+              <div class="form-head">
+                <div><h3>Cadastrar oferta</h3><p>Conte o que sua empresa possui disponível.</p></div>
+                <span class="secure-note">🔒 Dados comerciais não são exibidos publicamente</span>
+              </div>
+              <div class="form-grid">
+                <div class="field"><label>Empresa *</label><input name="empresa" required /></div>
+                <div class="field"><label>Responsável *</label><input name="responsavel" required /></div>
+                <div class="field"><label>WhatsApp *</label><input name="whatsapp" inputmode="tel" required placeholder="(19) 99999-9999" /></div>
+                <div class="field"><label>E-mail</label><input name="email" type="email" /></div>
+                <div class="field"><label>Cidade / UF *</label><input name="cidade" required placeholder="Piracicaba/SP" /></div>
+                <div class="field"><label>Material *</label><input name="material" required placeholder="Ex.: PEAD, PP, papelão..." /></div>
+                <div class="field"><label>Condição</label><input name="condicao" placeholder="Ex.: apara, peça, moído..." /></div>
+                <div class="field"><label>Quantidade *</label><input name="quantidade" required placeholder="Ex.: 1.000 kg" /></div>
+                <div class="field"><label>Frequência</label>
+                  <select name="frequencia"><option value="">Selecione</option><option>Única</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Recorrente / variável</option></select>
+                </div>
+                <div class="field"><label>Preço pretendido</label><input name="preco" placeholder="Ex.: aceita propostas" /></div>
+                <div class="field full"><label>Logística / retirada</label><input name="logistica" placeholder="Ex.: retirada no local, entrega a combinar..." /></div>
+                <div class="field full"><label>Observações</label><textarea name="observacoes" placeholder="Especificações, pureza, cor, contaminação, disponibilidade etc."></textarea></div>
+              </div>
+              <div class="submit-row">
+                <button class="btn btn-primary" type="submit">Cadastrar oferta →</button>
+                <span class="form-disclaimer">Ao enviar, você autoriza contato comercial da Circular B2B sobre oportunidades relacionadas ao cadastro.</span>
+              </div>
+              <div class="success-box">✓ Cadastro recebido. Nossa equipe vai analisar as informações e entrar em contato quando houver uma oportunidade compatível.</div>
+            </form>
+
+            <!-- COMPRA -->
+            <form class="form-pane" id="form-compra" data-type="compra">
+              <div class="form-head">
+                <div><h3>Cadastrar demanda</h3><p>Informe o que sua empresa está procurando.</p></div>
+                <span class="secure-note">🔒 Perfil comercial tratado pela Circular</span>
+              </div>
+              <div class="form-grid">
+                <div class="field"><label>Empresa *</label><input name="empresa" required /></div>
+                <div class="field"><label>Responsável *</label><input name="responsavel" required /></div>
+                <div class="field"><label>WhatsApp *</label><input name="whatsapp" inputmode="tel" required placeholder="(19) 99999-9999" /></div>
+                <div class="field"><label>E-mail</label><input name="email" type="email" /></div>
+                <div class="field"><label>Cidade / UF *</label><input name="cidade" required /></div>
+                <div class="field"><label>Material procurado *</label><input name="material" required placeholder="Ex.: PP, PEAD, ABS..." /></div>
+                <div class="field"><label>Condição aceita</label><input name="condicao" placeholder="Ex.: peças, aparas, moído..." /></div>
+                <div class="field"><label>Quantidade mínima</label><input name="quantidade" placeholder="Ex.: 1 tonelada" /></div>
+                <div class="field"><label>Frequência</label>
+                  <select name="frequencia"><option value="">Selecione</option><option>Compra única</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Recorrente</option></select>
+                </div>
+                <div class="field"><label>Faz retirada?</label>
+                  <select name="retirada"><option value="">Selecione</option><option>Sim</option><option>Não</option><option>Depende do lote</option></select>
+                </div>
+                <div class="field full"><label>Região de interesse</label><input name="regiao" placeholder="Ex.: até 150 km de Piracicaba" /></div>
+                <div class="field full"><label>Observações</label><textarea name="observacoes" placeholder="Especificações técnicas, cores, materiais não aceitos, faixa de interesse etc."></textarea></div>
+              </div>
+              <div class="submit-row">
+                <button class="btn btn-primary" type="submit">Cadastrar demanda →</button>
+                <span class="form-disclaimer">A Circular usa essas informações para filtrar oportunidades compatíveis e reduzir contatos irrelevantes.</span>
+              </div>
+              <div class="success-box">✓ Demanda recebida. Vamos considerar esse perfil nos próximos matchings.</div>
+            </form>
+
+            <!-- DESTINAÇÃO -->
+            <form class="form-pane" id="form-destinacao" data-type="destinacao">
+              <div class="form-head">
+                <div><h3>Buscar destinação</h3><p>Conte qual material sua empresa não consegue reaproveitar.</p></div>
+                <span class="secure-note">♻ Avaliação inicial da oportunidade</span>
+              </div>
+              <div class="form-grid">
+                <div class="field"><label>Empresa *</label><input name="empresa" required /></div>
+                <div class="field"><label>Responsável *</label><input name="responsavel" required /></div>
+                <div class="field"><label>WhatsApp *</label><input name="whatsapp" inputmode="tel" required /></div>
+                <div class="field"><label>E-mail</label><input name="email" type="email" /></div>
+                <div class="field"><label>Cidade / UF *</label><input name="cidade" required /></div>
+                <div class="field"><label>Material / resíduo *</label><input name="material" required placeholder="Ex.: baquelite" /></div>
+                <div class="field"><label>Quantidade aproximada</label><input name="quantidade" /></div>
+                <div class="field"><label>Frequência de geração</label>
+                  <select name="frequencia"><option value="">Selecione</option><option>Única</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Contínua</option></select>
+                </div>
+                <div class="field"><label>Condição do material</label><input name="condicao" placeholder="Ex.: peças, pó, aparas..." /></div>
+                <div class="field"><label>Limpo ou contaminado?</label>
+                  <select name="contaminacao"><option value="">Selecione</option><option>Limpo</option><option>Misturado</option><option>Possui contaminação</option><option>Não sei informar</option></select>
+                </div>
+                <div class="field"><label>Destinação atual</label>
+                  <select name="destinacaoAtual"><option value="">Selecione</option><option>Vendemos</option><option>Doamos</option><option>Retiram sem custo</option><option>Pagamos pela destinação</option><option>Não temos solução definida</option></select>
+                </div>
+                <div class="field"><label>Custo atual de destinação</label><input name="custoDestinacao" placeholder="Opcional" /></div>
+                <div class="field full"><label>Observações</label><textarea name="observacoes" placeholder="Conte como o resíduo é gerado, armazenamento, composição conhecida e outras informações relevantes."></textarea></div>
+              </div>
+              <div class="submit-row">
+                <button class="btn btn-primary" type="submit">Cadastrar necessidade →</button>
+                <span class="form-disclaimer">O cadastro não garante destinação. A Circular busca conexões potenciais e retorna quando houver aderência.</span>
+              </div>
+              <div class="success-box">✓ Necessidade recebida. Vamos avaliar possibilidades compatíveis dentro da rede.</div>
+            </form>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="opportunities" id="oportunidades">
+    <section class="section-soft">
       <div class="container">
-        <div class="section-heading">
-          <div class="section-label">Rede ativa</div>
-          <h2>Oportunidades cadastradas</h2>
-          <p class="section-description">As empresas permanecem preservadas durante a fase de busca. Exibimos apenas as informações comerciais necessárias para identificar interesse.</p>
-        </div>
-
-        <div class="opportunity-block">
-          <div class="block-title-row">
-            <div class="block-title">
-              <h3>🔎 Demandas de compra</h3>
-              <p>Empresas da rede procurando materiais para compra recorrente ou por lote.</p>
-            </div>
+        <div class="faq-grid">
+          <div class="section-head reveal">
+            <div class="eyebrow">Perguntas frequentes</div>
+            <h2>Feito para reduzir atrito entre empresas.</h2>
+            <p>Começamos com uma operação assistida para entender profundamente como compradores, fornecedores e geradores negociam.</p>
           </div>
-
-          <div class="cards-grid">
-            <div class="opp-card">
-              <div class="opp-top"><span class="badge badge-buy">Demanda ativa</span></div>
-              <h4>PP · PEAD · PEBD · PET</h4>
-              <ul class="opp-meta">
-                <li><strong>Local:</strong> Piracicaba/SP</li>
-                <li><strong>Condição:</strong> peças e aparas</li>
-                <li><strong>Lote:</strong> a partir de 1.000 kg</li>
-                <li><strong>Logística:</strong> possibilidade de retirada conforme o lote</li>
-              </ul>
-              <a href="#cadastro" class="btn btn-primary" onclick="showForm('sell')">Tenho este material →</a>
-            </div>
-
-            <div class="opp-card">
-              <div class="opp-top"><span class="badge badge-buy">Demanda recorrente</span></div>
-              <h4>PP · PEAD · PEBD · ABS</h4>
-              <ul class="opp-meta">
-                <li><strong>Região:</strong> Piracicaba/SP</li>
-                <li><strong>Também busca:</strong> PSAI, TPV, POM e PA6</li>
-                <li><strong>Frequência:</strong> demanda recorrente</li>
-                <li><strong>Formato:</strong> especificação sob avaliação</li>
-              </ul>
-              <a href="#cadastro" class="btn btn-primary" onclick="showForm('sell')">Tenho este material →</a>
-            </div>
+          <div class="faq-list reveal">
+            <details open><summary>O cadastro tem custo?</summary><p>No piloto atual, o cadastro de ofertas, demandas e necessidades de destinação é gratuito.</p></details>
+            <details><summary>O nome da minha empresa aparece publicamente?</summary><p>Não nas oportunidades exibidas nesta versão. O site mostra dados comerciais essenciais do material e preserva a identidade das empresas durante a etapa pública.</p></details>
+            <details><summary>A Circular compra o material?</summary><p>Nesta fase, a Circular atua na organização das oportunidades e no matching comercial. Cada operação é avaliada conforme as condições das partes envolvidas.</p></details>
+            <details><summary>Posso cadastrar uma demanda recorrente?</summary><p>Sim. Frequência, volume e região ajudam a Circular a identificar oportunidades com maior aderência.</p></details>
           </div>
-        </div>
-
-        <div class="opportunity-block">
-          <div class="block-title-row">
-            <div class="block-title">
-              <h3>📦 Ofertas recorrentes</h3>
-              <p>Materiais informados por fornecedores da rede e disponíveis de forma recorrente.</p>
-            </div>
-          </div>
-
-          <div class="cards-grid">
-            <div class="opp-card">
-              <div class="opp-top"><span class="badge badge-sell">Oferta recorrente</span></div>
-              <h4>Apara colorida</h4>
-              <ul class="opp-meta">
-                <li><strong>Local:</strong> Piracicaba/SP</li>
-                <li><strong>Volume:</strong> 1.000 kg</li>
-                <li><strong>Frequência:</strong> a cada 15 dias</li>
-                <li><strong>Condição comercial:</strong> aceita propostas</li>
-              </ul>
-              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
-            </div>
-
-            <div class="opp-card">
-              <div class="opp-top"><span class="badge badge-sell">Oferta recorrente</span></div>
-              <h4>Apara branca</h4>
-              <ul class="opp-meta">
-                <li><strong>Local:</strong> Piracicaba/SP</li>
-                <li><strong>Volume:</strong> 500 kg</li>
-                <li><strong>Frequência:</strong> a cada 15 dias</li>
-                <li><strong>Condição comercial:</strong> aceita propostas</li>
-              </ul>
-              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
-            </div>
-
-            <div class="opp-card">
-              <div class="opp-top"><span class="badge badge-sell">Oferta semanal</span></div>
-              <h4>PEAD</h4>
-              <ul class="opp-meta">
-                <li><strong>Local:</strong> Piracicaba/SP</li>
-                <li><strong>Volume:</strong> 300 kg/semana</li>
-                <li><strong>Frequência:</strong> recorrente</li>
-                <li><strong>Condição comercial:</strong> aceita propostas</li>
-              </ul>
-              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
-            </div>
-
-            <div class="opp-card">
-              <div class="opp-top"><span class="badge badge-sell">Oferta recorrente</span></div>
-              <h4>Papelão</h4>
-              <ul class="opp-meta">
-                <li><strong>Local:</strong> Piracicaba/SP</li>
-                <li><strong>Volume:</strong> 10 toneladas</li>
-                <li><strong>Frequência:</strong> a cada 15 dias</li>
-                <li><strong>Condição comercial:</strong> aceita propostas</li>
-              </ul>
-              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
-            </div>
-
-            <div class="opp-card">
-              <div class="opp-top"><span class="badge badge-sell">Oferta recorrente</span></div>
-              <h4>Vidro</h4>
-              <ul class="opp-meta">
-                <li><strong>Local:</strong> Piracicaba/SP</li>
-                <li><strong>Volume:</strong> 1 tonelada</li>
-                <li><strong>Frequência:</strong> a cada 15 dias</li>
-                <li><strong>Condição comercial:</strong> aceita propostas</li>
-              </ul>
-              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
-            </div>
-
-            <div class="opp-card">
-              <div class="opp-top"><span class="badge badge-sell">Oferta recorrente</span></div>
-              <h4>Latinhas de alumínio</h4>
-              <ul class="opp-meta">
-                <li><strong>Local:</strong> Piracicaba/SP</li>
-                <li><strong>Volume:</strong> 50 kg</li>
-                <li><strong>Frequência:</strong> a cada 15 dias</li>
-                <li><strong>Condição comercial:</strong> aceita propostas</li>
-              </ul>
-              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho interesse →</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="opportunity-block" id="destinacao">
-          <div class="block-title-row">
-            <div class="block-title">
-              <h3>♻️ Buscando solução de destinação</h3>
-              <p>Materiais que hoje não são totalmente reaproveitados na própria operação.</p>
-            </div>
-          </div>
-
-          <div class="cards-grid">
-            <div class="opp-card">
-              <div class="opp-top"><span class="badge badge-dest">Buscando solução</span></div>
-              <h4>Baquelite</h4>
-              <ul class="opp-meta">
-                <li><strong>Local:</strong> Limeira/SP</li>
-                <li><strong>Origem:</strong> sobra de processo industrial</li>
-                <li><strong>Volume:</strong> em levantamento</li>
-                <li><strong>Objetivo:</strong> reaproveitamento ou destinação adequada</li>
-              </ul>
-              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('dispose')">Tenho solução →</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="network-note">
-          <strong>Importante:</strong> os nomes e contatos das empresas não são exibidos publicamente nesta fase. A Circular B2B faz a triagem das oportunidades e entra em contato quando há interesse compatível.
         </div>
       </div>
     </section>
 
-    <section class="native-forms" id="cadastro">
+    <section>
       <div class="container">
-        <div class="section-heading">
-          <div class="section-label">Cadastro direto</div>
-          <h2>Comprar, vender ou destinar sem sair da Circular B2B.</h2>
-          <p class="section-description">Preencha sua necessidade. Os dados entram na nossa base para análise e matching comercial.</p>
-        </div>
-
-        <div class="form-shell">
-          <div class="form-tabs">
-            <button type="button" class="form-tab active" data-form="sell" onclick="showForm('sell')">🏭 Quero vender</button>
-            <button type="button" class="form-tab" data-form="buy" onclick="showForm('buy')">🔎 Quero comprar</button>
-            <button type="button" class="form-tab" data-form="dispose" onclick="showForm('dispose')">♻️ Preciso destinar</button>
+        <div class="cta-band reveal">
+          <div>
+            <h2>O próximo lote compatível pode já estar dentro da rede.</h2>
+            <p>Cadastre sua necessidade e deixe a Circular fazer o trabalho de encontrar aderência entre materiais, volumes e empresas.</p>
           </div>
-
-          <form class="native-form active" id="sellForm" data-type="venda">
-            <div class="form-intro"><h3>Tenho material disponível</h3><p>Cadastre matéria-prima, sobra de produção, apara, refugo ou estoque excedente.</p></div>
-            <div class="form-grid">
-              <div class="field"><label>Empresa *</label><input name="empresa" required></div>
-              <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
-              <div class="field"><label>WhatsApp *</label><input name="whatsapp" type="tel" required placeholder="(19) 99999-9999"></div>
-              <div class="field"><label>E-mail</label><input name="email" type="email"></div>
-              <div class="field"><label>Cidade *</label><input name="cidade" required></div>
-              <div class="field"><label>UF *</label><select name="uf" required><option value="">Selecione</option><option>SP</option><option>MG</option><option>PR</option><option>SC</option><option>RJ</option><option>RS</option><option>GO</option><option>ES</option><option>BA</option><option>Outro</option></select></div>
-              <div class="field"><label>Material *</label><input name="material" required placeholder="Ex.: PEAD, PP branco, papelão"></div>
-              <div class="field"><label>Quantidade *</label><input name="quantidade" required placeholder="Ex.: 1.000 kg"></div>
-              <div class="field"><label>Frequência</label><select name="frequencia"><option>Disponibilidade pontual</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Recorrência variável</option></select></div>
-              <div class="field"><label>Condição/formato</label><input name="condicao" placeholder="Apara, peça, borra, moído, fardo..."></div>
-              <div class="field"><label>Preço pretendido</label><input name="preco" placeholder="R$/kg ou aceita propostas"></div>
-              <div class="field"><label>Retirada</label><select name="retirada"><option value="">Selecione</option><option>Comprador deve retirar</option><option>Podemos entregar</option><option>A combinar</option></select></div>
-              <div class="field full"><label>Observações</label><textarea name="observacoes" placeholder="Cor, pureza, contaminação, especificação, disponibilidade, fotos/link etc."></textarea></div>
-            </div>
-            <button class="btn btn-primary form-submit" type="submit">Cadastrar material →</button>
-            <div class="form-status" aria-live="polite"></div>
-            <div class="privacy-note">Seus dados comerciais não serão exibidos publicamente sem autorização.</div>
-          </form>
-
-          <form class="native-form" id="buyForm" data-type="compra">
-            <div class="form-intro"><h3>Procuro material</h3><p>Informe o perfil de compra para receber somente oportunidades compatíveis.</p></div>
-            <div class="form-grid">
-              <div class="field"><label>Empresa *</label><input name="empresa" required></div>
-              <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
-              <div class="field"><label>WhatsApp *</label><input name="whatsapp" type="tel" required></div>
-              <div class="field"><label>E-mail</label><input name="email" type="email"></div>
-              <div class="field"><label>Cidade *</label><input name="cidade" required></div>
-              <div class="field"><label>UF *</label><select name="uf" required><option value="">Selecione</option><option>SP</option><option>MG</option><option>PR</option><option>SC</option><option>RJ</option><option>RS</option><option>GO</option><option>ES</option><option>BA</option><option>Outro</option></select></div>
-              <div class="field"><label>Material procurado *</label><input name="material" required placeholder="Ex.: PP, PEAD, ABS"></div>
-              <div class="field"><label>Volume mínimo</label><input name="quantidade" placeholder="Ex.: 1 tonelada"></div>
-              <div class="field"><label>Condições aceitas</label><input name="condicao" placeholder="Aparas, peças, moído, granulado..."></div>
-              <div class="field"><label>Frequência de compra</label><select name="frequencia"><option>Conforme disponibilidade</option><option>Compra pontual</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Recorrente</option></select></div>
-              <div class="field"><label>Região de interesse</label><input name="regiao" placeholder="Ex.: até 150 km de Piracicaba"></div>
-              <div class="field"><label>Logística</label><select name="retirada"><option value="">Selecione</option><option>Fazemos retirada</option><option>Precisamos receber</option><option>Depende do lote</option></select></div>
-              <div class="field full"><label>Especificações / faixa de preço</label><textarea name="observacoes" placeholder="Informe cor, qualidade, restrições, faixa de preço de referência ou outras exigências."></textarea></div>
-            </div>
-            <button class="btn btn-primary form-submit" type="submit">Cadastrar demanda →</button>
-            <div class="form-status" aria-live="polite"></div>
-            <div class="privacy-note">Entraremos em contato apenas quando houver oportunidade compatível ou necessidade de confirmar informações.</div>
-          </form>
-
-          <form class="native-form" id="disposeForm" data-type="destinacao">
-            <div class="form-intro"><h3>Preciso destinar um material</h3><p>Cadastre uma sobra ou resíduo que sua empresa não consegue reaproveitar internamente.</p></div>
-            <div class="form-grid">
-              <div class="field"><label>Empresa *</label><input name="empresa" required></div>
-              <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
-              <div class="field"><label>WhatsApp *</label><input name="whatsapp" type="tel" required></div>
-              <div class="field"><label>E-mail</label><input name="email" type="email"></div>
-              <div class="field"><label>Cidade *</label><input name="cidade" required></div>
-              <div class="field"><label>UF *</label><select name="uf" required><option value="">Selecione</option><option>SP</option><option>MG</option><option>PR</option><option>SC</option><option>RJ</option><option>RS</option><option>GO</option><option>ES</option><option>BA</option><option>Outro</option></select></div>
-              <div class="field"><label>Material/resíduo *</label><input name="material" required placeholder="Ex.: baquelite"></div>
-              <div class="field"><label>Quantidade aproximada *</label><input name="quantidade" required></div>
-              <div class="field"><label>Frequência de geração</label><select name="frequencia"><option>Pontual</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Contínua</option></select></div>
-              <div class="field"><label>Condição do material</label><input name="condicao" placeholder="Limpo, misturado, pó, peça, sólido..."></div>
-              <div class="field"><label>Situação atual *</label><select name="situacao_atual" required><option value="">Selecione</option><option>Vendemos atualmente</option><option>Doamos</option><option>Retiram sem custo</option><option>Pagamos pela destinação</option><option>Não temos destinação definida</option></select></div>
-              <div class="field"><label>Custo atual de destinação</label><input name="custo_atual" placeholder="Opcional — R$/mês ou R$/kg"></div>
-              <div class="field full"><label>Há contaminação ou mistura com outros materiais?</label><textarea name="contaminacao" placeholder="Descreva rapidamente ou informe 'não'."></textarea></div>
-              <div class="field full"><label>Observações</label><textarea name="observacoes" placeholder="Processo que gera a sobra, embalagem, armazenamento, fotos/link e outras informações."></textarea></div>
-            </div>
-            <button class="btn btn-primary form-submit" type="submit">Cadastrar para análise →</button>
-            <div class="form-status" aria-live="polite"></div>
-            <div class="privacy-note">A Circular B2B buscará alternativas comerciais ou de destinação compatíveis com as informações fornecidas.</div>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta">
-      <div class="container">
-        <div class="cta-box">
-          <h2>Sua empresa compra, vende ou descarta materiais industriais?</h2>
-          <p>Cadastre gratuitamente sua necessidade. A Circular B2B procura oportunidades compatíveis dentro da rede e entra em contato quando houver potencial de negócio.</p>
           <div class="cta-actions">
-            <a href="#cadastro" class="btn" onclick="showForm('sell')">Tenho material →</a>
-            <a href="#cadastro" class="btn" onclick="showForm('buy')">Procuro material →</a>
+            <button class="btn btn-primary" onclick="openForm('venda')">Tenho material</button>
+            <button class="btn btn-light" onclick="openForm('compra')">Procuro material</button>
           </div>
         </div>
       </div>
@@ -837,102 +800,189 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="logo" style="color:white;">
-            <div class="logo-mark">↻</div>
-            Circular B2B
-          </div>
-          <p>Rede B2B para compra, venda, reaproveitamento e destinação de matérias-primas, excedentes e materiais industriais.</p>
+          <a class="brand" href="#top"><span class="brand-mark">↻</span><span>Circular B2B</span></a>
+          <p>Rede B2B para compra, venda e destinação de materiais industriais. Começando regionalmente, estruturada para crescer com dados, liquidez e confiança.</p>
         </div>
-
-        <div class="footer-links">
-          <a href="#como-funciona">Como funciona</a>
+        <div class="footer-col">
+          <h4>Plataforma</h4>
           <a href="#oportunidades">Oportunidades</a>
-          <a href="#materiais">Materiais</a>
+          <a href="#como-funciona">Como funciona</a>
           <a href="#cadastro">Cadastrar</a>
         </div>
+        <div class="footer-col">
+          <h4>Ações</h4>
+          <a href="#cadastro" onclick="openForm('venda')">Vender material</a>
+          <a href="#cadastro" onclick="openForm('compra')">Comprar material</a>
+          <a href="#cadastro" onclick="openForm('destinacao')">Buscar destinação</a>
+        </div>
       </div>
-
-      <div class="copyright">© 2026 Circular B2B. Todos os direitos reservados.</div>
+      <div class="footer-bottom">
+        <span>© 2026 Circular B2B. Todos os direitos reservados.</span>
+        <span>Operação piloto • Piracicaba e região</span>
+      </div>
     </div>
   </footer>
 
   <script>
-    // Cole aqui a URL do Web App do Google Apps Script no próximo passo.
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDiTc6cjlZdh_b6LkdPqxKHmeh8_rSY3VS0AfVASZICZatMjnF8vm3BohBgmawFU_r/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbwDiTc6cjlZdh_b6LkdPqxKHmeh8_rSY3VS0AfVASZICZatMjnF8vm3BohBgmawFU_r/exec";
 
-    function showForm(type) {
-      const map = { sell: 'sellForm', buy: 'buyForm', dispose: 'disposeForm' };
-      document.querySelectorAll('.native-form').forEach(f => f.classList.remove('active'));
-      document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
-      const form = document.getElementById(map[type] || 'sellForm');
-      if (form) form.classList.add('active');
-      const tab = document.querySelector(`.form-tab[data-form="${type}"]`);
-      if (tab) tab.classList.add('active');
-      setTimeout(() => document.getElementById('cadastro')?.scrollIntoView({behavior:'smooth', block:'start'}), 10);
-    }
+    // Mobile menu
+    const hamb = document.getElementById('hamb');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamb?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      document.body.classList.toggle('menu-open');
+    });
+    mobileMenu?.querySelectorAll('a,button').forEach(el => el.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      document.body.classList.remove('menu-open');
+    }));
 
-    function formToObject(form) {
-      const raw = Object.fromEntries(new FormData(form).entries());
-      const data = { ...raw };
-      data.tipo = (form.dataset.type || '').toLowerCase();
-      data.cidade = [raw.cidade, raw.uf].filter(Boolean).join('/');
-      data.data_envio = new Date().toISOString();
-      data.origem = window.location.href;
-
-      if (data.tipo === 'venda') {
-        data.logistica = raw.retirada || '';
-      }
-
-      if (data.tipo === 'compra') {
-        data.retirada = raw.retirada || '';
-      }
-
-      if (data.tipo === 'destinacao') {
-        data.destinacaoAtual = raw.situacao_atual || '';
-        data.custoDestinacao = raw.custo_atual || '';
-      }
-
-      return data;
-    }
-
-    document.querySelectorAll('.native-form').forEach(form => {
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const status = form.querySelector('.form-status');
-        const button = form.querySelector('button[type="submit"]');
-
-        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('COLE_AQUI')) {
-          status.className = 'form-status error';
-          status.textContent = 'O formulário já está pronto no site, mas falta conectar o Google Sheets. Configure a URL do Apps Script antes de publicar esta versão.';
-          return;
+    // Reveal
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
         }
+      });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        button.disabled = true;
-        const oldText = button.textContent;
-        button.textContent = 'Enviando...';
-        status.className = 'form-status';
-        status.textContent = '';
+    // Opportunity filters
+    let currentFilter = 'all';
+    const searchInput = document.getElementById('marketSearch');
+    const cards = [...document.querySelectorAll('.opp')];
+    const emptyState = document.getElementById('emptyState');
 
-        try {
-          await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(formToObject(form))
-          });
-          status.className = 'form-status success';
-          status.textContent = 'Cadastro recebido! Vamos analisar as informações e entrar em contato quando houver uma oportunidade compatível.';
+    function applyFilters(){
+      const q = (searchInput.value || '').trim().toLowerCase();
+      let visible = 0;
+      cards.forEach(card => {
+        const typeOk = currentFilter === 'all' || card.dataset.type === currentFilter;
+        const textOk = !q || (card.dataset.search || '').includes(q) || card.innerText.toLowerCase().includes(q);
+        const show = typeOk && textOk;
+        card.style.display = show ? 'flex' : 'none';
+        if(show) visible++;
+      });
+      emptyState.style.display = visible ? 'none' : 'block';
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentFilter = tab.dataset.filter;
+        applyFilters();
+      });
+    });
+    searchInput.addEventListener('input', applyFilters);
+
+    // Forms
+    const choices = [...document.querySelectorAll('.form-choice')];
+    const panes = [...document.querySelectorAll('.form-pane')];
+
+    function selectForm(type){
+      choices.forEach(c => c.classList.toggle('active', c.dataset.form === type));
+      panes.forEach(p => p.classList.toggle('active', p.dataset.type === type));
+    }
+
+    function openForm(type){
+      selectForm(type);
+      document.getElementById('cadastro').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function prefillAndOpen(type, material){
+      selectForm(type);
+      const form = document.querySelector(`.form-pane[data-type="${type}"]`);
+      if(form){
+        const input = form.querySelector('[name="material"]');
+        if(input) input.value = material;
+      }
+      document.getElementById('cadastro').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function prefillSolution(material){
+      selectForm('compra');
+      const form = document.getElementById('form-compra');
+      form.querySelector('[name="material"]').value = material;
+      form.querySelector('[name="observacoes"]').value = 'Temos interesse em avaliar uma solução de reaproveitamento ou destinação para este material.';
+      document.getElementById('cadastro').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    choices.forEach(c => c.addEventListener('click', () => selectForm(c.dataset.form)));
+
+    // WhatsApp mask
+    document.querySelectorAll('input[name="whatsapp"]').forEach(input => {
+      input.addEventListener('input', e => {
+        let v = e.target.value.replace(/\D/g,'').slice(0,11);
+        if(v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+        if(v.length > 10) v = v.replace(/(\(\d{2}\) \d{5})(\d+)/,'$1-$2');
+        e.target.value = v;
+      });
+    });
+
+    // Queue: fast UX + retry
+    const QUEUE_KEY = 'circularB2B_pendingSubmissions';
+
+    function getQueue(){
+      try{return JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]')}catch{return []}
+    }
+    function setQueue(q){
+      try{localStorage.setItem(QUEUE_KEY, JSON.stringify(q))}catch{}
+    }
+    function enqueue(payload){
+      const q = getQueue();
+      q.push({id: crypto?.randomUUID?.() || String(Date.now()+Math.random()), payload, ts:Date.now()});
+      setQueue(q);
+      return q[q.length-1].id;
+    }
+    function removeFromQueue(id){
+      setQueue(getQueue().filter(item => item.id !== id));
+    }
+    function transmit(id,payload){
+      fetch(API_URL,{
+        method:'POST',
+        mode:'no-cors',
+        keepalive:true,
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify(payload)
+      }).then(() => removeFromQueue(id)).catch(() => {});
+    }
+    function retryQueue(){
+      getQueue().forEach(item => transmit(item.id,item.payload));
+    }
+    window.addEventListener('online', retryQueue);
+    setTimeout(retryQueue, 1200);
+
+    panes.forEach(form => {
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        if(!form.reportValidity()) return;
+
+        const btn = form.querySelector('button[type="submit"]');
+        const success = form.querySelector('.success-box');
+        const original = btn.textContent;
+
+        const payload = Object.fromEntries(new FormData(form).entries());
+        payload.tipo = form.dataset.type;
+
+        // Immediate UX response
+        btn.disabled = true;
+        btn.textContent = '✓ Cadastro recebido';
+        success.style.display = 'block';
+
+        const queueId = enqueue(payload);
+        transmit(queueId,payload);
+
+        // preserve context briefly, then reset
+        setTimeout(() => {
           form.reset();
-        } catch (error) {
-          status.className = 'form-status error';
-          status.textContent = 'Não foi possível enviar agora. Tente novamente em alguns instantes.';
-        } finally {
-          button.disabled = false;
-          button.textContent = oldText;
-        }
+          btn.disabled = false;
+          btn.textContent = original;
+        }, 1800);
       });
     });
   </script>
-
 </body>
 </html>
