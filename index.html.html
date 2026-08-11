@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Circular B2B — Excedentes industriais que encontram novos compradores</title>
+
+  <meta
+    name="description"
+    content="Conectamos empresas que possuem excedentes industriais a compradores que procuram matérias-primas, materiais e estoques disponíveis."
+  >
+
+  <style>
+
+    :root {
+      --bg: #f7f8f5;
+      --surface: #ffffff;
+      --dark: #142019;
+      --text: #26342c;
+      --muted: #68756d;
+      --line: #dfe5df;
+      --green: #1e6b45;
+      --green-dark: #155236;
+      --green-light: #e7f2eb;
+      --lime: #b7d96b;
+      --shadow: 0 20px 60px rgba(20, 32, 25, 0.08);
+      --radius: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247, 248, 245, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(223, 229, 223, 0.8);
+    }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.7px;
+      color: var(--dark);
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--green);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    nav a:hover {
+      color: var(--green);
+    }
+
+    .nav-button {
+      background: var(--dark);
+      color: white !important;
+      padding: 11px 18px;
+      border-radius: 10px;
+    }
+
+    .nav-button:hover {
+      background: var(--green);
+    }
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      padding: 15px 22px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 14px;
+      transition: 0.2s ease;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--dark);
+      border: 1px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--green);
+      transform: translateY(-2px);
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      padding: 90px 0 80px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      border: 1px solid #d2e6d9;
+      padding: 7px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    h1 {
+      font-size: clamp(44px, 6vw, 76px);
+      line-height: 0.98;
+      letter-spacing: -4px;
+      color: var(--dark);
+      max-width: 720px;
+      margin-bottom: 28px;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .hero-text {
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 650px;
+      margin-bottom: 34px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* =========================
+       HERO CARD
+    ========================= */
+
+    .hero-card {
+      background: var(--dark);
+      color: white;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: var(--green);
+      opacity: 0.25;
+      right: -100px;
+      top: -100px;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .status {
+      background: rgba(183, 217, 107, 0.15);
+      color: var(--lime);
+      border: 1px solid rgba(183, 217, 107, 0.25);
+      border-radius: 100px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .listing {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 15px;
+      padding: 18px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .listing-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 8px;
+    }
+
+    .listing-title {
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .listing-price {
+      color: var(--lime);
+      font-weight: 800;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .listing-info {
+      color: rgba(255,255,255,0.58);
+      font-size: 12px;
+    }
+
+    /* =========================
+       TRUST
+    ========================= */
+
+    .trust {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 28px 0;
+      background: white;
+    }
+
+    .trust-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .trust-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: var(--green-light);
+      display: grid;
+      place-items: center;
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    section {
+      padding: 100px 0;
+    }
+
+    .section-heading {
+      max-width: 700px;
+      margin-bottom: 50px;
+    }
+
+    .section-label {
+      color: var(--green);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      color: var(--dark);
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    /* =========================
+       AUDIENCES
+    ========================= */
+
+    .audiences {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .audience-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 38px;
+      transition: 0.2s;
+    }
+
+    .audience-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .audience-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 15px;
+      background: var(--green-light);
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+      margin-bottom: 24px;
+    }
+
+    .audience-card h3 {
+      font-size: 26px;
+      letter-spacing: -0.8px;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+
+    .audience-card p {
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .check-list {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .check-list li {
+      margin: 10px 0;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .check-list li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 900;
+      margin-right: 9px;
+    }
+
+    /* =========================
+       CATEGORIES
+    ========================= */
+
+    .categories {
+      background: var(--dark);
+      color: white;
+    }
+
+    .categories h2 {
+      color: white;
+    }
+
+    .categories .section-description {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .category {
+      padding: 23px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      border-radius: 15px;
+      transition: 0.2s;
+    }
+
+    .category:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(183,217,107,0.3);
+    }
+
+    .category strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+
+    .category span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* =========================
+       HOW IT WORKS
+    ========================= */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      position: relative;
+      padding: 28px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .step-number {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--green);
+      margin-bottom: 45px;
+    }
+
+    .step h3 {
+      font-size: 19px;
+      color: var(--dark);
+      margin-bottom: 9px;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* =========================
+       LISTINGS
+    ========================= */
+
+    .listings-section {
+      background: #eef1ed;
+    }
+
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .market-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .market-image {
+      height: 150px;
+      background: #e8ece7;
+      display: grid;
+      place-items: center;
+      font-size: 42px;
+    }
+
+    .market-content {
+      padding: 22px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green-dark);
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .market-content h3 {
+      font-size: 19px;
+      color: var(--dark);
+      margin-bottom: 7px;
+    }
+
+    .market-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .market-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .market-price {
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    /* =========================
+       REGISTRATION
+    ========================= */
+
+    .registration {
+      background: #eef3ed;
+    }
+
+    .registration-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .registration-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 45px;
+      box-shadow: var(--shadow);
+      transition: 0.2s ease;
+    }
+
+    .registration-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .registration-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 17px;
+      background: var(--green-light);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      margin-bottom: 25px;
+    }
+
+    .registration-card h3 {
+      color: var(--dark);
+      font-size: 28px;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .registration-card p {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    .registration-card ul {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+
+    .registration-card li {
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    .registration-card li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 900;
+      margin-right: 9px;
+    }
+
+    .registration-card .btn {
+      width: 100%;
+    }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta {
+      padding: 90px 0;
+    }
+
+    .cta-box {
+      background: var(--green);
+      border-radius: 28px;
+      padding: 65px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box h2 {
+      color: white;
+      max-width: 700px;
+      margin: 0 auto 17px;
+    }
+
+    .cta-box p {
+      max-width: 600px;
+      margin: auto auto 28px;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .cta-box .btn {
+      background: white;
+      color: var(--green-dark);
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 45px 0;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .footer-brand p {
+      color: rgba(255,255,255,0.5);
+      max-width: 400px;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 25px;
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+    }
+
+    .copyright {
+      margin-top: 35px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.35);
+      font-size: 11px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 850px) {
+
+      nav {
+        display: none;
+      }
+
+      .hero {
+        padding: 65px 0;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+
+      h1 {
+        letter-spacing: -2.5px;
+      }
+
+      .audiences {
+        grid-template-columns: 1fr;
+      }
+
+      .category-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .listings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .registration-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+
+      .container {
+        width: min(100% - 28px, 1160px);
+      }
+
+      section {
+        padding: 70px 0;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+
+      .category-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-row {
+        flex-direction: column;
+      }
+
+      .registration-card {
+        padding: 30px;
+      }
+
+      .cta-box {
+        padding: 45px 25px;
+      }
+
+      .footer-grid {
+        flex-direction: column;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header>
+
+    <div class="container nav">
+
+      <a href="#" class="logo">
+
+        <div class="logo-mark">
+          ↻
+        </div>
+
+        Circular B2B
+
+      </a>
+
+
+      <nav>
+
+        <a href="#como-funciona">
+          Como funciona
+        </a>
+
+        <a href="#materiais">
+          Materiais
+        </a>
+
+        <a href="#lotes">
+          Lotes
+        </a>
+
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog"
+          target="_blank"
+          class="nav-button">
+          Vender material
+        </a>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================
+       HERO
+  ========================= -->
+
+  <main>
+
+    <section class="hero">
+
+      <div class="container hero-grid">
+
+
+        <div>
+
+          <div class="eyebrow">
+
+            <span class="dot"></span>
+
+            Economia circular B2B
+
+          </div>
+
+
+          <h1>
+
+            O que está
+            <span>parado</span>
+            em uma empresa pode ser matéria-prima para outra.
+
+          </h1>
+
+
+          <p class="hero-text">
+
+            Conectamos indústrias que possuem excedentes,
+            estoques parados e materiais disponíveis a empresas
+            que precisam comprar matéria-prima e insumos.
+
+          </p>
+
+
+          <div class="hero-buttons">
+
+
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog"
+              target="_blank"
+              class="btn btn-primary">
+
+              Tenho material para vender →
+
+            </a>
+
+
+            <a
+              href="https://forms.gle/RRUU1xcYNK5usmrf7"
+              target="_blank"
+              class="btn btn-secondary">
+
+              Quero comprar material
+
+            </a>
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- HERO CARD -->
+
+        <div class="hero-card">
+
+          <div class="hero-card-header">
+
+            <strong>
+              Lotes disponíveis
+            </strong>
+
+            <span class="status">
+              ● AO VIVO
+            </span>
+
+          </div>
+
+
+          <div class="listing">
+
+            <div class="listing-top">
+
+              <div class="listing-title">
+                PP Natural
+              </div>
+
+              <div class="listing-price">
+                R$ 3,20/kg
+              </div>
+
+            </div>
+
+            <div class="listing-info">
+              5.000 kg · Limeira/SP · Aparas industriais
+            </div>
+
+          </div>
+
+
+          <div class="listing">
+
+            <div class="listing-top">
+
+              <div class="listing-title">
+                Tecido excedente
+              </div>
+
+              <div class="listing-price">
+                Aceita proposta
+              </div>
+
+            </div>
+
+            <div class="listing-info">
+              1.800 kg · Americana/SP · Rolos fechados
+            </div>
+
+          </div>
+
+
+          <div class="listing">
+
+            <div class="listing-top">
+
+              <div class="listing-title">
+                Chapas MDF
+              </div>
+
+              <div class="listing-price">
+                R$ 42/un.
+              </div>
+
+            </div>
+
+            <div class="listing-info">
+              2.500 un. · Piracicaba/SP · Estoque excedente
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         TRUST
+    ========================= -->
+
+    <div class="trust">
+
+      <div class="container trust-row">
+
+
+        <div class="trust-item">
+
+          <div class="trust-icon">
+            ♻
+          </div>
+
+          Materiais reaproveitáveis
+
+        </div>
+
+
+        <div class="trust-item">
+
+          <div class="trust-icon">
+            🏭
+          </div>
+
+          Negociação B2B
+
+        </div>
+
+
+        <div class="trust-item">
+
+          <div class="trust-icon">
+            📍
+          </div>
+
+          Oportunidades por região
+
+        </div>
+
+
+        <div class="trust-item">
+
+          <div class="trust-icon">
+            ↗
+          </div>
+
+          Venda de estoque parado
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         AUDIENCES
+    ========================= -->
+
+    <section>
+
+      <div class="container">
+
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Para empresas
+          </div>
+
+          <h2>
+            Dois lados. Um mercado.
+          </h2>
+
+          <p class="section-description">
+            Transformamos excedentes industriais em oportunidades comerciais.
+          </p>
+
+        </div>
+
+
+
+        <div class="audiences">
+
+
+          <!-- SELLER -->
+
+          <div class="audience-card">
+
+            <div class="audience-icon">
+              🏭
+            </div>
+
+            <h3>
+              Você tem material parado?
+            </h3>
+
+            <p>
+              Transforme estoque excedente, matéria-prima parada
+              ou sobras industriais em dinheiro.
+            </p>
+
+            <ul class="check-list">
+
+              <li>
+                Matéria-prima excedente
+              </li>
+
+              <li>
+                Estoque fora de linha
+              </li>
+
+              <li>
+                Sobras de produção
+              </li>
+
+              <li>
+                Peças e componentes
+              </li>
+
+              <li>
+                Materiais recicláveis
+              </li>
+
+            </ul>
+
+
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog"
+              target="_blank"
+              class="btn btn-primary">
+
+              Quero vender →
+
+            </a>
+
+          </div>
+
+
+
+          <!-- BUYER -->
+
+          <div class="audience-card">
+
+            <div class="audience-icon">
+              🔎
+            </div>
+
+            <h3>
+              Você procura material?
+            </h3>
+
+            <p>
+              Encontre lotes industriais disponíveis e descubra
+              novas fontes de matéria-prima.
+            </p>
+
+            <ul class="check-list">
+
+              <li>
+                Compare fornecedores
+              </li>
+
+              <li>
+                Encontre materiais próximos
+              </li>
+
+              <li>
+                Compre lotes excedentes
+              </li>
+
+              <li>
+                Solicite propostas
+              </li>
+
+              <li>
+                Encontre novas oportunidades
+              </li>
+
+            </ul>
+
+
+            <a
+              href="https://forms.gle/RRUU1xcYNK5usmrf7"
+              target="_blank"
+              class="btn btn-secondary">
+
+              Quero comprar →
+
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================= -->
+
+    <section
+      class="categories"
+      id="materiais">
+
+      <div class="container">
+
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Categorias
+          </div>
+
+          <h2>
+            O que pode ser negociado?
+          </h2>
+
+          <p class="section-description">
+            De matérias-primas a estoques industriais
+            que perderam prioridade dentro de uma empresa.
+          </p>
+
+        </div>
+
+
+
+        <div class="category-grid">
+
+
+          <div class="category">
+
+            <strong>
+              ♻️ Plásticos
+            </strong>
+
+            <span>
+              PP, PEAD, PEBD, PET, ABS e outros
+            </span>
+
+          </div>
+
+
+          <div class="category">
+
+            <strong>
+              🔩 Metais
+            </strong>
+
+            <span>
+              Alumínio, cobre, aço, latão e aparas
+            </span>
+
+          </div>
+
+
+          <div class="category">
+
+            <strong>
+              🪵 Madeira & MDF
+            </strong>
+
+            <span>
+              Chapas, sobras, pallets e madeira
+            </span>
+
+          </div>
+
+
+          <div class="category">
+
+            <strong>
+              🧵 Têxteis
+            </strong>
+
+            <span>
+              Tecidos, rolos, retalhos e couro
+            </span>
+
+          </div>
+
+
+          <div class="category">
+
+            <strong>
+              📦 Embalagens
+            </strong>
+
+            <span>
+              Bobinas, caixas e embalagens excedentes
+            </span>
+
+          </div>
+
+
+          <div class="category">
+
+            <strong>
+              ⚙️ Componentes
+            </strong>
+
+            <span>
+              Peças, ferramentas e componentes industriais
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         HOW IT WORKS
+    ========================= -->
+
+    <section id="como-funciona">
+
+      <div class="container">
+
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Simples
+          </div>
+
+          <h2>
+            Como funciona
+          </h2>
+
+          <p class="section-description">
+            A plataforma conecta quem possui o material
+            com quem precisa dele.
+          </p>
+
+        </div>
+
+
+
+        <div class="steps">
+
+
+          <div class="step">
+
+            <div class="step-number">
+              01 / CADASTRE
+            </div>
+
+            <h3>
+              Informe o material
+            </h3>
+
+            <p>
+              Conte o que sua empresa possui ou procura.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              02 / MATCHING
+            </div>
+
+            <h3>
+              Encontramos compatibilidade
+            </h3>
+
+            <p>
+              Cruzamos material, quantidade e localização.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              03 / CONECTE
+            </div>
+
+            <h3>
+              Receba oportunidades
+            </h3>
+
+            <p>
+              Compradores e vendedores entram em contato.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              04 / NEGOCIE
+            </div>
+
+            <h3>
+              Feche o negócio
+            </h3>
+
+            <p>
+              Negocie diretamente e transforme excedentes em valor.
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         LISTINGS
+    ========================= -->
+
+    <section
+      class="listings-section"
+      id="lotes">
+
+      <div class="container">
+
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Marketplace
+          </div>
+
+          <h2>
+            Lotes disponíveis
+          </h2>
+
+          <p class="section-description">
+            Exemplos de oportunidades que podem aparecer na plataforma.
+          </p>
+
+        </div>
+
+
+
+        <div class="listings-grid">
+
+
+          <!-- LOT 1 -->
+
+          <div class="market-card">
+
+            <div class="market-image">
+              ♻️
+            </div>
+
+            <div class="market-content">
+
+              <span class="tag">
+                Plástico
+              </span>
+
+              <h3>
+                PP Natural
+              </h3>
+
+              <p class="market-meta">
+                5.000 kg · Limeira/SP<br>
+                Aparas industriais
+              </p>
+
+              <div class="market-bottom">
+
+                <strong class="market-price">
+                  R$ 3,20/kg
+                </strong>
+
+                <a
+                  href="https://forms.gle/RRUU1xcYNK5usmrf7"
+                  target="_blank"
+                  class="btn btn-secondary">
+
+                  Tenho interesse
+
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- LOT 2 -->
+
+          <div class="market-card">
+
+            <div class="market-image">
+              🧵
+            </div>
+
+            <div class="market-content">
+
+              <span class="tag">
+                Têxtil
+              </span>
+
+              <h3>
+                Rolos de tecido
+              </h3>
+
+              <p class="market-meta">
+                1.800 kg · Americana/SP<br>
+                Estoque excedente
+              </p>
+
+              <div class="market-bottom">
+
+                <strong class="market-price">
+                  Aceita proposta
+                </strong>
+
+                <a
+                  href="https://forms.gle/RRUU1xcYNK5usmrf7"
+                  target="_blank"
+                  class="btn btn-secondary">
+
+                  Tenho interesse
+
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- LOT 3 -->
+
+          <div class="market-card">
+
+            <div class="market-image">
+              🪵
+            </div>
+
+            <div class="market-content">
+
+              <span class="tag">
+                Madeira
+              </span>
+
+              <h3>
+                Chapas MDF
+              </h3>
+
+              <p class="market-meta">
+                2.500 unidades · Piracicaba/SP<br>
+                Estoque excedente
+              </p>
+
+              <div class="market-bottom">
+
+                <strong class="market-price">
+                  R$ 42/un.
+                </strong>
+
+                <a
+                  href="https://forms.gle/RRUU1xcYNK5usmrf7"
+                  target="_blank"
+                  class="btn btn-secondary">
+
+                  Tenho interesse
+
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         REGISTRATION
+    ========================= -->
+
+    <section
+      class="registration"
+      id="cadastro">
+
+      <div class="container">
+
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Comece agora
+          </div>
+
+          <h2>
+            Faça parte do Circular B2B.
+          </h2>
+
+          <p class="section-description">
+            Escolha o que sua empresa precisa e cadastre-se gratuitamente.
+          </p>
+
+        </div>
+
+
+
+        <div class="registration-grid">
+
+
+          <!-- SELL -->
+
+          <div class="registration-card">
+
+            <div class="registration-icon">
+              🏭
+            </div>
+
+            <h3>
+              Tenho material para vender
+            </h3>
+
+            <p>
+              Possui estoque parado, matéria-prima excedente,
+              sobra industrial ou materiais disponíveis?
+            </p>
+
+            <ul>
+
+              <li>
+                Cadastre seu material
+              </li>
+
+              <li>
+                Informe quantidade e localização
+              </li>
+
+              <li>
+                Receba potenciais compradores
+              </li>
+
+            </ul>
+
+
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog"
+              target="_blank"
+              class="btn btn-primary">
+
+              Cadastrar material →
+
+            </a>
+
+          </div>
+
+
+
+          <!-- BUY -->
+
+          <div class="registration-card">
+
+            <div class="registration-icon">
+              🔎
+            </div>
+
+            <h3>
+              Quero comprar material
+            </h3>
+
+            <p>
+              Sua empresa procura matéria-prima,
+              excedentes ou materiais industriais?
+            </p>
+
+            <ul>
+
+              <li>
+                Informe o que você procura
+              </li>
+
+              <li>
+                Defina quantidade e localização
+              </li>
+
+              <li>
+                Receba oportunidades compatíveis
+              </li>
+
+            </ul>
+
+
+            <a
+              href="https://forms.gle/RRUU1xcYNK5usmrf7"
+              target="_blank"
+              class="btn btn-secondary">
+
+              Procurar material →
+
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CTA
+    ========================= -->
+
+    <section class="cta">
+
+      <div class="container">
+
+        <div class="cta-box">
+
+          <h2>
+            Existe valor escondido em milhares de estoques industriais.
+          </h2>
+
+          <p>
+            Cadastre o que sua empresa possui ou o que precisa encontrar.
+            Nós fazemos a conexão.
+          </p>
+
+
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog"
+            target="_blank"
+            class="btn">
+
+            Tenho material para vender →
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <div class="container">
+
+
+      <div class="footer-grid">
+
+
+        <div class="footer-brand">
+
+          <div
+            class="logo"
+            style="color:white;">
+
+            <div class="logo-mark">
+              ↻
+            </div>
+
+            Circular B2B
+
+          </div>
+
+
+          <p>
+            Marketplace B2B para excedentes industriais,
+            matérias-primas e materiais que podem voltar
+            à cadeia produtiva.
+          </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+          <a href="#como-funciona">
+            Como funciona
+          </a>
+
+          <a href="#materiais">
+            Materiais
+          </a>
+
+          <a href="#lotes">
+            Lotes
+          </a>
+
+          <a
+            href="https://forms.gle/RRUU1xcYNK5usmrf7"
+            target="_blank">
+
+            Comprar
+
+          </a>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="copyright">
+
+        © 2026 Circular B2B.
+        Todos os direitos reservados.
+
+      </div>
+
+
+    </div>
+
+  </footer>
+
+
+</body>
+</html>
