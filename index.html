@@ -428,9 +428,9 @@
           </p>
 
           <div class="hero-buttons">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog" target="_blank" class="btn btn-primary">Tenho material →</a>
-            <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Procuro material</a>
-            <a href="#destinacao" class="btn btn-secondary">Preciso destinar</a>
+            <a href="#cadastro" class="btn btn-primary" onclick="showForm('sell')">Tenho material →</a>
+            <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Procuro material</a>
+            <a href="#cadastro" class="btn btn-secondary" onclick="showForm('dispose')">Preciso destinar</a>
           </div>
         </div>
 
@@ -495,7 +495,7 @@
               <li>Estoque parado</li>
               <li>Materiais recicláveis</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog" target="_blank" class="btn btn-primary">Cadastrar oferta →</a>
+            <a href="#cadastro" class="btn btn-primary" onclick="showForm('sell')">Cadastrar oferta →</a>
           </div>
 
           <div class="solution-card">
@@ -508,7 +508,7 @@
               <li>Volume de interesse</li>
               <li>Região de compra</li>
             </ul>
-            <a href="https://forms.gle/RRUU1xcYNK5usmrf7" target="_blank" class="btn btn-secondary">Cadastrar demanda →</a>
+            <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Cadastrar demanda →</a>
           </div>
 
           <div class="solution-card">
@@ -521,7 +521,7 @@
               <li>Materiais de difícil saída</li>
               <li>Alternativas de destinação</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuwv7oEdLfiAKjCthmYy8y63gXZoCacDGqWECgzhp9ft22dg/viewform?usp=dialog" target="_blank" class="btn btn-secondary">Cadastrar material →</a>
+            <a href="#cadastro" class="btn btn-secondary" onclick="showForm('dispose')">Cadastrar material →</a>
           </div>
         </div>
       </div>
@@ -723,7 +723,7 @@
                 <li><strong>Volume:</strong> em levantamento</li>
                 <li><strong>Objetivo:</strong> reaproveitamento ou destinação adequada</li>
               </ul>
-              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('buy')">Tenho solução →</a>
+              <a href="#cadastro" class="btn btn-secondary" onclick="showForm('dispose')">Tenho solução →</a>
             </div>
           </div>
         </div>
@@ -749,7 +749,7 @@
             <button type="button" class="form-tab" data-form="dispose" onclick="showForm('dispose')">♻️ Preciso destinar</button>
           </div>
 
-          <form class="native-form active" id="sellForm" data-type="Venda">
+          <form class="native-form active" id="sellForm" data-type="venda">
             <div class="form-intro"><h3>Tenho material disponível</h3><p>Cadastre matéria-prima, sobra de produção, apara, refugo ou estoque excedente.</p></div>
             <div class="form-grid">
               <div class="field"><label>Empresa *</label><input name="empresa" required></div>
@@ -771,7 +771,7 @@
             <div class="privacy-note">Seus dados comerciais não serão exibidos publicamente sem autorização.</div>
           </form>
 
-          <form class="native-form" id="buyForm" data-type="Compra">
+          <form class="native-form" id="buyForm" data-type="compra">
             <div class="form-intro"><h3>Procuro material</h3><p>Informe o perfil de compra para receber somente oportunidades compatíveis.</p></div>
             <div class="form-grid">
               <div class="field"><label>Empresa *</label><input name="empresa" required></div>
@@ -793,7 +793,7 @@
             <div class="privacy-note">Entraremos em contato apenas quando houver oportunidade compatível ou necessidade de confirmar informações.</div>
           </form>
 
-          <form class="native-form" id="disposeForm" data-type="Destinacao">
+          <form class="native-form" id="disposeForm" data-type="destinacao">
             <div class="form-intro"><h3>Preciso destinar um material</h3><p>Cadastre uma sobra ou resíduo que sua empresa não consegue reaproveitar internamente.</p></div>
             <div class="form-grid">
               <div class="field"><label>Empresa *</label><input name="empresa" required></div>
@@ -872,10 +872,26 @@
     }
 
     function formToObject(form) {
-      const data = Object.fromEntries(new FormData(form).entries());
-      data.tipo = form.dataset.type;
+      const raw = Object.fromEntries(new FormData(form).entries());
+      const data = { ...raw };
+      data.tipo = (form.dataset.type || '').toLowerCase();
+      data.cidade = [raw.cidade, raw.uf].filter(Boolean).join('/');
       data.data_envio = new Date().toISOString();
       data.origem = window.location.href;
+
+      if (data.tipo === 'venda') {
+        data.logistica = raw.retirada || '';
+      }
+
+      if (data.tipo === 'compra') {
+        data.retirada = raw.retirada || '';
+      }
+
+      if (data.tipo === 'destinacao') {
+        data.destinacaoAtual = raw.situacao_atual || '';
+        data.custoDestinacao = raw.custo_atual || '';
+      }
+
       return data;
     }
 
