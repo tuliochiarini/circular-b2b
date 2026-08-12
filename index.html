@@ -1296,22 +1296,44 @@
     });
   });
 
+  function normalizeOpportunity(raw){
+    const o = raw && typeof raw === 'object' ? raw : {};
+    return {
+      id: String(o.id ?? ''),
+      tipo: String(o.tipo ?? '').trim().toLowerCase(),
+      categoria: String(o.categoria ?? '').trim().toLowerCase(),
+      material: String(o.material ?? '').trim(),
+      formato: String(o.formato ?? '').trim(),
+      especificacao: String(o.especificacao ?? '').trim(),
+      condicao: String(o.condicao ?? '').trim(),
+      quantidade: String(o.quantidade ?? '').trim(),
+      unidade: String(o.unidade ?? '').trim(),
+      frequencia: String(o.frequencia ?? '').trim(),
+      preco: String(o.preco ?? '').trim(),
+      cidadeUF: String(o.cidadeUF ?? '').trim(),
+      logistica: String(o.logistica ?? '').trim(),
+      observacoes: String(o.observacoes ?? o.observacao ?? '').trim(),
+      materiaisNaoInteressam: String(o.materiaisNaoInteressam ?? o.naoInteressam ?? '').trim(),
+      status: String(o.status ?? o.situacao ?? '').trim().toLowerCase()
+    };
+  }
+
   async function loadOpportunities(){
     const grid=document.getElementById('opps');
-
-    if(!API_URL.startsWith('https://script.google.com/')){
-      grid.innerHTML='<div class="empty">Conecte a URL do Web App V7 Lite para carregar as oportunidades.</div>';
-      return;
-    }
+    grid.innerHTML='<div class="empty">Carregando oportunidades...</div>';
 
     try{
-      const r=await fetch('/api/opportunities',{cache:'no-store'});
+      const r=await fetch('/api/opportunities?t='+Date.now(),{cache:'no-store'});
       if(!r.ok) throw new Error('HTTP '+r.status);
+
       const data=await r.json();
-      opportunities=(data.opportunities||[]);
+      const raw=Array.isArray(data) ? data : data.opportunities;
+      if(!Array.isArray(raw)) throw new Error('Formato inválido da API: opportunities não é uma lista');
+
+      opportunities=raw.map(normalizeOpportunity);
       renderOpportunities();
     }catch(e){
-      console.error('Erro ao carregar/renderizar oportunidades:', e);
+      console.error('Erro ao carregar oportunidades:', e);
       grid.innerHTML='<div class="empty">Não foi possível carregar as oportunidades agora.</div>';
     }
   }
@@ -1320,67 +1342,86 @@
     const material=String(o.material||'').trim().toLowerCase();
     const city=String(o.cidadeUF||'').trim();
     const type=String(o.tipo||'').trim().toLowerCase();
-    const status=String(o.status||o.situacao||'').trim().toLowerCase();
+    const status=String(o.status||'').trim().toLowerCase();
 
-    // Se futuramente a API enviar status, só publica registros ativos/oficiais.
     if(status && !['ativo','ativa','oficial','publicado','publicada','active'].includes(status)) return false;
-
-    // Requisitos mínimos para uma oportunidade pública útil.
     if(!material || !city || !['compra','venda','cessao','destinacao'].includes(type)) return false;
-
-    // Bloqueia resíduos óbvios de testes antigos.
     if(['x','xx','xxx','teste','test','material teste'].includes(material)) return false;
-
     return true;
   }
 
   function renderOpportunities(){
     const grid=document.getElementById('opps');
-    const q=(document.getElementById('filterText').value||'').toLowerCase().trim();
-    const type=document.getElementById('filterType').value;
-    const cat=document.getElementById('filterCategory').value;
 
-    const rows=opportunities.filter(o=>{
-      if(!isOfficialOpportunity(o)) return false;
-      const text=[o.material,o.formato,o.especificacao,o.condicao,o.cidadeUF].join(' ').toLowerCase();
-      return (!q||text.includes(q)) &&
-             (type==='all'||o.tipo===type) &&
-             (cat==='all'||o.categoria===cat);
-    });
+    try{
+      const q=String(document.getElementById('filterText')?.value||'').toLowerCase().trim();
+      const type=String(document.getElementById('filterType')?.value||'all');
+      const cat=String(document.getElementById('filterCategory')?.value||'all');
 
-    renderedOpportunities=rows;
+      const rows=(Array.isArray(opportunities)?opportunities:[]).filter(raw=>{
+        const o=normalizeOpportunity(raw);
+        if(!isOfficialOpportunity(o)) return false;
 
-    if(!rows.length){
-      grid.innerHTML='<div class="empty">Nenhuma oportunidade encontrada com esses filtros.</div>';
-      return;
+        const text=[o.material,o.formato,o.especificacao,o.condicao,o.cidadeUF]
+          .map(v=>String(v||''))
+          .join(' ')
+          .toLowerCase();
+
+        return (!q||text.includes(q)) &&
+               (type==='all'||o.tipo===type) &&
+               (cat==='all'||o.categoria===cat);
+      }).map(normalizeOpportunity);
+
+      renderedOpportunities=rows;
+
+      if(!rows.length){
+        grid.innerHTML='<div class="empty">Nenhuma oportunidade encontrada com esses filtros.</div>';
+        return;
+      }
+
+      const cards=[];
+      rows.forEach((o,i)=>{
+        try{
+          const qty=o.quantidade ? [o.quantidade,o.unidade].filter(Boolean).join(' ') : 'Qualquer quantidade';
+          const classification=String(o.formato||o.especificacao||o.condicao||'Sob avaliação');
+          const material=String(o.material||'Material');
+          const title=classification && classification.toLowerCase()!==material.toLowerCase()
+            ? `${material} — ${classification}` : material;
+
+          const primary=o.tipo==='compra'
+            ? `<button type="button" class="opp-cta" onclick="offerMaterial(${i})">Tenho este material →</button>`
+            : `<button type="button" class="opp-cta" onclick="openOpportunityDetails(${i})">Tenho interesse →</button>`;
+
+          cards.push(`
+          <article class="opp">
+            <div class="opp-main">
+              <div class="opp-main-top"><span class="pill ${escapeHtml(o.tipo)}">${labelType(o.tipo)}</span></div>
+              <h3>${escapeHtml(title)}</h3>
+              <div class="meta">📍 ${escapeHtml(o.cidadeUF)}</div>
+            </div>
+            <div class="opp-mini"><span>Quantidade</span><b>${escapeHtml(qty)}</b></div>
+            <div class="opp-mini"><span>Frequência</span><b>${escapeHtml(o.frequencia||'A combinar')}</b></div>
+            <div class="opp-mini"><span>Preço</span><b>${escapeHtml(o.preco||'Sob consulta')}</b></div>
+            <div class="opp-actions">
+              <button type="button" class="opp-details-btn" onclick="openOpportunityDetails(${i})">Ver detalhes</button>
+              ${primary}
+            </div>
+          </article>`);
+        }catch(cardError){
+          console.warn('Oportunidade ignorada por dado inválido:', o, cardError);
+        }
+      });
+
+      if(!cards.length){
+        grid.innerHTML='<div class="empty">Nenhuma oportunidade válida para exibir.</div>';
+        return;
+      }
+
+      grid.innerHTML=cards.join('');
+    }catch(e){
+      console.error('Erro ao renderizar oportunidades:', e);
+      grid.innerHTML='<div class="empty">Não foi possível exibir as oportunidades agora.</div>';
     }
-
-    grid.innerHTML=rows.map((o,i)=>{
-      const qty=o.quantidade ? [o.quantidade,o.unidade].filter(Boolean).join(' ') : 'Qualquer quantidade';
-      const classification=String(o.formato||o.especificacao||o.condicao||'Sob avaliação');
-      const title=classification && classification.toLowerCase()!==String(o.material||'').toLowerCase()
-        ? `${o.material} — ${classification}` : (o.material||'Material');
-
-      const primary=o.tipo==='compra'
-        ? `<button type="button" class="opp-cta" onclick="offerMaterial(${i})">Tenho este material →</button>`
-        : `<button type="button" class="opp-cta" onclick="openOpportunityDetails(${i})">Tenho interesse →</button>`;
-
-      return `
-      <article class="opp">
-        <div class="opp-main">
-          <div class="opp-main-top"><span class="pill ${escapeHtml(o.tipo)}">${labelType(o.tipo)}</span></div>
-          <h3>${escapeHtml(title)}</h3>
-          <div class="meta">📍 ${escapeHtml(o.cidadeUF)}</div>
-        </div>
-        <div class="opp-mini"><span>Quantidade</span><b>${escapeHtml(qty)}</b></div>
-        <div class="opp-mini"><span>Frequência</span><b>${escapeHtml(o.frequencia||'A combinar')}</b></div>
-        <div class="opp-mini"><span>Preço</span><b>${escapeHtml(o.preco||'Sob consulta')}</b></div>
-        <div class="opp-actions">
-          <button type="button" class="opp-details-btn" onclick="openOpportunityDetails(${i})">Ver detalhes</button>
-          ${primary}
-        </div>
-      </article>`;
-    }).join('');
   }
 
   function openOpportunityDetails(index){
@@ -1388,7 +1429,7 @@
     if(!o) return;
 
     const qty=o.quantidade ? [o.quantidade,o.unidade].filter(Boolean).join(' ') : 'Qualquer quantidade';
-    const classification=o.formato||o.especificacao||o.condicao||'Sob avaliação';
+    const classification=String(o.formato||o.especificacao||o.condicao||'Sob avaliação');
     const logistics=o.logistica||'A combinar';
     const notes=o.observacoes||o.observacao||'Nenhuma informação adicional.';
     const restrictions=o.materiaisNaoInteressam||o.naoInteressam||'Não informado';
