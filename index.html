@@ -199,6 +199,14 @@
     .cta p{font-size:11px;color:#b8cbc2;margin-top:4px}
     .cta-actions{display:flex;gap:8px;flex-wrap:wrap}
 
+
+    .material-builder-row{display:grid;grid-template-columns:1fr 1.1fr 1.1fr 1.25fr .65fr .75fr 1fr 1fr 36px;gap:7px;padding:10px;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:#f9fbfa}
+    .material-builder-row input,.material-builder-row select{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:9px;background:#fff;font-size:9px;outline:0}
+    .material-builder-row .remove-material{border:1px solid var(--line);background:#fff;border-radius:9px;color:#8b3d3d}
+    .material-head{display:grid;grid-template-columns:1fr 1.1fr 1.1fr 1.25fr .65fr .75fr 1fr 1fr 36px;gap:7px;margin-top:8px;padding:0 10px}
+    .material-head span{font-size:8px;font-weight:850;color:#61736a}
+    @media(max-width:900px){.material-head{display:none}.material-builder-row{grid-template-columns:1fr 1fr}}
+
     /* Modal */
     .modal-backdrop{
       position:fixed;inset:0;z-index:100;background:rgba(5,15,11,.58);backdrop-filter:blur(8px);
@@ -609,80 +617,21 @@
       <form id="opportunityForm">
         <input type="hidden" name="tipo" id="tipo" value="venda">
         <input type="hidden" name="origem" value="site">
-        <input type="hidden" name="versaoFormulario" value="v5">
+        <input type="hidden" name="versaoFormulario" value="v6">
 
         <!-- STEP 1 -->
         <div class="form-step active" data-step="1">
           <div class="form-grid">
-            <div class="field">
-              <label>Categoria *</label>
-              <select name="categoria" id="categoria" required>
-                <option value="">Selecione</option>
-                <option value="plastico">Plásticos</option>
-                <option value="metal">Metais</option>
-                <option value="papel">Papel e papelão</option>
-                <option value="vidro">Vidro</option>
-                <option value="madeira">Madeira e MDF</option>
-                <option value="textil">Têxteis e couro</option>
-                <option value="borracha">Borracha</option>
-                <option value="quimico">Químicos e insumos</option>
-                <option value="eletronico">Eletrônicos e componentes</option>
-                <option value="construcao">Construção</option>
-                <option value="embalagem">Embalagens</option>
-                <option value="biomassa">Orgânicos e biomassa</option>
-                <option value="outros">Outros</option>
-              </select>
+            <div class="field full">
+              <label>Materiais *</label>
+              <div id="materialsBuilder"></div>
+              <button class="btn btn-outline" type="button" onclick="addMaterialRow()" style="margin-top:8px;width:max-content">+ Adicionar outro material</button>
+              <div style="font-size:9px;color:var(--muted);margin-top:7px">Adicione todos os materiais desta mesma necessidade. Cada item será tratado como uma oportunidade própria.</div>
             </div>
 
-            <div class="field">
-              <label>Material *</label>
-              <input name="material" id="material" required placeholder="Ex.: cobre, PET, pallet, tecido, resina, vidro...">
-            </div>
-
-            <div class="field">
-              <label>Condição / formato</label>
-              <input name="condicao" placeholder="Ex.: apara, peça, fardo, moído, chapa...">
-            </div>
-
-            <div class="field">
-              <label>Especificação</label>
-              <input name="especificacao" placeholder="Cor, composição, pureza, dimensão, tipo etc.">
-            </div>
-
-            <div class="field">
-              <label>Quantidade</label>
-              <input name="quantidade" placeholder="Ex.: 5">
-            </div>
-
-            <div class="field">
-              <label>Unidade</label>
-              <select name="unidade">
-                <option value="">Selecione</option>
-                <option>kg</option>
-                <option>toneladas</option>
-                <option>unidades</option>
-                <option>m²</option>
-                <option>m³</option>
-                <option>litros</option>
-                <option>outro</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>Frequência</label>
-              <select name="frequencia">
-                <option value="">Selecione</option>
-                <option>Única</option>
-                <option>Semanal</option>
-                <option>Quinzenal</option>
-                <option>Mensal</option>
-                <option>Recorrente / variável</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label id="priceLabel">Preço pretendido</label>
-              <input name="precoReferencia" id="precoReferencia" placeholder="Ex.: R$ 3,50/kg ou aceita propostas">
+            <div class="field full">
+              <label>Materiais que NÃO interessam</label>
+              <input name="restricoes" placeholder="Ex.: PET, Nylon, PP, PVC rígido">
             </div>
           </div>
         </div>
@@ -848,6 +797,28 @@
     heroApply();
   }
 
+
+  const CATEGORY_OPTIONS=[['','Categoria'],['plastico','Plásticos'],['metal','Metais'],['papel','Papel e papelão'],['vidro','Vidro'],['madeira','Madeira e MDF'],['textil','Têxteis e couro'],['borracha','Borracha'],['quimico','Químicos e insumos'],['eletronico','Eletrônicos e componentes'],['construcao','Construção'],['embalagem','Embalagens'],['biomassa','Orgânicos e biomassa'],['outros','Outros']];
+  const UNIT_OPTIONS=['','kg','toneladas','unidades','m²','m³','litros','outro'];
+  const FREQ_OPTIONS=['','Única','Semanal','Quinzenal','Mensal','Recorrente / variável'];
+  function opts(items){return items.map(i=>{const v=Array.isArray(i)?i[0]:i,l=Array.isArray(i)?i[1]:i;return `<option value="${v}">${l||'Selecione'}</option>`}).join('')}
+  function materialRowHtml(){return `<div class="material-builder-row">
+    <select data-field="categoria" required>${opts(CATEGORY_OPTIONS)}</select>
+    <input data-field="material" required placeholder="Material">
+    <input data-field="condicao" placeholder="Formato / condição">
+    <input data-field="especificacao" placeholder="Subtipo, cor, qualidade...">
+    <input data-field="quantidade" placeholder="Qtd.">
+    <select data-field="unidade">${opts(UNIT_OPTIONS)}</select>
+    <select data-field="frequencia">${opts(FREQ_OPTIONS)}</select>
+    <input data-field="precoReferencia" placeholder="Preço / referência">
+    <button type="button" class="remove-material" onclick="removeMaterialRow(this)">×</button>
+  </div>`}
+  function ensureMaterialBuilder(){const b=document.getElementById('materialsBuilder');if(!b)return;if(!b.querySelector('.material-head'))b.insertAdjacentHTML('beforeend','<div class="material-head"><span>Categoria</span><span>Material</span><span>Formato</span><span>Especificação</span><span>Qtd.</span><span>Unidade</span><span>Frequência</span><span>Preço</span><span></span></div>');if(!b.querySelector('.material-builder-row'))b.insertAdjacentHTML('beforeend',materialRowHtml())}
+  function addMaterialRow(){ensureMaterialBuilder();document.getElementById('materialsBuilder').insertAdjacentHTML('beforeend',materialRowHtml())}
+  function removeMaterialRow(btn){const rows=document.querySelectorAll('.material-builder-row');if(rows.length<=1){rows[0].querySelectorAll('input,select').forEach(el=>el.value='');return}btn.closest('.material-builder-row').remove()}
+  function collectMaterials(){return [...document.querySelectorAll('.material-builder-row')].map(r=>{const x={};r.querySelectorAll('[data-field]').forEach(el=>x[el.dataset.field]=el.value.trim());return x}).filter(x=>x.material)}
+  ensureMaterialBuilder();
+
   // Modal / unified opportunity
   const modal=document.getElementById('modalBackdrop');
   const typeButtons=[...document.querySelectorAll('.type-btn')];
@@ -900,9 +871,9 @@
   }
 
   function prefillOpportunity(type,category,material){
-    openOpportunity(type);
-    document.getElementById('categoria').value=category;
-    document.getElementById('material').value=material;
+    openOpportunity(type); ensureMaterialBuilder();
+    const row=document.querySelector('.material-builder-row');
+    if(row){row.querySelector('[data-field="categoria"]').value=category||'';row.querySelector('[data-field="material"]').value=material||'';}
   }
 
   function goStep(n){
@@ -965,6 +936,10 @@
     if(!validateStep(3)) return;
 
     const payload=Object.fromEntries(new FormData(form).entries());
+    const materials=collectMaterials();
+    if(!materials.length){alert('Adicione pelo menos um material.');return;}
+    payload.materiais=materials;
+    Object.assign(payload,materials[0]);
     const id=enqueue(payload);
 
     const btn=document.getElementById('submitBtn');
@@ -979,6 +954,7 @@
 
     setTimeout(()=>{
       form.reset();
+      document.getElementById('materialsBuilder').innerHTML=''; ensureMaterialBuilder();
       setType('venda');
       goStep(1);
       btn.disabled=false;
