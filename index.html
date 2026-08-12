@@ -422,6 +422,7 @@
           <option value="all">Todas as regiões</option>
           <option value="Piracicaba">Piracicaba/SP</option>
           <option value="Limeira">Limeira/SP</option>
+          <option value="São Paulo">São Paulo/SP</option>
         </select>
       </div>
 
@@ -529,7 +530,52 @@
           <button class="btn btn-outline" onclick="prefillOpportunity('solucao','plastico','Baquelite')">Tenho uma solução →</button>
         </article>
 
+
+        <article class="opp" data-type="demanda" data-category="plastico" data-city="São Paulo" data-search="pvc flexivel cristal bagum lonas capacho sao paulo zona leste limpo sem etiquetas">
+          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Nova</span></div>
+          <h3>PVC Flexível</h3>
+          <div class="meta">São Paulo/SP • Zona Leste</div>
+          <div class="opp-data">
+            <div><span>Subtipos</span><b>Cristal • Bagum • Lonas • Capacho</b></div>
+            <div><span>Condição</span><b>Sobras / retalhos</b></div>
+            <div><span>Qualidade</span><b>Limpo e sem etiquetas*</b></div>
+            <div><span>Volume</span><b>Avaliado conforme lote</b></div>
+            <div><span>Logística</span><b>Capital e região metropolitana</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('venda','plastico','PVC Flexível')">Tenho este material →</button>
+        </article>
+
+        <article class="opp" data-type="demanda" data-category="plastico" data-city="São Paulo" data-search="polietileno stretch canela sao paulo zona leste sobras retalhos">
+          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Nova</span></div>
+          <h3>Polietileno</h3>
+          <div class="meta">São Paulo/SP • Zona Leste</div>
+          <div class="opp-data">
+            <div><span>Subtipos</span><b>Stretch • Canela</b></div>
+            <div><span>Condição</span><b>Sobras / retalhos</b></div>
+            <div><span>Volume</span><b>Sem mínimo fixo</b></div>
+            <div><span>Logística</span><b>Retirada conforme peso e volume</b></div>
+            <div><span>Preço</span><b>Cotação conforme qualidade</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('venda','plastico','Polietileno')">Tenho este material →</button>
+        </article>
+
+        <article class="opp" data-type="demanda" data-category="papel" data-city="São Paulo" data-search="tubetes tubete papel papelão papelao sao paulo zona leste">
+          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Nova</span></div>
+          <h3>Tubetes de papelão</h3>
+          <div class="meta">São Paulo/SP • Zona Leste</div>
+          <div class="opp-data">
+            <div><span>Perfil</span><b>Compra recorrente</b></div>
+            <div><span>Volume</span><b>Avaliado conforme lote</b></div>
+            <div><span>Logística</span><b>Capital e região metropolitana</b></div>
+            <div><span>Outras regiões</span><b>Avaliação caso a caso</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('venda','papel','Tubetes de papelão')">Tenho este material →</button>
+        </article>
+
         <div class="empty" id="emptyState">Nenhuma oportunidade encontrada com esses filtros.</div>
+      </div>
+      <div style="margin-top:10px;font-size:9px;color:var(--muted)">
+        * Condições e especificações exibidas refletem informações confirmadas pelas empresas cadastradas e podem ser revalidadas antes da negociação.
       </div>
     </div>
   </section>
