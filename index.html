@@ -578,93 +578,6 @@
       .opp-detail-wide{grid-column:auto}
     }
 
-
-    /* V7.10 — skeleton loading premium */
-    .skeleton-wrap{display:grid;gap:8px}
-    .skeleton-row{
-      min-height:86px;
-      display:grid;
-      grid-template-columns:minmax(190px,1.35fr) minmax(125px,.8fr) minmax(145px,.9fr) minmax(150px,.9fr) auto;
-      gap:16px;
-      align-items:center;
-      padding:15px 16px;
-      border:1px solid rgba(130,180,153,.12);
-      border-radius:14px;
-      background:linear-gradient(180deg,rgba(11,27,21,.88),rgba(7,22,16,.88));
-      overflow:hidden;
-      position:relative;
-    }
-    .skeleton-row::after{
-      content:"";
-      position:absolute;inset:0;
-      transform:translateX(-100%);
-      background:linear-gradient(90deg,transparent,rgba(255,255,255,.045),transparent);
-      animation:skeletonShimmer 1.35s infinite;
-    }
-    .skeleton-block{
-      height:13px;border-radius:999px;
-      background:rgba(255,255,255,.075)
-    }
-    .skeleton-main{display:grid;gap:8px}
-    .skeleton-pill{width:64px;height:22px;border-radius:7px}
-    .skeleton-title{width:72%;height:18px}
-    .skeleton-city{width:44%;height:11px}
-    .skeleton-mid{width:78%}
-    .skeleton-action{width:170px;height:40px;border-radius:9px;justify-self:end}
-    .loading-label{
-      display:flex;align-items:center;gap:8px;
-      color:#8fa79c;font-size:12px;font-weight:750;
-      margin-bottom:10px;padding-left:2px
-    }
-    .loading-dot{
-      width:7px;height:7px;border-radius:50%;
-      background:#26c77c;box-shadow:0 0 0 0 rgba(38,199,124,.35);
-      animation:loadingPulse 1.25s infinite
-    }
-    @keyframes skeletonShimmer{100%{transform:translateX(100%)}}
-    @keyframes loadingPulse{
-      0%{box-shadow:0 0 0 0 rgba(38,199,124,.32)}
-      70%{box-shadow:0 0 0 8px rgba(38,199,124,0)}
-      100%{box-shadow:0 0 0 0 rgba(38,199,124,0)}
-    }
-    @media(max-width:900px){
-      .skeleton-row{grid-template-columns:1fr 1fr}
-      .skeleton-main,.skeleton-action{grid-column:1/-1}
-      .skeleton-action{justify-self:stretch;width:100%}
-    }
-    @media(max-width:560px){
-      .skeleton-row{min-height:170px;padding:14px}
-    }
-
-
-    /* V7.11 — carregamento resiliente */
-    .opps-error{
-      padding:22px;border:1px solid rgba(130,180,153,.14);border-radius:14px;
-      background:rgba(7,29,21,.78);text-align:center;color:#dce9e3
-    }
-    .opps-error strong{display:block;font-size:15px;margin-bottom:5px;color:#f5faf7}
-    .opps-error span{display:block;font-size:12px;color:#8fa79c;margin-bottom:13px}
-    .retry-opps{
-      min-height:39px;padding:0 15px;border-radius:9px;border:1px solid rgba(61,220,139,.25);
-      background:#18b36b;color:#fff;font-size:12px;font-weight:900;cursor:pointer
-    }
-    .cached-note{font-size:11px;color:#7f9b8e;margin:0 0 9px 2px}
-
-
-    /* V7.12 — correção da API pública + estado vazio premium */
-    #opps .empty{
-      background:rgba(7,29,21,.72)!important;
-      border:1px solid rgba(130,180,153,.14)!important;
-      color:#9db1a7!important;
-      border-radius:14px!important;
-      padding:24px!important;
-      min-height:92px!important;
-      display:flex!important;
-      align-items:center!important;
-      justify-content:center!important;
-      text-align:center!important;
-    }
-
 </style>
 </head>
 
@@ -778,7 +691,7 @@
         </select>
       </div>
 
-      <div id="opps" class="opps"><div class="empty">Preparando oportunidades...</div></div>
+      <div id="opps" class="opps"><div class="empty">Carregando oportunidades...</div></div>
     </div>
   </section><section class="how" id="como-funciona">
     <div class="container">
@@ -1382,67 +1295,24 @@
     });
   });
 
-
-  function renderOpportunitySkeleton(){
-    const grid=document.getElementById('opps');
-    if(!grid) return;
-
-    const rows=Array.from({length:6},()=>`
-      <div class="skeleton-row" aria-hidden="true">
-        <div class="skeleton-main">
-          <div class="skeleton-block skeleton-pill"></div>
-          <div class="skeleton-block skeleton-title"></div>
-          <div class="skeleton-block skeleton-city"></div>
-        </div>
-        <div class="skeleton-block skeleton-mid"></div>
-        <div class="skeleton-block skeleton-mid"></div>
-        <div class="skeleton-block skeleton-mid"></div>
-        <div class="skeleton-block skeleton-action"></div>
-      </div>
-    `).join('');
-
-    grid.innerHTML=`
-      <div class="loading-label"><span class="loading-dot"></span>Buscando oportunidades na rede…</div>
-      <div class="skeleton-wrap">${rows}</div>
-    `;
-  }
-
   async function loadOpportunities(){
     const grid=document.getElementById('opps');
 
-    document.querySelectorAll('.cached-note').forEach(el=>el.remove());
-    renderOpportunitySkeleton();
-
     if(!API_URL.startsWith('https://script.google.com/')){
-      grid.innerHTML=`
-        <div class="opps-error">
-          <strong>Conexão não configurada.</strong>
-          <span>Precisamos conectar o Web App da Circular para carregar as oportunidades.</span>
-        </div>`;
+      grid.innerHTML='<div class="empty">Conecte a URL do Web App V7 Lite para carregar as oportunidades.</div>';
       return;
     }
 
     try{
-      // Mantemos a chamada simples que já funcionava nas versões anteriores.
-      // Sem timeout: o Apps Script pode demorar alguns segundos para responder.
-      const response=await fetch(API_URL+'?action=public');
-      const data=await response.json();
-
-      opportunities=Array.isArray(data)
-        ? data
-        : (Array.isArray(data.opportunities) ? data.opportunities : []);
-
+      const r=await fetch(API_URL+'?action=public');
+      const data=await r.json();
+      opportunities=(data.opportunities||[]);
       renderOpportunities();
-    }catch(err){
-      console.warn('Falha ao carregar oportunidades:',err);
-      grid.innerHTML=`
-        <div class="opps-error">
-          <strong>Não conseguimos atualizar as oportunidades agora.</strong>
-          <span>A conexão pode estar demorando mais do que o normal.</span>
-          <button type="button" class="retry-opps" onclick="loadOpportunities()">Tentar novamente</button>
-        </div>`;
+    }catch(e){
+      grid.innerHTML='<div class="empty">Não foi possível carregar as oportunidades agora.</div>';
     }
   }
+
   function isOfficialOpportunity(o){
     const material=String(o.material||'').trim().toLowerCase();
     const city=String(o.cidadeUF||'').trim();
