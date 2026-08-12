@@ -650,6 +650,21 @@
     }
     .cached-note{font-size:11px;color:#7f9b8e;margin:0 0 9px 2px}
 
+
+    /* V7.12 — correção da API pública + estado vazio premium */
+    #opps .empty{
+      background:rgba(7,29,21,.72)!important;
+      border:1px solid rgba(130,180,153,.14)!important;
+      color:#9db1a7!important;
+      border-radius:14px!important;
+      padding:24px!important;
+      min-height:92px!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      text-align:center!important;
+    }
+
 </style>
 </head>
 
@@ -1408,7 +1423,7 @@
       const timeout=setTimeout(()=>controller.abort(),9000);
       try{
         const separator=API_URL.includes('?')?'&':'?';
-        const response=await fetch(API_URL+separator+'action=list&t='+Date.now(),{
+        const response=await fetch(API_URL+separator+'action=public&t='+Date.now(),{
           method:'GET',
           cache:'no-store',
           signal:controller.signal
