@@ -563,7 +563,7 @@
       <div class="cta-box">
         <div>
           <h2>Publique uma necessidade em poucos minutos.</h2>
-          <p>A Circular busca aderência entre empresas, materiais e soluções.</p>
+          <p>A Circular cruza material, volume, localização, preço e logística para encontrar aderência comercial.</p>
         </div>
         <div class="cta-actions">
           <button class="btn btn-primary" onclick="openOpportunity('venda')">Publicar oportunidade →</button>
@@ -608,6 +608,8 @@
 
       <form id="opportunityForm">
         <input type="hidden" name="tipo" id="tipo" value="venda">
+        <input type="hidden" name="origem" value="site">
+        <input type="hidden" name="versaoFormulario" value="v5">
 
         <!-- STEP 1 -->
         <div class="form-step active" data-step="1">
@@ -695,7 +697,17 @@
 
             <div class="field">
               <label>Logística / cobertura</label>
-              <input name="logistica" placeholder="Retirada, entrega, raio de atendimento etc.">
+              <input name="logistica" placeholder="Retirada, entrega, transportadora etc.">
+            </div>
+
+            <div class="field">
+              <label>Raio de interesse / atendimento</label>
+              <input name="raioKm" placeholder="Ex.: até 150 km">
+            </div>
+
+            <div class="field">
+              <label>Condição de pagamento</label>
+              <input name="condicaoPagamento" placeholder="Ex.: à vista, 7 dias, 28 dias...">
             </div>
 
             <div class="field conditional dest-field">
