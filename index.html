@@ -86,6 +86,73 @@
     .dest-only.show{display:flex}
     @media(max-width:900px){.hero-box{grid-template-columns:1fr}.intent-grid,.opps{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr}.material-row{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
     @media(max-width:600px){.intent-grid,.opps{grid-template-columns:1fr}.brand small{display:none}.hero-box{padding:23px}}
+
+    /* V7.1 — cadastro guiado, legível e autoexplicativo */
+    .modal{width:min(1040px,100%)}
+    .modal-head{padding:22px 26px}
+    .modal-head h3{font-size:24px;line-height:1.2}
+    .modal-head p{font-size:14px!important;line-height:1.45!important}
+    .modal-body{padding:24px 26px 28px}
+    .types{gap:10px;margin-bottom:22px}
+    .type-btn{min-height:58px;padding:12px;font-size:15px;border-radius:13px}
+    .field{gap:8px}
+    .field label{font-size:14px;font-weight:800;color:#33483e}
+    .field input,.field select,.field textarea{
+      min-height:52px;border-radius:12px;padding:13px 14px;font-size:16px
+    }
+    .field textarea{min-height:110px}
+    .helper{font-size:13px;color:var(--muted);line-height:1.4}
+    .stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
+    .step-indicator{display:flex;align-items:center;gap:9px;padding:10px;border-radius:12px;color:#718078;font-size:13px;font-weight:800;background:#f5f7f6}
+    .step-indicator .num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#e6ece9;color:#506159}
+    .step-indicator.active{background:var(--greenSoft);color:#08784b}
+    .step-indicator.active .num,.step-indicator.done .num{background:var(--green);color:#fff}
+    .form-step{display:none}
+    .form-step.active{display:block}
+    .step-title{font-size:23px;line-height:1.2;margin-bottom:6px}
+    .step-subtitle{font-size:14px;color:var(--muted);margin-bottom:20px}
+    .choice-help{background:#f7faf8;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:14px;color:#4c6056}
+    .choice-help b{color:var(--ink)}
+    .material-row{
+      display:block;padding:18px;border-radius:15px;margin-top:12px;background:#f9fbfa
+    }
+    .material-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .material-title strong{font-size:16px}
+    .material-grid{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:13px}
+    .material-grid .wide{grid-column:span 2}
+    .material-cell{display:flex;flex-direction:column;gap:6px}
+    .material-cell label{font-size:13px;font-weight:800;color:#43574d}
+    .material-cell small{font-size:12px;color:var(--muted);line-height:1.35}
+    .material-cell input,.material-cell select{min-height:50px;width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 13px;font-size:15px;background:#fff}
+    .remove{width:38px;height:38px;border-radius:10px;font-size:18px}
+    .examples{margin:14px 0 4px;border:1px solid #cfe3d9;background:#f3faf6;border-radius:14px;overflow:hidden}
+    .examples summary{cursor:pointer;padding:14px 16px;font-size:14px;font-weight:850;color:#176a48}
+    .examples-content{padding:0 16px 16px}
+    .examples-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:10px;overflow:hidden}
+    .examples-table th,.examples-table td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+    .examples-table th{background:#edf6f1}
+    .examples-note{font-size:12px;color:var(--muted);margin-top:9px}
+    .step-actions{display:flex;justify-content:space-between;gap:10px;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+    .step-actions .btn{min-height:50px;font-size:14px;padding:0 20px}
+    .review{display:grid;gap:12px}
+    .review-card{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafcfb}
+    .review-card h4{font-size:14px;margin-bottom:7px}
+    .review-card p{font-size:14px;color:#52645b}
+    .optional{font-size:12px;font-weight:650;color:#829087}
+    @media(max-width:760px){
+      .modal-bg{padding:0;align-items:stretch}
+      .modal{max-height:100vh;border-radius:0;width:100%}
+      .modal-head{padding:18px}
+      .modal-body{padding:18px}
+      .stepper{grid-template-columns:repeat(4,1fr)}
+      .step-indicator{justify-content:center;padding:8px 4px}
+      .step-indicator span:last-child{display:none}
+      .types{grid-template-columns:1fr 1fr}
+      .material-grid{grid-template-columns:1fr}
+      .material-grid .wide{grid-column:auto}
+      .grid{grid-template-columns:1fr}
+    }
+
   </style>
 </head>
 
@@ -184,48 +251,140 @@
 <div class="modal-bg" id="modalBg">
   <div class="modal">
     <div class="modal-head">
-      <div><h3>Cadastrar material</h3><p style="font-size:10px;color:var(--muted);margin-top:3px">Cadastre uma empresa e todos os materiais dessa mesma necessidade.</p></div>
-      <button class="close" onclick="closeForm()">✕</button>
+      <div>
+        <h3>Cadastrar material</h3>
+        <p style="color:var(--muted);margin-top:5px">Leva poucos minutos. Se não souber algum detalhe, você pode deixar o campo opcional em branco.</p>
+      </div>
+      <button class="close" onclick="closeForm()" aria-label="Fechar">✕</button>
     </div>
 
     <div class="modal-body">
-      <div class="types">
-        <button class="type-btn active" data-type="venda">Venda</button>
-        <button class="type-btn" data-type="compra">Compra</button>
-        <button class="type-btn" data-type="cessao">Cessão</button>
-        <button class="type-btn" data-type="destinacao">Destinação</button>
+      <div class="stepper">
+        <div class="step-indicator active" data-step-indicator="1"><span class="num">1</span><span>Objetivo</span></div>
+        <div class="step-indicator" data-step-indicator="2"><span class="num">2</span><span>Material</span></div>
+        <div class="step-indicator" data-step-indicator="3"><span class="num">3</span><span>Local e empresa</span></div>
+        <div class="step-indicator" data-step-indicator="4"><span class="num">4</span><span>Conferir</span></div>
       </div>
 
       <form id="form">
         <input type="hidden" id="tipo" name="tipo" value="venda">
-        <input type="hidden" name="origem" value="site-v7-lite">
+        <input type="hidden" name="origem" value="site-v7.1-guiado">
 
-        <div class="field full">
-          <label>Materiais *</label>
+        <section class="form-step active" data-step="1">
+          <h4 class="step-title">O que sua empresa precisa fazer?</h4>
+          <p class="step-subtitle">Escolha a opção que mais combina com sua situação.</p>
+
+          <div class="types">
+            <button type="button" class="type-btn active" data-type="venda">💰 Quero vender</button>
+            <button type="button" class="type-btn" data-type="compra">🔎 Quero comprar</button>
+            <button type="button" class="type-btn" data-type="cessao">🤝 Quero ceder</button>
+            <button type="button" class="type-btn" data-type="destinacao">♻️ Preciso destinar</button>
+          </div>
+
+          <div class="choice-help" id="typeHelp"><b>Venda:</b> sua empresa tem um material e quer receber por ele.</div>
+
+          <div class="step-actions">
+            <button class="btn btn-outline" type="button" onclick="closeForm()">Cancelar</button>
+            <button class="btn btn-primary" type="button" onclick="nextStep()">Continuar →</button>
+          </div>
+        </section>
+
+        <section class="form-step" data-step="2">
+          <h4 class="step-title">Qual é o material?</h4>
+          <p class="step-subtitle">Cadastre um ou vários materiais da mesma necessidade. Os campos com * são essenciais.</p>
+
           <div id="materials"></div>
-          <button class="btn btn-outline" type="button" style="margin-top:7px" onclick="addMaterial()">+ Adicionar material</button>
-        </div>
+          <button class="btn btn-outline" type="button" style="margin-top:12px;min-height:50px;font-size:14px" onclick="addMaterial()">+ Adicionar outro material</button>
 
-        <div class="grid" style="margin-top:14px">
-          <div class="field"><label>Cidade / UF *</label><input name="cidadeUF" required placeholder="Ex.: Piracicaba/SP"></div>
-          <div class="field"><label>Logística</label><input name="logistica" placeholder="Retirada, entrega, transportadora..."></div>
-          <div class="field"><label>Materiais que não interessam</label><input name="restricoes" placeholder="Ex.: PET, PVC rígido"></div>
-          <div class="field dest-only"><label>Custo atual de destinação</label><input name="custoAtual" placeholder="Ex.: R$ 250/t"></div>
-          <div class="field full"><label>Observações</label><textarea name="observacoes" placeholder="Informações adicionais importantes"></textarea></div>
-        </div>
+          <details class="examples">
+            <summary>Não sei a diferença entre material, formato e especificação — ver exemplos</summary>
+            <div class="examples-content">
+              <table class="examples-table">
+                <thead><tr><th>Material</th><th>Formato</th><th>Especificação</th></tr></thead>
+                <tbody>
+                  <tr><td>PP</td><td>Moído</td><td>Preto, pós-industrial, sem carga</td></tr>
+                  <tr><td>PEAD</td><td>Aparas</td><td>Natural, limpo</td></tr>
+                  <tr><td>Papelão</td><td>Fardos</td><td>Ondulado, seco</td></tr>
+                  <tr><td>Alumínio</td><td>Retalhos</td><td>Liga 6061, sem óleo</td></tr>
+                </tbody>
+              </table>
+              <div class="examples-note"><b>Regra simples:</b> material = o que é; formato = como ele está fisicamente; especificação = detalhes que ajudam o comprador a saber se serve.</div>
+            </div>
+          </details>
 
-        <div class="grid" style="margin-top:14px">
-          <div class="field"><label>Empresa *</label><input name="empresa" required></div>
-          <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
-          <div class="field"><label>WhatsApp</label><input name="whatsapp"></div>
-          <div class="field"><label>E-mail</label><input name="email" type="email"></div>
-        </div>
+          <div class="step-actions">
+            <button class="btn btn-outline" type="button" onclick="prevStep()">← Voltar</button>
+            <button class="btn btn-primary" type="button" onclick="nextStep()">Continuar →</button>
+          </div>
+        </section>
 
-        <div class="form-actions">
-          <button class="btn btn-outline" type="button" onclick="closeForm()">Cancelar</button>
-          <button class="btn btn-primary" type="submit" id="submitBtn">Enviar cadastro</button>
-        </div>
-        <div class="success" id="success">✓ Cadastro recebido. A Circular B2B vai considerar os dados nos próximos matchings.</div>
+        <section class="form-step" data-step="3">
+          <h4 class="step-title">Onde está o material e com quem falamos?</h4>
+          <p class="step-subtitle">Esses dados ajudam a calcular viabilidade logística e permitem que a Circular B2B entre em contato.</p>
+
+          <div class="grid">
+            <div class="field">
+              <label>Cidade / UF *</label>
+              <input name="cidadeUF" required placeholder="Ex.: Piracicaba/SP">
+              <span class="helper">Informe onde o material está ou onde sua empresa precisa recebê-lo.</span>
+            </div>
+            <div class="field">
+              <label>Logística <span class="optional">(opcional)</span></label>
+              <input name="logistica" placeholder="Ex.: posso entregar / precisa retirar">
+              <span class="helper">Se souber, diga como costuma funcionar o transporte.</span>
+            </div>
+            <div class="field">
+              <label>Materiais que não interessam <span class="optional">(opcional)</span></label>
+              <input name="restricoes" placeholder="Ex.: não aceitamos PET nem PVC rígido">
+              <span class="helper">Muito útil para evitar ofertas erradas no futuro.</span>
+            </div>
+            <div class="field dest-only">
+              <label>Custo atual de destinação <span class="optional">(opcional)</span></label>
+              <input name="custoAtual" placeholder="Ex.: R$ 250 por tonelada">
+              <span class="helper">Ajuda a Circular a buscar uma alternativa economicamente melhor.</span>
+            </div>
+            <div class="field full">
+              <label>Observações <span class="optional">(opcional)</span></label>
+              <textarea name="observacoes" placeholder="Ex.: material fica armazenado em big bags; retirada com agendamento; temos fotos e laudo..."></textarea>
+            </div>
+          </div>
+
+          <div class="grid" style="margin-top:20px">
+            <div class="field">
+              <label>Empresa *</label>
+              <input name="empresa" required placeholder="Nome da empresa">
+            </div>
+            <div class="field">
+              <label>Responsável *</label>
+              <input name="responsavel" required placeholder="Nome de quem podemos procurar">
+            </div>
+            <div class="field">
+              <label>WhatsApp <span class="optional">(recomendado)</span></label>
+              <input name="whatsapp" inputmode="tel" placeholder="(19) 99999-9999">
+            </div>
+            <div class="field">
+              <label>E-mail <span class="optional">(opcional)</span></label>
+              <input name="email" type="email" placeholder="empresa@exemplo.com">
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button class="btn btn-outline" type="button" onclick="prevStep()">← Voltar</button>
+            <button class="btn btn-primary" type="button" onclick="nextStep()">Conferir cadastro →</button>
+          </div>
+        </section>
+
+        <section class="form-step" data-step="4">
+          <h4 class="step-title">Confira antes de enviar</h4>
+          <p class="step-subtitle">Se algo estiver errado, volte e corrija. Seus contatos não serão exibidos publicamente.</p>
+          <div id="review" class="review"></div>
+
+          <div class="step-actions">
+            <button class="btn btn-outline" type="button" onclick="prevStep()">← Corrigir</button>
+            <button class="btn btn-primary" type="submit" id="submitBtn">✓ Enviar cadastro</button>
+          </div>
+          <div class="success" id="success">✓ Cadastro recebido. A Circular B2B vai considerar os dados nos próximos matchings.</div>
+        </section>
       </form>
     </div>
   </div>
@@ -255,16 +414,54 @@
   }
 
   function materialHtml(){
+    const n=document.querySelectorAll('.material-row').length+1;
     return `<div class="material-row">
-      <select data-field="categoria" required>${opts(CATEGORY_OPTIONS)}</select>
-      <input data-field="material" required placeholder="Material">
-      <input data-field="condicao" placeholder="Formato">
-      <input data-field="especificacao" placeholder="Especificação">
-      <input data-field="quantidade" placeholder="Qtd.">
-      <select data-field="unidade">${opts(UNIT_OPTIONS)}</select>
-      <select data-field="frequencia">${opts(FREQ_OPTIONS)}</select>
-      <input data-field="precoReferencia" placeholder="Preço / referência">
-      <button type="button" class="remove" onclick="removeMaterial(this)">×</button>
+      <div class="material-title">
+        <strong>Material ${n}</strong>
+        <button type="button" class="remove" onclick="removeMaterial(this)" title="Remover material">×</button>
+      </div>
+      <div class="material-grid">
+        <div class="material-cell">
+          <label>Categoria *</label>
+          <select data-field="categoria" required>${opts(CATEGORY_OPTIONS)}</select>
+          <small>Ex.: Plásticos, Metais, Papel e papelão.</small>
+        </div>
+        <div class="material-cell">
+          <label>Material *</label>
+          <input data-field="material" required placeholder="Ex.: PP, PEAD, papelão, alumínio">
+          <small>Digite o nome do material. Se não souber a sigla, escreva como conhece.</small>
+        </div>
+        <div class="material-cell">
+          <label>Formato <span class="optional">(opcional)</span></label>
+          <input data-field="condicao" placeholder="Ex.: moído, aparas, peças, fardos">
+          <small>Como o material está fisicamente.</small>
+        </div>
+        <div class="material-cell wide">
+          <label>Especificação <span class="optional">(opcional)</span></label>
+          <input data-field="especificacao" placeholder="Ex.: preto, limpo, pós-industrial, sem contaminação">
+          <small>Cor, origem, pureza, composição, contaminação ou qualquer detalhe importante.</small>
+        </div>
+        <div class="material-cell">
+          <label>Quantidade <span class="optional">(opcional)</span></label>
+          <input data-field="quantidade" inputmode="decimal" placeholder="Ex.: 5.000">
+          <small>Pode ser aproximada.</small>
+        </div>
+        <div class="material-cell">
+          <label>Unidade</label>
+          <select data-field="unidade">${opts(UNIT_OPTIONS)}</select>
+          <small>Kg, toneladas, unidades etc.</small>
+        </div>
+        <div class="material-cell">
+          <label>Frequência</label>
+          <select data-field="frequencia">${opts(FREQ_OPTIONS)}</select>
+          <small>É um lote único ou aparece sempre?</small>
+        </div>
+        <div class="material-cell">
+          <label>Preço / referência <span class="optional">(opcional)</span></label>
+          <input data-field="precoReferencia" placeholder="Ex.: R$ 4,50/kg">
+          <small>Se não souber ou preferir negociar depois, deixe em branco.</small>
+        </div>
+      </div>
     </div>`;
   }
 
@@ -282,10 +479,94 @@
     }).filter(x=>x.material);
   }
 
+
+  let currentStep=1;
+
+  const TYPE_HELP={
+    venda:'<b>Venda:</b> sua empresa tem um material e quer receber por ele.',
+    compra:'<b>Compra:</b> sua empresa procura um material para comprar.',
+    cessao:'<b>Cessão:</b> sua empresa tem material disponível e pode entregá-lo sem cobrar pelo material.',
+    destinacao:'<b>Destinação:</b> sua empresa precisa dar uma saída correta ao material ou resíduo, inclusive quando hoje existe custo para isso.'
+  };
+
+  function showStep(step){
+    currentStep=Math.max(1,Math.min(4,step));
+    document.querySelectorAll('.form-step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===currentStep));
+    document.querySelectorAll('.step-indicator').forEach(x=>{
+      const n=Number(x.dataset.stepIndicator);
+      x.classList.toggle('active',n===currentStep);
+      x.classList.toggle('done',n<currentStep);
+    });
+    if(currentStep===4) buildReview();
+    const modal=document.querySelector('.modal');
+    if(modal) modal.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function validateStep(step){
+    if(step===2){
+      const rows=[...document.querySelectorAll('.material-row')];
+      if(!rows.length) return false;
+      for(const row of rows){
+        const categoria=row.querySelector('[data-field="categoria"]');
+        const material=row.querySelector('[data-field="material"]');
+        if(!categoria.value || !material.value.trim()){
+          alert('Preencha pelo menos a categoria e o nome de cada material.');
+          return false;
+        }
+      }
+    }
+    if(step===3){
+      const required=[...document.querySelectorAll('.form-step[data-step="3"] [required]')];
+      for(const el of required){
+        if(!el.value.trim()){
+          el.focus();
+          alert('Preencha os campos obrigatórios antes de continuar.');
+          return false;
+        }
+      }
+      const email=document.querySelector('[name="email"]');
+      if(email.value && !email.checkValidity()){
+        email.focus(); alert('Confira o endereço de e-mail.'); return false;
+      }
+    }
+    return true;
+  }
+
+  function nextStep(){
+    if(!validateStep(currentStep)) return;
+    showStep(currentStep+1);
+  }
+  function prevStep(){ showStep(currentStep-1); }
+
+  function buildReview(){
+    const f=document.getElementById('form');
+    const data=Object.fromEntries(new FormData(f).entries());
+    const mats=collectMaterials();
+    const typeLabel={venda:'Venda',compra:'Compra',cessao:'Cessão',destinacao:'Destinação'}[data.tipo]||data.tipo;
+    const matsHtml=mats.map((m,i)=>{
+      const details=[
+        m.condicao && `Formato: ${escapeHtml(m.condicao)}`,
+        m.especificacao && `Especificação: ${escapeHtml(m.especificacao)}`,
+        m.quantidade && `Quantidade: ${escapeHtml([m.quantidade,m.unidade].filter(Boolean).join(' '))}`,
+        m.frequencia && `Frequência: ${escapeHtml(m.frequencia)}`,
+        m.precoReferencia && `Preço/ref.: ${escapeHtml(m.precoReferencia)}`
+      ].filter(Boolean).join(' • ');
+      return `<div class="review-card"><h4>${i+1}. ${escapeHtml(m.material)}</h4><p>${details||'Sem detalhes adicionais.'}</p></div>`;
+    }).join('');
+
+    document.getElementById('review').innerHTML=`
+      <div class="review-card"><h4>Objetivo</h4><p>${escapeHtml(typeLabel)}</p></div>
+      ${matsHtml}
+      <div class="review-card"><h4>Local</h4><p>${escapeHtml(data.cidadeUF||'')} ${data.logistica?' • '+escapeHtml(data.logistica):''}</p></div>
+      <div class="review-card"><h4>Empresa e contato</h4><p>${escapeHtml(data.empresa||'')} • ${escapeHtml(data.responsavel||'')}${data.whatsapp?' • '+escapeHtml(data.whatsapp):''}${data.email?' • '+escapeHtml(data.email):''}</p></div>
+    `;
+  }
+
   function openForm(type='venda'){
     document.getElementById('modalBg').classList.add('open');
     document.body.style.overflow='hidden';
     setType(type);
+    showStep(1);
   }
   function closeForm(){
     document.getElementById('modalBg').classList.remove('open');
@@ -295,6 +576,8 @@
     document.getElementById('tipo').value=type;
     document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active',b.dataset.type===type));
     document.querySelectorAll('.dest-only').forEach(x=>x.classList.toggle('show',type==='destinacao'));
+    const help=document.getElementById('typeHelp');
+    if(help) help.innerHTML=TYPE_HELP[type]||'';
   }
 
   document.querySelectorAll('.type-btn').forEach(btn=>btn.addEventListener('click',()=>setType(btn.dataset.type)));
@@ -329,6 +612,7 @@
         document.getElementById('materials').innerHTML='';
         addMaterial();
         setType('venda');
+        showStep(1);
         btn.disabled=false;
         btn.textContent='Enviar cadastro';
         closeForm();
