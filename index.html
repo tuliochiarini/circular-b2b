@@ -4,355 +4,129 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Circular B2B — rede de oportunidades para compra, venda, destinação e soluções em materiais industriais.">
-  <title>Circular B2B — Mercado B2B de materiais industriais</title>
+  <meta name="description" content="Circular B2B — rede para compra, venda, cessão e destinação de materiais industriais.">
+  <title>Circular B2B — Mercado de materiais industriais</title>
 
   <style>
     :root{
-      --bg:#f5f7f6;
-      --card:#fff;
-      --ink:#0b1d16;
-      --muted:#6a7a72;
-      --line:#dfe7e3;
-      --green:#0fa968;
-      --green2:#17c77b;
-      --greenSoft:#eaf7f1;
-      --dark:#071b14;
-      --dark2:#0b2a20;
-      --gold:#d4a84f;
-      --blue:#2d72df;
-      --purple:#7650bd;
-      --amber:#e9a11a;
-      --shadow:0 16px 50px rgba(8,30,22,.08);
-      --radius:18px;
-      --container:1280px;
+      --bg:#f5f7f6;--card:#fff;--ink:#0b1d16;--muted:#6a7a72;--line:#dfe7e3;
+      --green:#0fa968;--green2:#17c77b;--greenSoft:#eaf7f1;--dark:#071b14;
+      --blue:#2d72df;--purple:#7650bd;--amber:#e9a11a;--shadow:0 16px 50px rgba(8,30,22,.08);
+      --radius:18px;--container:1240px;
     }
-
     *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg);
-      color:var(--ink);
-      line-height:1.5;
-    }
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
     button,input,select,textarea{font:inherit}
     button{cursor:pointer}
-    a{text-decoration:none;color:inherit}
-    .container{width:min(var(--container),calc(100% - 36px));margin:0 auto}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .btn{
-      min-height:44px;padding:0 16px;border-radius:11px;border:1px solid transparent;
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      font-size:13px;font-weight:800;transition:.18s ease;
-    }
-    .btn:hover{transform:translateY(-1px)}
+    .container{width:min(var(--container),calc(100% - 32px));margin:auto}
+    header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{width:44px;height:44px;border-radius:13px;background:var(--dark);display:grid;place-items:center;color:#fff;font-weight:900}
+    .brand strong{display:block;letter-spacing:.08em}
+    .brand small{color:var(--muted);font-size:10px}
+    .btn{border:0;border-radius:11px;min-height:44px;padding:0 16px;font-size:12px;font-weight:850}
     .btn-primary{background:var(--green);color:#fff}
-    .btn-primary:hover{background:var(--green2)}
-    .btn-outline{background:#fff;border-color:var(--line);color:var(--ink)}
-    .btn-dark{background:var(--dark);color:#fff}
-    .eyebrow{
-      display:inline-flex;align-items:center;gap:7px;
-      font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#0b7d4f;
-    }
-    .eyebrow::before{content:"";width:7px;height:7px;border-radius:999px;background:var(--green)}
-
-    /* Header */
-    header{
-      position:sticky;top:0;z-index:70;
-      background:rgba(255,255,255,.95);backdrop-filter:blur(14px);
-      border-bottom:1px solid var(--line);
-    }
-    .nav{height:74px;display:flex;align-items:center;gap:30px}
-    .brand{display:flex;align-items:center;gap:11px;min-width:260px}
-    .brand-mark{
-      width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,#0a2a20,#06150f);
-      display:grid;place-items:center;border:1px solid rgba(212,168,79,.25);
-    }
-    .brand-mark svg{width:32px;height:32px}
-    .brand-copy strong{display:block;font-size:19px;letter-spacing:.09em;font-weight:900}
-    .brand-copy small{display:block;margin-top:3px;font-size:9px;color:var(--muted)}
-    .nav-links{display:flex;gap:24px;align-items:center;flex:1}
-    .nav-links a{font-size:12px;font-weight:750;color:#42564b}
-    .nav-links a:hover{color:var(--green)}
-    .nav-actions{display:flex;gap:9px}
-    .menu{display:none}
-
-    /* Hero */
+    .btn-outline{background:#fff;border:1px solid var(--line);color:var(--ink)}
     .hero{padding:42px 0 20px}
-    .hero-box{
-      display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;
-      padding:34px;background:linear-gradient(135deg,var(--dark),#0c3225 70%,#0d3d2c);
-      color:white;border-radius:24px;overflow:hidden;position:relative;
-      box-shadow:0 22px 70px rgba(8,30,22,.17);
-    }
-    .hero-box::after{
-      content:"";position:absolute;width:360px;height:360px;border-radius:50%;
-      right:-110px;bottom:-180px;border:1px solid rgba(255,255,255,.10);
-      box-shadow:0 0 0 35px rgba(255,255,255,.025),0 0 0 70px rgba(255,255,255,.018);
-    }
-    .hero-copy{position:relative;z-index:2}
-    .hero .eyebrow{color:#9bf2c8}
-    .hero h1{
-      font-size:clamp(38px,5vw,64px);line-height:1;letter-spacing:-.045em;
-      margin:14px 0 16px;max-width:740px;
-    }
+    .hero-box{background:linear-gradient(135deg,var(--dark),#0d3c2b);color:white;border-radius:24px;padding:34px;display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
+    .hero h1{font-size:clamp(38px,5vw,64px);line-height:1;letter-spacing:-.04em;margin-bottom:16px}
     .hero h1 span{color:#58e7a7}
-    .hero p{max-width:700px;color:#c1d1c9;font-size:15px;line-height:1.7}
-    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-    .hero-trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;color:#b7c9c0;font-size:10px}
-    .hero-trust span{display:flex;align-items:center;gap:6px}
-    .hero-trust i{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:#13b973;color:#00150c;font-style:normal;font-size:9px;font-weight:900}
-
-    .hero-search{
-      position:relative;z-index:2;background:rgba(255,255,255,.96);border-radius:18px;padding:18px;color:var(--ink);
-      border:1px solid rgba(255,255,255,.18);box-shadow:0 24px 70px rgba(0,0,0,.20);
-    }
-    .hero-search h3{font-size:16px;margin-bottom:5px}
-    .hero-search p{color:var(--muted);font-size:10px;margin-bottom:13px}
-    .search-main{display:grid;grid-template-columns:1fr 150px;gap:8px}
-    .search-main input,.search-main select{
-      height:46px;border:1px solid var(--line);border-radius:10px;padding:0 12px;outline:0;background:white;
-    }
-    .search-main input:focus,.search-main select:focus{border-color:#7cc7a3;box-shadow:0 0 0 3px rgba(15,169,104,.08)}
-    .search-main .btn{grid-column:1/-1}
-    .popular{margin-top:12px;display:flex;gap:7px;flex-wrap:wrap}
-    .popular button{
-      border:1px solid var(--line);background:#f7faf8;border-radius:999px;padding:6px 9px;font-size:9px;color:#496056;
-    }
-
-    /* Intent cards */
-    .intents{padding:16px 0 10px}
+    .hero p{color:#c0d0c8;max-width:700px}
+    .hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+    .hero-side{background:#fff;color:var(--ink);border-radius:18px;padding:18px}
+    .hero-side h3{font-size:17px;margin-bottom:7px}
+    .hero-side p{font-size:11px;color:var(--muted);margin-bottom:12px}
+    .search{display:grid;gap:8px}
+    .search input,.search select{height:44px;border:1px solid var(--line);border-radius:10px;padding:0 11px;background:#fff}
+    .intents{padding:16px 0}
     .intent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .intent{
-      background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px;
-      display:flex;gap:11px;align-items:flex-start;transition:.18s;cursor:pointer;
-    }
-    .intent:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#c7d9d0}
-    .intent-icon{
-      width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:0 0 42px;
-      background:var(--greenSoft);color:var(--green);font-size:17px;
-    }
-    .intent:nth-child(2) .intent-icon{background:#fff5df;color:var(--amber)}
-    .intent:nth-child(3) .intent-icon{background:#efeafb;color:var(--purple)}
-    .intent:nth-child(4) .intent-icon{background:#eaf2ff;color:var(--blue)}
-    .intent h3{font-size:13px;margin-bottom:3px}
-    .intent p{font-size:10px;color:var(--muted)}
-
-    /* Marketplace */
-    .market{padding:24px 0 16px}
-    .section-head{
-      display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:14px;
-    }
-    .section-head h2{font-size:28px;letter-spacing:-.03em}
-    .section-head p{font-size:11px;color:var(--muted);margin-top:4px}
-    .live{font-size:9px;color:var(--green);font-weight:900;margin-left:7px}
-    .filterbar{
-      display:grid;grid-template-columns:1.4fr repeat(3,minmax(130px,.6fr));gap:8px;
-      padding:12px;margin-bottom:12px;
-    }
-    .filterbar input,.filterbar select{
-      height:42px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 11px;outline:0;
-    }
-    .tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
-    .tab{
-      border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 12px;font-size:10px;font-weight:800;color:#5c6d64;
-    }
-    .tab.active{background:var(--green);border-color:var(--green);color:#fff}
+    .intent{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;cursor:pointer;transition:.18s}
+    .intent:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+    .intent b{display:block;margin-bottom:5px}
+    .intent p{font-size:11px;color:var(--muted)}
+    .market{padding:24px 0 44px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:14px}
+    .section-head h2{font-size:30px}
+    .section-head p{font-size:11px;color:var(--muted)}
+    .filters{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;display:grid;grid-template-columns:1.5fr .7fr .7fr;gap:8px;margin-bottom:12px}
+    .filters input,.filters select{height:42px;border:1px solid var(--line);border-radius:9px;padding:0 10px;background:#fff}
     .opps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .opp{
-      min-height:244px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;
-      display:flex;flex-direction:column;transition:.18s;
-    }
-    .opp:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-    .opp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-    .pill{font-size:8px;font-weight:900;padding:4px 7px;border-radius:6px;color:#fff}
-    .demand{background:var(--blue)} .offer{background:var(--green)} .dest{background:var(--purple)}
-    .opp-status{font-size:8px;color:var(--muted);font-weight:750}
+    .opp{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;min-height:220px;display:flex;flex-direction:column}
+    .pill{display:inline-block;padding:4px 7px;border-radius:6px;font-size:8px;font-weight:900;color:#fff;margin-bottom:10px}
+    .compra{background:var(--blue)} .venda{background:var(--green)} .cessao{background:var(--amber)} .destinacao{background:var(--purple)}
     .opp h3{font-size:15px;margin-bottom:4px}
-    .meta{font-size:9px;color:var(--muted);margin-bottom:12px}
-    .opp-data{display:grid;gap:6px;margin-bottom:14px}
-    .opp-data div{display:flex;justify-content:space-between;gap:10px;font-size:9px;color:#6b7c73}
-    .opp-data b{text-align:right;color:#1d3027}
-    .opp .btn{width:100%;margin-top:auto;min-height:38px;font-size:10px}
-    .empty{
-      grid-column:1/-1;text-align:center;padding:46px;border:1px dashed #cbd8d1;border-radius:14px;color:var(--muted);display:none;background:#fff;
-    }
-
-    /* Platform section */
-    .platform{padding:34px 0 12px}
-    .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .platform-card{padding:22px}
-    .platform-card h3{font-size:19px;margin:8px 0}
-    .platform-card p{font-size:11px;color:var(--muted);line-height:1.7}
-    .platform-list{display:grid;gap:9px;margin-top:14px}
-    .platform-list div{display:flex;gap:8px;font-size:10px;color:#44584e}
-    .platform-list i{color:var(--green);font-style:normal;font-weight:900}
-
-    /* CTA */
-    .cta{padding:24px 0 8px}
-    .cta-box{
-      padding:26px;border-radius:20px;background:linear-gradient(135deg,var(--dark),#0e382a);color:white;
-      display:flex;justify-content:space-between;align-items:center;gap:20px;
-    }
-    .cta h2{font-size:28px;letter-spacing:-.03em}
-    .cta p{font-size:11px;color:#b8cbc2;margin-top:4px}
-    .cta-actions{display:flex;gap:8px;flex-wrap:wrap}
-
-
-    .material-builder-row{display:grid;grid-template-columns:1fr 1.1fr 1.1fr 1.25fr .65fr .75fr 1fr 1fr 36px;gap:7px;padding:10px;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:#f9fbfa}
-    .material-builder-row input,.material-builder-row select{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:9px;background:#fff;font-size:9px;outline:0}
-    .material-builder-row .remove-material{border:1px solid var(--line);background:#fff;border-radius:9px;color:#8b3d3d}
-    .material-head{display:grid;grid-template-columns:1fr 1.1fr 1.1fr 1.25fr .65fr .75fr 1fr 1fr 36px;gap:7px;margin-top:8px;padding:0 10px}
-    .material-head span{font-size:8px;font-weight:850;color:#61736a}
-    @media(max-width:900px){.material-head{display:none}.material-builder-row{grid-template-columns:1fr 1fr}}
-
-    /* Modal */
-    .modal-backdrop{
-      position:fixed;inset:0;z-index:100;background:rgba(5,15,11,.58);backdrop-filter:blur(8px);
-      display:none;align-items:center;justify-content:center;padding:18px;
-    }
-    .modal-backdrop.open{display:flex}
-    .modal{
-      width:min(820px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;border:1px solid var(--line);
-      box-shadow:0 40px 120px rgba(0,0,0,.28);
-    }
-    .modal-head{
-      position:sticky;top:0;z-index:3;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);
-      padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;align-items:flex-start;
-    }
-    .modal-head h3{font-size:20px}
-    .modal-head p{font-size:10px;color:var(--muted);margin-top:4px}
-    .close{width:36px;height:36px;border:1px solid var(--line);border-radius:9px;background:#fff}
-    .modal-body{padding:20px}
-    .type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:18px}
-    .type-btn{
-      border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;font-size:10px;font-weight:850;color:#5d6e65;
-    }
-    .type-btn.active{background:var(--greenSoft);border-color:#acd8c3;color:#08784b}
-    .stepbar{display:flex;gap:7px;margin:2px 0 18px}
-    .stepdot{height:4px;flex:1;background:#e8eeeb;border-radius:999px}
-    .stepdot.active{background:var(--green)}
-    .form-step{display:none}
-    .form-step.active{display:block}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .field{display:flex;flex-direction:column;gap:6px}
+    .meta{font-size:9px;color:var(--muted);margin-bottom:10px}
+    .data{display:grid;gap:6px;font-size:9px;color:#63746b}
+    .data div{display:flex;justify-content:space-between;gap:10px}
+    .data b{text-align:right;color:#1d3027}
+    .empty{grid-column:1/-1;padding:40px;text-align:center;border:1px dashed #ccd8d2;border-radius:14px;color:var(--muted);background:#fff}
+    footer{padding:28px 0;color:var(--muted);font-size:10px}
+    .modal-bg{position:fixed;inset:0;background:rgba(5,15,11,.6);backdrop-filter:blur(7px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+    .modal-bg.open{display:flex}
+    .modal{width:min(860px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;border:1px solid var(--line)}
+    .modal-head{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:17px 19px;display:flex;justify-content:space-between;align-items:start;z-index:2}
+    .close{width:34px;height:34px;border:1px solid var(--line);background:#fff;border-radius:9px}
+    .modal-body{padding:18px}
+    .types{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:16px}
+    .type-btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;font-size:10px;font-weight:850}
+    .type-btn.active{background:var(--greenSoft);border-color:#a9d9c1;color:#08784b}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    .field{display:flex;flex-direction:column;gap:5px}
     .field.full{grid-column:1/-1}
     .field label{font-size:9px;font-weight:850;color:#52645b}
-    .field input,.field select,.field textarea{
-      width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;outline:0;background:#fff;color:var(--ink);font-size:10px;
-    }
-    .field textarea{min-height:88px;resize:vertical}
-    .field input:focus,.field select:focus,.field textarea:focus{border-color:#7cc7a3;box-shadow:0 0 0 3px rgba(15,169,104,.08)}
-    .conditional{display:none}
-    .conditional.show{display:flex}
-    .form-nav{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:16px}
-    .form-note{font-size:8px;color:var(--muted);max-width:450px}
-    .success{
-      display:none;margin-top:14px;padding:11px 12px;border-radius:10px;background:var(--greenSoft);color:#087347;border:1px solid #cbe9da;font-size:10px;font-weight:800;
-    }
-
-    footer{padding:28px 0 34px;color:var(--muted);font-size:9px}
-    .footer-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
-
-    @media(max-width:1000px){
-      .nav-links{display:none}.menu{display:block}
-      .hero-box{grid-template-columns:1fr}
-      .intent-grid{grid-template-columns:1fr 1fr}
-      .filterbar{grid-template-columns:1fr 1fr}
-      .opps{grid-template-columns:1fr 1fr}
-    }
-    @media(max-width:650px){
-      .container{width:min(var(--container),calc(100% - 24px))}
-      .brand{min-width:auto}.brand-copy small{display:none}.nav-actions .btn{display:none}
-      .hero{padding-top:24px}.hero-box{padding:22px}.hero h1{font-size:40px}
-      .search-main{grid-template-columns:1fr}
-      .search-main .btn{grid-column:auto}
-      .intent-grid,.platform-grid,.opps{grid-template-columns:1fr}
-      .filterbar{grid-template-columns:1fr}
-      .cta-box{flex-direction:column;align-items:flex-start}
-      .type-grid{grid-template-columns:1fr 1fr}
-      .form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
-    }
+    .field input,.field select,.field textarea{border:1px solid var(--line);border-radius:9px;padding:10px;background:#fff;font-size:10px}
+    .field textarea{min-height:82px;resize:vertical}
+    .material-row{display:grid;grid-template-columns:.8fr 1fr 1fr 1fr .6fr .7fr .8fr 1fr 36px;gap:6px;padding:9px;border:1px solid var(--line);border-radius:11px;margin-top:7px;background:#f9fbfa}
+    .material-row input,.material-row select{width:100%;min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:9px;background:#fff}
+    .remove{border:1px solid var(--line);background:#fff;border-radius:8px}
+    .form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+    .success{display:none;margin-top:12px;padding:11px;border-radius:10px;background:var(--greenSoft);color:#08784b;font-size:10px;font-weight:800}
+    .dest-only{display:none}
+    .dest-only.show{display:flex}
+    @media(max-width:900px){.hero-box{grid-template-columns:1fr}.intent-grid,.opps{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr}.material-row{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+    @media(max-width:600px){.intent-grid,.opps{grid-template-columns:1fr}.brand small{display:none}.hero-box{padding:23px}}
   </style>
 </head>
-<body>
 
+<body>
 <header>
   <div class="container nav">
-    <a class="brand" href="#top">
-      <span class="brand-mark">
-        <svg viewBox="0 0 64 64" aria-hidden="true">
-          <path d="M14 18c8-8 21-8 29 0l5 5-8 8-5-5c-4-4-10-4-14 0l-7 7c-4 4-4 10 0 14s10 4 14 0l7-7 8 8-7 7c-8 8-21 8-29 0s-8-21 0-29z" fill="#d4a84f"/>
-          <path d="M50 46c-8 8-21 8-29 0l-5-5 8-8 5 5c4 4 10 4 14 0l7-7c4-4 4-10 0-14s-10-4-14 0l-7 7-8-8 7-7c8-8 21-8 29 0s8 21 0 29z" fill="#17c77b"/>
-        </svg>
-      </span>
-      <span class="brand-copy">
-        <strong>CIRCULAR B2B</strong>
-        <small>Mercado inteligente de materiais industriais</small>
-      </span>
-    </a>
-
-    <nav class="nav-links">
-      <a href="#marketplace">Oportunidades</a>
-      <a href="#plataforma">Como funciona</a>
-      <a href="#plataforma">Para empresas</a>
-    </nav>
-
-    <div class="nav-actions">
-      <button class="btn btn-outline" onclick="openOpportunity('compra')">Cadastrar demanda</button>
-      <button class="btn btn-primary" onclick="openOpportunity('venda')">Publicar oportunidade →</button>
-      <button class="menu">☰</button>
+    <div class="brand">
+      <div class="brand-mark">C</div>
+      <div><strong>CIRCULAR B2B</strong><small>Mercado inteligente de materiais industriais</small></div>
     </div>
+    <button class="btn btn-primary" onclick="openForm('venda')">Cadastrar material</button>
   </div>
 </header>
 
-<main id="top">
+<main>
   <section class="hero">
     <div class="container">
       <div class="hero-box">
-        <div class="hero-copy">
-          <div class="eyebrow">Rede B2B de materiais industriais</div>
-          <h1>Compre, venda e encontre destino para <span>materiais industriais.</span></h1>
-          <p>
-            Uma única rede para conectar empresas, materiais, excedentes, insumos,
-            resíduos e soluções comerciais ou ambientais.
-          </p>
-
+        <div>
+          <h1>Conectamos quem tem material com <span>quem precisa dele.</span></h1>
+          <p>Uma rede B2B para compra, venda, cessão e destinação de excedentes, matérias-primas e resíduos industriais.</p>
           <div class="hero-actions">
-            <button class="btn btn-primary" onclick="openOpportunity('venda')">Tenho material →</button>
-            <button class="btn btn-outline" onclick="openOpportunity('compra')">Procuro material</button>
-            <button class="btn btn-outline" onclick="openOpportunity('destinacao')">Preciso de solução</button>
-          </div>
-
-          <div class="hero-trust">
-            <span><i>✓</i>Cadastro gratuito no piloto</span>
-            <span><i>✓</i>Dados comerciais preservados</span>
-            <span><i>✓</i>Oportunidades qualificadas</span>
+            <button class="btn btn-primary" onclick="openForm('venda')">Quero vender</button>
+            <button class="btn btn-outline" onclick="openForm('compra')">Quero comprar</button>
+            <button class="btn btn-outline" onclick="openForm('cessao')">Quero ceder</button>
+            <button class="btn btn-outline" onclick="openForm('destinacao')">Preciso destinar</button>
           </div>
         </div>
-
-        <div class="hero-search">
-          <h3>Encontre oportunidades</h3>
-          <p>Pesquise qualquer material, categoria ou região.</p>
-
-          <div class="search-main">
-            <input id="heroSearch" placeholder="O que você procura? Ex.: cobre, PET, pallet, tecido, vidro...">
-            <select id="heroType">
-              <option value="all">Todas</option>
-              <option value="demanda">Demandas</option>
-              <option value="oferta">Ofertas</option>
+        <div class="hero-side">
+          <h3>Buscar oportunidades</h3>
+          <p>Pesquise por material ou região.</p>
+          <div class="search">
+            <input id="searchText" placeholder="Ex.: ABS, PP, papelão, alumínio...">
+            <select id="searchType">
+              <option value="all">Todos os tipos</option>
+              <option value="compra">Compra</option>
+              <option value="venda">Venda</option>
+              <option value="cessao">Cessão</option>
               <option value="destinacao">Destinação</option>
             </select>
-            <button class="btn btn-dark" onclick="heroApply()">Buscar oportunidades →</button>
-          </div>
-
-          <div class="popular">
-            <button onclick="quickSearch('PP')">PP</button>
-            <button onclick="quickSearch('PEAD')">PEAD</button>
-            <button onclick="quickSearch('Papelão')">Papelão</button>
-            <button onclick="quickSearch('Vidro')">Vidro</button>
-            <button onclick="quickSearch('Alumínio')">Alumínio</button>
+            <button class="btn btn-primary" onclick="applyFilters()">Buscar</button>
           </div>
         </div>
       </div>
@@ -361,652 +135,286 @@
 
   <section class="intents">
     <div class="container intent-grid">
-      <article class="intent" onclick="openOpportunity('venda')">
-        <div class="intent-icon">↗</div>
-        <div><h3>Vender material</h3><p>Publique excedentes, matérias-primas ou lotes disponíveis.</p></div>
-      </article>
-
-      <article class="intent" onclick="openOpportunity('compra')">
-        <div class="intent-icon">⌕</div>
-        <div><h3>Comprar material</h3><p>Cadastre sua demanda, especificação e faixa de compra.</p></div>
-      </article>
-
-      <article class="intent" onclick="openOpportunity('destinacao')">
-        <div class="intent-icon">♻</div>
-        <div><h3>Encontrar destinação</h3><p>Busque alternativas para resíduos, sobras ou materiais sem uso.</p></div>
-      </article>
-
-      <article class="intent" onclick="openOpportunity('solucao')">
-        <div class="intent-icon">◇</div>
-        <div><h3>Oferecer uma solução</h3><p>Cadastre serviços, coleta, reciclagem, logística ou tecnologia.</p></div>
-      </article>
+      <article class="intent" onclick="openForm('compra')"><b>Comprar material</b><p>Cadastre o que sua empresa procura.</p></article>
+      <article class="intent" onclick="openForm('venda')"><b>Vender material</b><p>Publique lotes e excedentes disponíveis.</p></article>
+      <article class="intent" onclick="openForm('cessao')"><b>Ceder material</b><p>Disponibilize material sem cobrança.</p></article>
+      <article class="intent" onclick="openForm('destinacao')"><b>Encontrar destinação</b><p>Cadastre resíduos ou materiais que precisam de saída.</p></article>
     </div>
   </section>
 
-  <section class="market" id="marketplace">
+  <section class="market">
     <div class="container">
       <div class="section-head">
         <div>
-          <div class="eyebrow">Marketplace</div>
-          <h2>Oportunidades na rede <span class="live">● ATIVAS</span></h2>
-          <p>Empresas permanecem anonimizadas até existir aderência comercial.</p>
+          <h2>Oportunidades na rede</h2>
+          <p>Dados de contato das empresas não são exibidos publicamente.</p>
         </div>
-        <button class="btn btn-outline" onclick="openOpportunity('venda')">+ Nova oportunidade</button>
       </div>
 
-      <div class="filterbar card">
-        <input id="marketSearch" placeholder="Buscar material, especificação ou palavra-chave...">
-        <select id="marketType">
-          <option value="all">Todos os tipos</option>
-          <option value="demanda">Demandas</option>
-          <option value="oferta">Ofertas</option>
+      <div class="filters">
+        <input id="filterText" placeholder="Buscar material, especificação ou cidade...">
+        <select id="filterType">
+          <option value="all">Todos</option>
+          <option value="compra">Compra</option>
+          <option value="venda">Venda</option>
+          <option value="cessao">Cessão</option>
           <option value="destinacao">Destinação</option>
         </select>
-        <select id="marketCategory">
+        <select id="filterCategory">
           <option value="all">Todas as categorias</option>
           <option value="plastico">Plásticos</option>
           <option value="metal">Metais</option>
           <option value="papel">Papel e papelão</option>
           <option value="vidro">Vidro</option>
-          <option value="madeira">Madeira e MDF</option>
-          <option value="textil">Têxteis e couro</option>
+          <option value="madeira">Madeira</option>
           <option value="borracha">Borracha</option>
-          <option value="quimico">Químicos e insumos</option>
-          <option value="eletronico">Eletrônicos e componentes</option>
-          <option value="construcao">Construção</option>
-          <option value="embalagem">Embalagens</option>
-          <option value="biomassa">Orgânicos e biomassa</option>
+          <option value="textil">Têxteis</option>
+          <option value="quimico">Químicos</option>
           <option value="outros">Outros</option>
         </select>
-        <select id="marketCity">
-          <option value="all">Todas as regiões</option>
-          <option value="Piracicaba">Piracicaba/SP</option>
-          <option value="Limeira">Limeira/SP</option>
-          <option value="São Paulo">São Paulo/SP</option>
-        </select>
       </div>
 
-      <div class="tabs">
-        <button class="tab active" data-tab="all">Todas</button>
-        <button class="tab" data-tab="demanda">Demandas</button>
-        <button class="tab" data-tab="oferta">Ofertas</button>
-        <button class="tab" data-tab="destinacao">Destinação</button>
-      </div>
-
-      <div class="opps" id="opportunityGrid">
-        <article class="opp" data-type="demanda" data-category="plastico" data-city="Piracicaba" data-search="pp pead pebd pet piracicaba peças aparas">
-          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Ativa</span></div>
-          <h3>PP • PEAD • PEBD • PET</h3>
-          <div class="meta">Piracicaba/SP • Compra recorrente</div>
-          <div class="opp-data">
-            <div><span>Quantidade</span><b>A partir de 1.000 kg</b></div>
-            <div><span>Condição</span><b>Peças / aparas</b></div>
-            <div><span>Logística</span><b>Retirada conforme lote</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('venda','plastico','PP / PEAD / PEBD / PET')">Tenho este material →</button>
-        </article>
-
-        <article class="opp" data-type="demanda" data-category="plastico" data-city="Piracicaba" data-search="abs psai tpv pom pa6 piracicaba recorrente">
-          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Recorrente</span></div>
-          <h3>ABS • PSAI • TPV • POM • PA6</h3>
-          <div class="meta">Região de Piracicaba/SP</div>
-          <div class="opp-data">
-            <div><span>Frequência</span><b>Recorrente</b></div>
-            <div><span>Formatos</span><b>Sob avaliação</b></div>
-            <div><span>Perfil</span><b>Comprador industrial</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('venda','plastico','ABS / PSAI / TPV / POM / PA6')">Tenho este material →</button>
-        </article>
-
-        <article class="opp" data-type="oferta" data-category="papel" data-city="Piracicaba" data-search="papelão papelao 10 toneladas piracicaba 15 dias">
-          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Recorrente</span></div>
-          <h3>Papelão</h3>
-          <div class="meta">Piracicaba/SP • Oferta recorrente</div>
-          <div class="opp-data">
-            <div><span>Quantidade</span><b>10 toneladas</b></div>
-            <div><span>Frequência</span><b>A cada 15 dias</b></div>
-            <div><span>Preço</span><b>Aceita propostas</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('compra','papel','Papelão')">Tenho interesse →</button>
-        </article>
-
-        <article class="opp" data-type="oferta" data-category="plastico" data-city="Piracicaba" data-search="pead 300 kg semana piracicaba">
-          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Semanal</span></div>
-          <h3>PEAD</h3>
-          <div class="meta">Piracicaba/SP • Disponibilidade semanal</div>
-          <div class="opp-data">
-            <div><span>Quantidade</span><b>300 kg / semana</b></div>
-            <div><span>Frequência</span><b>Semanal</b></div>
-            <div><span>Preço</span><b>Aceita propostas</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('compra','plastico','PEAD')">Tenho interesse →</button>
-        </article>
-
-        <article class="opp" data-type="oferta" data-category="vidro" data-city="Piracicaba" data-search="vidro 1 tonelada 15 dias piracicaba">
-          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Recorrente</span></div>
-          <h3>Vidro</h3>
-          <div class="meta">Piracicaba/SP</div>
-          <div class="opp-data">
-            <div><span>Quantidade</span><b>1 tonelada</b></div>
-            <div><span>Frequência</span><b>A cada 15 dias</b></div>
-            <div><span>Preço</span><b>Aceita propostas</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('compra','vidro','Vidro')">Tenho interesse →</button>
-        </article>
-
-        <article class="opp" data-type="oferta" data-category="metal" data-city="Piracicaba" data-search="latinha aluminio alumínio 50 kg 15 dias piracicaba">
-          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Recorrente</span></div>
-          <h3>Latinhas de alumínio</h3>
-          <div class="meta">Piracicaba/SP</div>
-          <div class="opp-data">
-            <div><span>Quantidade</span><b>50 kg</b></div>
-            <div><span>Frequência</span><b>A cada 15 dias</b></div>
-            <div><span>Preço</span><b>Aceita propostas</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('compra','metal','Latinhas de alumínio')">Tenho interesse →</button>
-        </article>
-
-        <article class="opp" data-type="oferta" data-category="plastico" data-city="Piracicaba" data-search="apara colorida branca 1000 500 kg piracicaba">
-          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Quinzenal</span></div>
-          <h3>Aparas plásticas</h3>
-          <div class="meta">Piracicaba/SP</div>
-          <div class="opp-data">
-            <div><span>Colorida</span><b>1.000 kg / 15 dias</b></div>
-            <div><span>Branca</span><b>500 kg / 15 dias</b></div>
-            <div><span>Preço</span><b>Aceita propostas</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('compra','plastico','Aparas plásticas')">Tenho interesse →</button>
-        </article>
-
-        <article class="opp" data-type="destinacao" data-category="plastico" data-city="Limeira" data-search="baquelite limeira sobra industrial destinação">
-          <div class="opp-top"><span class="pill dest">DESTINAÇÃO</span><span class="opp-status">Em análise</span></div>
-          <h3>Baquelite</h3>
-          <div class="meta">Limeira/SP • Sobra de processo industrial</div>
-          <div class="opp-data">
-            <div><span>Volume</span><b>Em levantamento</b></div>
-            <div><span>Objetivo</span><b>Encontrar solução</b></div>
-            <div><span>Status</span><b>Avaliando alternativas</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('solucao','plastico','Baquelite')">Tenho uma solução →</button>
-        </article>
-
-
-        <article class="opp" data-type="demanda" data-category="plastico" data-city="São Paulo" data-search="pvc flexivel cristal bagum lonas capacho sao paulo zona leste limpo sem etiquetas">
-          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Nova</span></div>
-          <h3>PVC Flexível</h3>
-          <div class="meta">São Paulo/SP • Zona Leste</div>
-          <div class="opp-data">
-            <div><span>Subtipos</span><b>Cristal • Bagum • Lonas • Capacho</b></div>
-            <div><span>Condição</span><b>Sobras / retalhos</b></div>
-            <div><span>Qualidade</span><b>Limpo e sem etiquetas*</b></div>
-            <div><span>Volume</span><b>Avaliado conforme lote</b></div>
-            <div><span>Logística</span><b>Capital e região metropolitana</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('venda','plastico','PVC Flexível')">Tenho este material →</button>
-        </article>
-
-        <article class="opp" data-type="demanda" data-category="plastico" data-city="São Paulo" data-search="polietileno stretch canela sao paulo zona leste sobras retalhos">
-          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Nova</span></div>
-          <h3>Polietileno</h3>
-          <div class="meta">São Paulo/SP • Zona Leste</div>
-          <div class="opp-data">
-            <div><span>Subtipos</span><b>Stretch • Canela</b></div>
-            <div><span>Condição</span><b>Sobras / retalhos</b></div>
-            <div><span>Volume</span><b>Sem mínimo fixo</b></div>
-            <div><span>Logística</span><b>Retirada conforme peso e volume</b></div>
-            <div><span>Preço</span><b>Cotação conforme qualidade</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('venda','plastico','Polietileno')">Tenho este material →</button>
-        </article>
-
-        <article class="opp" data-type="demanda" data-category="papel" data-city="São Paulo" data-search="tubetes tubete papel papelão papelao sao paulo zona leste">
-          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Nova</span></div>
-          <h3>Tubetes de papelão</h3>
-          <div class="meta">São Paulo/SP • Zona Leste</div>
-          <div class="opp-data">
-            <div><span>Perfil</span><b>Compra recorrente</b></div>
-            <div><span>Volume</span><b>Avaliado conforme lote</b></div>
-            <div><span>Logística</span><b>Capital e região metropolitana</b></div>
-            <div><span>Outras regiões</span><b>Avaliação caso a caso</b></div>
-          </div>
-          <button class="btn btn-outline" onclick="prefillOpportunity('venda','papel','Tubetes de papelão')">Tenho este material →</button>
-        </article>
-
-        <div class="empty" id="emptyState">Nenhuma oportunidade encontrada com esses filtros.</div>
-      </div>
-      <div style="margin-top:10px;font-size:9px;color:var(--muted)">
-        * Condições e especificações exibidas refletem informações confirmadas pelas empresas cadastradas e podem ser revalidadas antes da negociação.
-      </div>
-    </div>
-  </section>
-
-  <section class="platform" id="plataforma">
-    <div class="container platform-grid">
-      <div class="platform-card card">
-        <div class="eyebrow">Para empresas</div>
-        <h3>Uma infraestrutura comercial, não apenas um mural de anúncios.</h3>
-        <p>
-          A Circular organiza dados de materiais, volumes, preços, frequência, localização e logística para melhorar a qualidade dos matchings.
-        </p>
-        <div class="platform-list">
-          <div><i>✓</i><span>Compradores podem informar faixa de preço e volume desejado.</span></div>
-          <div><i>✓</i><span>Fornecedores podem publicar lotes pontuais ou recorrentes.</span></div>
-          <div><i>✓</i><span>Empresas podem registrar necessidades de destinação.</span></div>
-          <div><i>✓</i><span>Prestadores podem oferecer coleta, reciclagem, logística e outras soluções.</span></div>
-        </div>
-      </div>
-
-      <div class="platform-card card">
-        <div class="eyebrow">Visão de plataforma</div>
-        <h3>Estruturada para crescer com liquidez, dados e confiança.</h3>
-        <p>
-          Cada cadastro fortalece a rede e melhora a capacidade de conectar oferta, demanda e soluções. A identidade das empresas permanece preservada durante a etapa pública.
-        </p>
-        <div class="platform-list">
-          <div><i>✓</i><span>Taxonomia por categoria + material em texto livre.</span></div>
-          <div><i>✓</i><span>Modelo único para diferentes tipos de materiais industriais.</span></div>
-          <div><i>✓</i><span>Base preparada para matching por região, quantidade, condição e preço.</span></div>
-          <div><i>✓</i><span>Arquitetura preparada para migrar futuramente de Sheets para banco de dados.</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta">
-    <div class="container">
-      <div class="cta-box">
-        <div>
-          <h2>Publique uma necessidade em poucos minutos.</h2>
-          <p>A Circular cruza material, volume, localização, preço e logística para encontrar aderência comercial.</p>
-        </div>
-        <div class="cta-actions">
-          <button class="btn btn-primary" onclick="openOpportunity('venda')">Publicar oportunidade →</button>
-          <button class="btn btn-outline" onclick="openOpportunity('compra')">Cadastrar demanda</button>
-        </div>
-      </div>
+      <div id="opps" class="opps"><div class="empty">Carregando oportunidades...</div></div>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="container footer-row">
-    <span>© 2026 Circular B2B.</span>
-    <span>Marketplace B2B de materiais industriais</span>
-  </div>
-</footer>
+<footer><div class="container">© 2026 Circular B2B • Marketplace B2B de materiais industriais</div></footer>
 
-<!-- UNIFIED OPPORTUNITY MODAL -->
-<div class="modal-backdrop" id="modalBackdrop">
+<div class="modal-bg" id="modalBg">
   <div class="modal">
     <div class="modal-head">
-      <div>
-        <h3 id="modalTitle">Publicar oportunidade</h3>
-        <p>Um único cadastro para compra, venda, destinação ou solução.</p>
-      </div>
-      <button class="close" onclick="closeModal()">✕</button>
+      <div><h3>Cadastrar material</h3><p style="font-size:10px;color:var(--muted);margin-top:3px">Cadastre uma empresa e todos os materiais dessa mesma necessidade.</p></div>
+      <button class="close" onclick="closeForm()">✕</button>
     </div>
 
     <div class="modal-body">
-      <div class="type-grid">
-        <button class="type-btn active" data-type="venda">Vender</button>
-        <button class="type-btn" data-type="compra">Comprar</button>
-        <button class="type-btn" data-type="destinacao">Destinar</button>
-        <button class="type-btn" data-type="solucao">Oferecer solução</button>
+      <div class="types">
+        <button class="type-btn active" data-type="venda">Venda</button>
+        <button class="type-btn" data-type="compra">Compra</button>
+        <button class="type-btn" data-type="cessao">Cessão</button>
+        <button class="type-btn" data-type="destinacao">Destinação</button>
       </div>
 
-      <div class="stepbar">
-        <span class="stepdot active"></span>
-        <span class="stepdot"></span>
-        <span class="stepdot"></span>
-      </div>
+      <form id="form">
+        <input type="hidden" id="tipo" name="tipo" value="venda">
+        <input type="hidden" name="origem" value="site-v7-lite">
 
-      <form id="opportunityForm">
-        <input type="hidden" name="tipo" id="tipo" value="venda">
-        <input type="hidden" name="origem" value="site">
-        <input type="hidden" name="versaoFormulario" value="v6">
-
-        <!-- STEP 1 -->
-        <div class="form-step active" data-step="1">
-          <div class="form-grid">
-            <div class="field full">
-              <label>Materiais *</label>
-              <div id="materialsBuilder"></div>
-              <button class="btn btn-outline" type="button" onclick="addMaterialRow()" style="margin-top:8px;width:max-content">+ Adicionar outro material</button>
-              <div style="font-size:9px;color:var(--muted);margin-top:7px">Adicione todos os materiais desta mesma necessidade. Cada item será tratado como uma oportunidade própria.</div>
-            </div>
-
-            <div class="field full">
-              <label>Materiais que NÃO interessam</label>
-              <input name="restricoes" placeholder="Ex.: PET, Nylon, PP, PVC rígido">
-            </div>
-          </div>
+        <div class="field full">
+          <label>Materiais *</label>
+          <div id="materials"></div>
+          <button class="btn btn-outline" type="button" style="margin-top:7px" onclick="addMaterial()">+ Adicionar material</button>
         </div>
 
-        <!-- STEP 2 -->
-        <div class="form-step" data-step="2">
-          <div class="form-grid">
-            <div class="field">
-              <label>Cidade / UF *</label>
-              <input name="cidadeUF" required placeholder="Ex.: Piracicaba/SP">
-            </div>
-
-            <div class="field">
-              <label>Logística / cobertura</label>
-              <input name="logistica" placeholder="Retirada, entrega, transportadora etc.">
-            </div>
-
-            <div class="field">
-              <label>Raio de interesse / atendimento</label>
-              <input name="raioKm" placeholder="Ex.: até 150 km">
-            </div>
-
-            <div class="field">
-              <label>Condição de pagamento</label>
-              <input name="condicaoPagamento" placeholder="Ex.: à vista, 7 dias, 28 dias...">
-            </div>
-
-            <div class="field conditional dest-field">
-              <label>Material limpo ou contaminado?</label>
-              <select name="contaminacao">
-                <option value="">Selecione</option>
-                <option>Limpo</option>
-                <option>Misturado</option>
-                <option>Possui contaminação</option>
-                <option>Não sei informar</option>
-              </select>
-            </div>
-
-            <div class="field conditional dest-field">
-              <label>Destinação atual</label>
-              <select name="destinacaoAtual">
-                <option value="">Selecione</option>
-                <option>Vendemos</option>
-                <option>Doamos</option>
-                <option>Retiram sem custo</option>
-                <option>Pagamos pela destinação</option>
-                <option>Sem solução definida</option>
-              </select>
-            </div>
-
-            <div class="field conditional dest-field">
-              <label>Custo atual</label>
-              <input name="custoAtual" placeholder="Opcional">
-            </div>
-
-            <div class="field full conditional solution-field">
-              <label>Solução oferecida *</label>
-              <textarea name="solucaoOferecida" placeholder="Ex.: coleta, reciclagem, moagem, transporte, descaracterização, tecnologia..."></textarea>
-            </div>
-
-            <div class="field full">
-              <label>Observações</label>
-              <textarea name="observacoes" placeholder="Informações adicionais relevantes para a negociação ou análise."></textarea>
-            </div>
-          </div>
+        <div class="grid" style="margin-top:14px">
+          <div class="field"><label>Cidade / UF *</label><input name="cidadeUF" required placeholder="Ex.: Piracicaba/SP"></div>
+          <div class="field"><label>Logística</label><input name="logistica" placeholder="Retirada, entrega, transportadora..."></div>
+          <div class="field"><label>Materiais que não interessam</label><input name="restricoes" placeholder="Ex.: PET, PVC rígido"></div>
+          <div class="field dest-only"><label>Custo atual de destinação</label><input name="custoAtual" placeholder="Ex.: R$ 250/t"></div>
+          <div class="field full"><label>Observações</label><textarea name="observacoes" placeholder="Informações adicionais importantes"></textarea></div>
         </div>
 
-        <!-- STEP 3 -->
-        <div class="form-step" data-step="3">
-          <div class="form-grid">
-            <div class="field">
-              <label>Empresa *</label>
-              <input name="empresa" required>
-            </div>
-
-            <div class="field">
-              <label>Responsável *</label>
-              <input name="responsavel" required>
-            </div>
-
-            <div class="field">
-              <label>WhatsApp *</label>
-              <input name="whatsapp" required>
-            </div>
-
-            <div class="field">
-              <label>E-mail</label>
-              <input name="email" type="email">
-            </div>
-          </div>
+        <div class="grid" style="margin-top:14px">
+          <div class="field"><label>Empresa *</label><input name="empresa" required></div>
+          <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
+          <div class="field"><label>WhatsApp</label><input name="whatsapp"></div>
+          <div class="field"><label>E-mail</label><input name="email" type="email"></div>
         </div>
 
-        <div class="form-nav">
-          <button class="btn btn-outline" type="button" id="backBtn" onclick="prevStep()" style="visibility:hidden">← Voltar</button>
-          <span class="form-note">A oportunidade pública não exibe seus dados de contato.</span>
-          <button class="btn btn-primary" type="button" id="nextBtn" onclick="nextStep()">Continuar →</button>
-          <button class="btn btn-primary" type="submit" id="submitBtn" style="display:none">Publicar oportunidade →</button>
+        <div class="form-actions">
+          <button class="btn btn-outline" type="button" onclick="closeForm()">Cancelar</button>
+          <button class="btn btn-primary" type="submit" id="submitBtn">Enviar cadastro</button>
         </div>
-
-        <div class="success" id="successBox">✓ Oportunidade recebida. A Circular vai analisar as informações e considerar o cadastro nos próximos matchings.</div>
+        <div class="success" id="success">✓ Cadastro recebido. A Circular B2B vai considerar os dados nos próximos matchings.</div>
       </form>
     </div>
   </div>
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbwDiTc6cjlZdh_b6LkdPqxKHmeh8_rSY3VS0AfVASZICZatMjnF8vm3BohBgmawFU_r/exec";
+  // IMPORTANTE: depois de implantar o Apps Script V7 Lite como Web App,
+  // substitua esta URL pela nova URL terminada em /exec.
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyeoQwrWQD4TmxZNpIIZVU5X3jWZXj0cPW3E7J6sQQTtHr9wtCZ9cdtMx4xjAsbxyFy/exec';
 
-  // Marketplace filters
-  let tabType = 'all';
+  const CATEGORY_OPTIONS = [
+    ['','Categoria'],['plastico','Plásticos'],['metal','Metais'],['papel','Papel e papelão'],
+    ['vidro','Vidro'],['madeira','Madeira'],['borracha','Borracha'],['textil','Têxteis'],
+    ['quimico','Químicos'],['outros','Outros']
+  ];
+  const UNIT_OPTIONS = ['','kg','toneladas','unidades','m²','m³','litros'];
+  const FREQ_OPTIONS = ['','Única','Semanal','Quinzenal','Mensal','Recorrente / variável'];
 
-  const marketSearch = document.getElementById('marketSearch');
-  const marketType = document.getElementById('marketType');
-  const marketCategory = document.getElementById('marketCategory');
-  const marketCity = document.getElementById('marketCity');
-  const cards = [...document.querySelectorAll('.opp')];
+  let opportunities = [];
 
-  document.querySelectorAll('.tab').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-      btn.classList.add('active');
-      tabType = btn.dataset.tab;
-      applyFilters();
-    });
-  });
-
-  [marketSearch,marketType,marketCategory,marketCity].forEach(el=>{
-    el.addEventListener(el===marketSearch?'input':'change',applyFilters);
-  });
-
-  function applyFilters(){
-    const q=(marketSearch.value||'').toLowerCase().trim();
-    const type=tabType!=='all'?tabType:marketType.value;
-    const category=marketCategory.value;
-    const city=marketCity.value;
-    let count=0;
-
-    cards.forEach(card=>{
-      const text=(card.dataset.search+' '+card.innerText).toLowerCase();
-      const okQ=!q||text.includes(q);
-      const okT=type==='all'||card.dataset.type===type;
-      const okC=category==='all'||card.dataset.category===category;
-      const okCity=city==='all'||card.dataset.city===city;
-      const show=okQ&&okT&&okC&&okCity;
-      card.style.display=show?'flex':'none';
-      if(show) count++;
-    });
-
-    document.getElementById('emptyState').style.display=count?'none':'block';
+  function opts(items){
+    return items.map(i=>{
+      const v=Array.isArray(i)?i[0]:i;
+      const l=Array.isArray(i)?i[1]:i;
+      return `<option value="${v}">${l||'Selecione'}</option>`;
+    }).join('');
   }
 
-  function heroApply(){
-    marketSearch.value=document.getElementById('heroSearch').value;
-    marketType.value=document.getElementById('heroType').value;
-    tabType='all';
-    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab==='all'));
-    applyFilters();
-    document.getElementById('marketplace').scrollIntoView({behavior:'smooth'});
+  function materialHtml(){
+    return `<div class="material-row">
+      <select data-field="categoria" required>${opts(CATEGORY_OPTIONS)}</select>
+      <input data-field="material" required placeholder="Material">
+      <input data-field="condicao" placeholder="Formato">
+      <input data-field="especificacao" placeholder="Especificação">
+      <input data-field="quantidade" placeholder="Qtd.">
+      <select data-field="unidade">${opts(UNIT_OPTIONS)}</select>
+      <select data-field="frequencia">${opts(FREQ_OPTIONS)}</select>
+      <input data-field="precoReferencia" placeholder="Preço / referência">
+      <button type="button" class="remove" onclick="removeMaterial(this)">×</button>
+    </div>`;
   }
 
-  function quickSearch(q){
-    document.getElementById('heroSearch').value=q;
-    heroApply();
+  function addMaterial(){ document.getElementById('materials').insertAdjacentHTML('beforeend',materialHtml()); }
+  function removeMaterial(btn){
+    const rows=[...document.querySelectorAll('.material-row')];
+    if(rows.length<=1){ rows[0].querySelectorAll('input,select').forEach(x=>x.value=''); return; }
+    btn.closest('.material-row').remove();
+  }
+  function collectMaterials(){
+    return [...document.querySelectorAll('.material-row')].map(row=>{
+      const x={};
+      row.querySelectorAll('[data-field]').forEach(el=>x[el.dataset.field]=el.value.trim());
+      return x;
+    }).filter(x=>x.material);
   }
 
-
-  const CATEGORY_OPTIONS=[['','Categoria'],['plastico','Plásticos'],['metal','Metais'],['papel','Papel e papelão'],['vidro','Vidro'],['madeira','Madeira e MDF'],['textil','Têxteis e couro'],['borracha','Borracha'],['quimico','Químicos e insumos'],['eletronico','Eletrônicos e componentes'],['construcao','Construção'],['embalagem','Embalagens'],['biomassa','Orgânicos e biomassa'],['outros','Outros']];
-  const UNIT_OPTIONS=['','kg','toneladas','unidades','m²','m³','litros','outro'];
-  const FREQ_OPTIONS=['','Única','Semanal','Quinzenal','Mensal','Recorrente / variável'];
-  function opts(items){return items.map(i=>{const v=Array.isArray(i)?i[0]:i,l=Array.isArray(i)?i[1]:i;return `<option value="${v}">${l||'Selecione'}</option>`}).join('')}
-  function materialRowHtml(){return `<div class="material-builder-row">
-    <select data-field="categoria" required>${opts(CATEGORY_OPTIONS)}</select>
-    <input data-field="material" required placeholder="Material">
-    <input data-field="condicao" placeholder="Formato / condição">
-    <input data-field="especificacao" placeholder="Subtipo, cor, qualidade...">
-    <input data-field="quantidade" placeholder="Qtd.">
-    <select data-field="unidade">${opts(UNIT_OPTIONS)}</select>
-    <select data-field="frequencia">${opts(FREQ_OPTIONS)}</select>
-    <input data-field="precoReferencia" placeholder="Preço / referência">
-    <button type="button" class="remove-material" onclick="removeMaterialRow(this)">×</button>
-  </div>`}
-  function ensureMaterialBuilder(){const b=document.getElementById('materialsBuilder');if(!b)return;if(!b.querySelector('.material-head'))b.insertAdjacentHTML('beforeend','<div class="material-head"><span>Categoria</span><span>Material</span><span>Formato</span><span>Especificação</span><span>Qtd.</span><span>Unidade</span><span>Frequência</span><span>Preço</span><span></span></div>');if(!b.querySelector('.material-builder-row'))b.insertAdjacentHTML('beforeend',materialRowHtml())}
-  function addMaterialRow(){ensureMaterialBuilder();document.getElementById('materialsBuilder').insertAdjacentHTML('beforeend',materialRowHtml())}
-  function removeMaterialRow(btn){const rows=document.querySelectorAll('.material-builder-row');if(rows.length<=1){rows[0].querySelectorAll('input,select').forEach(el=>el.value='');return}btn.closest('.material-builder-row').remove()}
-  function collectMaterials(){return [...document.querySelectorAll('.material-builder-row')].map(r=>{const x={};r.querySelectorAll('[data-field]').forEach(el=>x[el.dataset.field]=el.value.trim());return x}).filter(x=>x.material)}
-  ensureMaterialBuilder();
-
-  // Modal / unified opportunity
-  const modal=document.getElementById('modalBackdrop');
-  const typeButtons=[...document.querySelectorAll('.type-btn')];
-  const form=document.getElementById('opportunityForm');
-  const tipo=document.getElementById('tipo');
-  const priceLabel=document.getElementById('priceLabel');
-  const priceInput=document.getElementById('precoReferencia');
-  let currentStep=1;
-
-  function openOpportunity(type='venda'){
-    modal.classList.add('open');
+  function openForm(type='venda'){
+    document.getElementById('modalBg').classList.add('open');
     document.body.style.overflow='hidden';
     setType(type);
-    goStep(1);
   }
-
-  function closeModal(){
-    modal.classList.remove('open');
+  function closeForm(){
+    document.getElementById('modalBg').classList.remove('open');
     document.body.style.overflow='';
   }
-
-  modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-
-  typeButtons.forEach(btn=>btn.addEventListener('click',()=>setType(btn.dataset.type)));
-
   function setType(type){
-    tipo.value=type;
-    typeButtons.forEach(x=>x.classList.toggle('active',x.dataset.type===type));
-
-    document.querySelectorAll('.dest-field').forEach(x=>x.classList.toggle('show',type==='destinacao'));
-    document.querySelectorAll('.solution-field').forEach(x=>x.classList.toggle('show',type==='solucao'));
-
-    const solutionTextarea=document.querySelector('[name="solucaoOferecida"]');
-    solutionTextarea.required = type==='solucao';
-
-    if(type==='compra'){
-      priceLabel.textContent='Faixa que pretende pagar';
-      priceInput.placeholder='Ex.: até R$ 3,90/kg';
-    } else if(type==='venda'){
-      priceLabel.textContent='Preço pretendido';
-      priceInput.placeholder='Ex.: R$ 3,50/kg ou aceita propostas';
-    } else if(type==='destinacao'){
-      priceLabel.textContent='Valor / condição comercial';
-      priceInput.placeholder='Opcional';
-    } else {
-      priceLabel.textContent='Preço / condição da solução';
-      priceInput.placeholder='Opcional';
-    }
+    document.getElementById('tipo').value=type;
+    document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active',b.dataset.type===type));
+    document.querySelectorAll('.dest-only').forEach(x=>x.classList.toggle('show',type==='destinacao'));
   }
 
-  function prefillOpportunity(type,category,material){
-    openOpportunity(type); ensureMaterialBuilder();
-    const row=document.querySelector('.material-builder-row');
-    if(row){row.querySelector('[data-field="categoria"]').value=category||'';row.querySelector('[data-field="material"]').value=material||'';}
-  }
+  document.querySelectorAll('.type-btn').forEach(btn=>btn.addEventListener('click',()=>setType(btn.dataset.type)));
+  document.getElementById('modalBg').addEventListener('click',e=>{ if(e.target.id==='modalBg') closeForm(); });
 
-  function goStep(n){
-    currentStep=n;
-    document.querySelectorAll('.form-step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===n));
-    document.querySelectorAll('.stepdot').forEach((x,i)=>x.classList.toggle('active',i<n));
-    document.getElementById('backBtn').style.visibility=n===1?'hidden':'visible';
-    document.getElementById('nextBtn').style.display=n===3?'none':'inline-flex';
-    document.getElementById('submitBtn').style.display=n===3?'inline-flex':'none';
-  }
+  document.getElementById('form').addEventListener('submit',e=>{
+    e.preventDefault();
 
-  function validateStep(step){
-    const current=document.querySelector(`.form-step[data-step="${step}"]`);
-    const required=[...current.querySelectorAll('[required]')].filter(el=>el.offsetParent!==null);
-    for(const el of required){
-      if(!el.checkValidity()){
-        el.reportValidity();
-        return false;
-      }
-    }
-    return true;
-  }
+    const materials=collectMaterials();
+    if(!materials.length){ alert('Adicione pelo menos um material.'); return; }
 
-  function nextStep(){
-    if(!validateStep(currentStep)) return;
-    if(currentStep<3) goStep(currentStep+1);
-  }
+    const payload=Object.fromEntries(new FormData(e.target).entries());
+    payload.materiais=materials;
 
-  function prevStep(){
-    if(currentStep>1) goStep(currentStep-1);
-  }
+    const btn=document.getElementById('submitBtn');
+    const success=document.getElementById('success');
+    btn.disabled=true;
+    btn.textContent='Enviando...';
 
-  // Fast queue
-  const KEY='circularB2B_pendingV4';
-  function getQueue(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]}}
-  function setQueue(q){try{localStorage.setItem(KEY,JSON.stringify(q))}catch{}}
-  function enqueue(payload){
-    const q=getQueue();
-    const id=(crypto?.randomUUID?.()||String(Date.now()+Math.random()));
-    q.push({id,payload});
-    setQueue(q);
-    return id;
-  }
-  function removeQueue(id){setQueue(getQueue().filter(x=>x.id!==id))}
-  function send(id,payload){
     fetch(API_URL,{
       method:'POST',
       mode:'no-cors',
       keepalive:true,
       headers:{'Content-Type':'text/plain;charset=utf-8'},
       body:JSON.stringify(payload)
-    }).then(()=>removeQueue(id)).catch(()=>{});
-  }
-  function retryQueue(){getQueue().forEach(x=>send(x.id,x.payload))}
-  window.addEventListener('online',retryQueue);
-  setTimeout(retryQueue,1200);
-
-  form.addEventListener('submit',e=>{
-    e.preventDefault();
-    if(!validateStep(3)) return;
-
-    const payload=Object.fromEntries(new FormData(form).entries());
-    const materials=collectMaterials();
-    if(!materials.length){alert('Adicione pelo menos um material.');return;}
-    payload.materiais=materials;
-    Object.assign(payload,materials[0]);
-    const id=enqueue(payload);
-
-    const btn=document.getElementById('submitBtn');
-    const success=document.getElementById('successBox');
-    const original=btn.textContent;
-
-    btn.disabled=true;
-    btn.textContent='✓ Recebido';
-    success.style.display='block';
-
-    send(id,payload);
-
-    setTimeout(()=>{
-      form.reset();
-      document.getElementById('materialsBuilder').innerHTML=''; ensureMaterialBuilder();
-      setType('venda');
-      goStep(1);
+    })
+    .then(()=>{
+      success.style.display='block';
+      btn.textContent='✓ Recebido';
+      setTimeout(()=>{
+        e.target.reset();
+        document.getElementById('materials').innerHTML='';
+        addMaterial();
+        setType('venda');
+        btn.disabled=false;
+        btn.textContent='Enviar cadastro';
+        closeForm();
+        loadOpportunities();
+      },1500);
+    })
+    .catch(()=>{
       btn.disabled=false;
-      btn.textContent=original;
-    },1800);
+      btn.textContent='Enviar cadastro';
+      alert('Não foi possível enviar agora. Tente novamente.');
+    });
   });
+
+  async function loadOpportunities(){
+    const grid=document.getElementById('opps');
+
+    if(!API_URL.startsWith('https://script.google.com/')){
+      grid.innerHTML='<div class="empty">Conecte a URL do Web App V7 Lite para carregar as oportunidades.</div>';
+      return;
+    }
+
+    try{
+      const r=await fetch(API_URL+'?action=public');
+      const data=await r.json();
+      opportunities=(data.opportunities||[]);
+      renderOpportunities();
+    }catch(e){
+      grid.innerHTML='<div class="empty">Não foi possível carregar as oportunidades agora.</div>';
+    }
+  }
+
+  function renderOpportunities(){
+    const grid=document.getElementById('opps');
+    const q=(document.getElementById('filterText').value||'').toLowerCase().trim();
+    const type=document.getElementById('filterType').value;
+    const cat=document.getElementById('filterCategory').value;
+
+    const rows=opportunities.filter(o=>{
+      const text=[o.material,o.especificacao,o.condicao,o.cidadeUF].join(' ').toLowerCase();
+      return (!q||text.includes(q)) &&
+             (type==='all'||o.tipo===type) &&
+             (cat==='all'||o.categoria===cat);
+    });
+
+    if(!rows.length){
+      grid.innerHTML='<div class="empty">Nenhuma oportunidade encontrada com esses filtros.</div>';
+      return;
+    }
+
+    grid.innerHTML=rows.map(o=>`
+      <article class="opp">
+        <div><span class="pill ${escapeHtml(o.tipo)}">${labelType(o.tipo)}</span></div>
+        <h3>${escapeHtml(o.material||'Material')}</h3>
+        <div class="meta">${escapeHtml(o.cidadeUF||'Local sob consulta')}</div>
+        <div class="data">
+          <div><span>Especificação</span><b>${escapeHtml(o.especificacao||o.condicao||'Sob avaliação')}</b></div>
+          <div><span>Quantidade</span><b>${escapeHtml([o.quantidade,o.unidade].filter(Boolean).join(' ')||'A combinar')}</b></div>
+          <div><span>Frequência</span><b>${escapeHtml(o.frequencia||'A combinar')}</b></div>
+          <div><span>Preço</span><b>${escapeHtml(o.preco||'Sob consulta')}</b></div>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  function labelType(t){
+    return ({compra:'COMPRA',venda:'VENDA',cessao:'CESSÃO',destinacao:'DESTINAÇÃO'})[t]||String(t||'').toUpperCase();
+  }
+
+  function escapeHtml(v){
+    return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  }
+
+  function applyFilters(){
+    document.getElementById('filterText').value=document.getElementById('searchText').value;
+    document.getElementById('filterType').value=document.getElementById('searchType').value;
+    renderOpportunities();
+    document.querySelector('.market').scrollIntoView({behavior:'smooth'});
+  }
+
+  ['filterText','filterType','filterCategory'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.addEventListener(id==='filterText'?'input':'change',renderOpportunities);
+  });
+
+  addMaterial();
+  loadOpportunities();
 </script>
 </body>
 </html>
