@@ -1,782 +1,776 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#020b08" />
-  <meta name="description" content="Circular B2B conecta empresas que compram, vendem ou precisam destinar materiais industriais." />
-  <title>Circular B2B — Materiais encontram destino. Empresas encontram valor.</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Circular B2B — rede de oportunidades para compra, venda, destinação e soluções em materiais industriais.">
+  <title>Circular B2B — Mercado B2B de materiais industriais</title>
 
   <style>
     :root{
-      --bg:#020b08;
-      --bg2:#06130f;
-      --panel:#081712;
-      --panel2:#0b1d17;
-      --panel3:#10271e;
-      --text:#f5f7f6;
-      --muted:#8fa29a;
-      --line:rgba(255,255,255,.10);
-      --green:#16d77f;
-      --green2:#38f29e;
-      --green-soft:#0f6d49;
-      --gold:#e6bd62;
-      --blue:#3ba6ff;
-      --purple:#9e61ff;
-      --amber:#ffb64d;
-      --danger:#ff6b6b;
+      --bg:#f5f7f6;
+      --card:#fff;
+      --ink:#0b1d16;
+      --muted:#6a7a72;
+      --line:#dfe7e3;
+      --green:#0fa968;
+      --green2:#17c77b;
+      --greenSoft:#eaf7f1;
+      --dark:#071b14;
+      --dark2:#0b2a20;
+      --gold:#d4a84f;
+      --blue:#2d72df;
+      --purple:#7650bd;
+      --amber:#e9a11a;
+      --shadow:0 16px 50px rgba(8,30,22,.08);
       --radius:18px;
-      --shadow:0 30px 90px rgba(0,0,0,.35);
-      --container:1420px;
+      --container:1280px;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{
       font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:
-        radial-gradient(circle at 50% -10%, rgba(22,215,127,.10), transparent 25%),
-        linear-gradient(180deg,#010806 0%,#03100c 100%);
-      color:var(--text);
+      background:var(--bg);
+      color:var(--ink);
       line-height:1.5;
-      overflow-x:hidden;
     }
-    a{color:inherit;text-decoration:none}
     button,input,select,textarea{font:inherit}
     button{cursor:pointer}
-    .container{width:min(var(--container),calc(100% - 44px));margin:0 auto}
-    .muted{color:var(--muted)}
-    .hidden{display:none!important}
-
-    /* HEADER */
-    header{
-      position:sticky;top:0;z-index:90;
-      background:rgba(2,11,8,.86);backdrop-filter:blur(18px);
-      border-bottom:1px solid rgba(255,255,255,.07);
-    }
-    .nav{
-      min-height:76px;display:flex;align-items:center;gap:34px;
-    }
-    .brand{display:flex;align-items:center;gap:12px;min-width:260px}
-    .brand-symbol{
-      width:48px;height:48px;border-radius:16px;
-      display:grid;place-items:center;
-      background:linear-gradient(145deg,#0b1d16,#030d09);
-      border:1px solid rgba(230,189,98,.30);
-      box-shadow:inset 0 1px rgba(255,255,255,.06),0 12px 32px rgba(0,0,0,.25);
-    }
-    .brand-symbol svg{display:block}
-    .brand-copy strong{
-      display:block;font-size:21px;letter-spacing:.10em;line-height:1;font-weight:900;
-    }
-    .brand-copy span{
-      display:block;margin-top:6px;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#7d9389;
-    }
-    .navlinks{display:flex;align-items:center;gap:28px;flex:1}
-    .navlinks a{
-      font-size:12px;color:#b0c0b8;font-weight:700;transition:.2s;
-    }
-    .navlinks a:hover,.navlinks a.active{color:#fff}
-    .navlinks a.active{position:relative}
-    .navlinks a.active::after{
-      content:"";position:absolute;left:0;right:0;bottom:-29px;height:2px;background:var(--green);
-    }
-    .nav-actions{display:flex;align-items:center;gap:10px}
-    .icon-btn{
-      width:40px;height:40px;border:0;background:transparent;color:#dce7e2;border-radius:10px;
-    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--container),calc(100% - 36px));margin:0 auto}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
     .btn{
-      min-height:43px;padding:0 17px;border-radius:11px;border:1px solid transparent;
+      min-height:44px;padding:0 16px;border-radius:11px;border:1px solid transparent;
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      font-size:12px;font-weight:850;transition:.2s ease;
+      font-size:13px;font-weight:800;transition:.18s ease;
     }
-    .btn:hover{transform:translateY(-2px)}
-    .btn-primary{background:var(--green);color:#001009;box-shadow:0 12px 30px rgba(22,215,127,.22)}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--green);color:#fff}
     .btn-primary:hover{background:var(--green2)}
-    .btn-outline{background:transparent;color:#fff;border-color:#355148}
-    .btn-panel{background:#0b2118;color:#fff;border-color:#21493a}
-    .hamb{display:none}
+    .btn-outline{background:#fff;border-color:var(--line);color:var(--ink)}
+    .btn-dark{background:var(--dark);color:#fff}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:7px;
+      font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#0b7d4f;
+    }
+    .eyebrow::before{content:"";width:7px;height:7px;border-radius:999px;background:var(--green)}
 
-    /* HERO */
-    .hero{
-      position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08);
-      background:
-        radial-gradient(circle at 53% 54%,rgba(22,215,127,.17),transparent 23%),
-        radial-gradient(circle at 78% 50%,rgba(28,95,68,.20),transparent 23%);
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:70;
+      background:rgba(255,255,255,.95);backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
     }
-    .hero::before{
-      content:"";position:absolute;inset:0;opacity:.17;pointer-events:none;
-      background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
-      background-size:46px 46px;
-      mask-image:linear-gradient(to bottom,black,transparent 86%);
+    .nav{height:74px;display:flex;align-items:center;gap:30px}
+    .brand{display:flex;align-items:center;gap:11px;min-width:260px}
+    .brand-mark{
+      width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,#0a2a20,#06150f);
+      display:grid;place-items:center;border:1px solid rgba(212,168,79,.25);
     }
-    .hero-grid{
-      position:relative;z-index:2;
-      min-height:600px;padding:46px 0 38px;
-      display:grid;grid-template-columns:1.02fr 1.14fr .82fr;gap:24px;align-items:center;
-    }
-    .badge{
-      display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;
-      border:1px solid rgba(22,215,127,.38);color:#8df3c3;background:rgba(22,215,127,.06);
-      font-size:9px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;
-    }
-    .hero-left h1{
-      margin-top:20px;font-size:clamp(42px,4.8vw,70px);line-height:.98;letter-spacing:-.045em;
-      max-width:620px;
-    }
-    .hero-left h1 span{color:var(--green)}
-    .hero-left p{
-      margin-top:20px;max-width:560px;color:#b3c2bb;font-size:16px;line-height:1.7;
-    }
-    .hero-points{display:flex;gap:18px;flex-wrap:wrap;margin-top:24px}
-    .hero-points span{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:#b4c4bc}
-    .hero-points i{
-      width:15px;height:15px;border-radius:50%;display:grid;place-items:center;
-      background:var(--green);color:#00100a;font-style:normal;font-size:9px;font-weight:900;
-    }
+    .brand-mark svg{width:32px;height:32px}
+    .brand-copy strong{display:block;font-size:19px;letter-spacing:.09em;font-weight:900}
+    .brand-copy small{display:block;margin-top:3px;font-size:9px;color:var(--muted)}
+    .nav-links{display:flex;gap:24px;align-items:center;flex:1}
+    .nav-links a{font-size:12px;font-weight:750;color:#42564b}
+    .nav-links a:hover{color:var(--green)}
+    .nav-actions{display:flex;gap:9px}
+    .menu{display:none}
 
-    /* NETWORK VISUAL */
-    .network{
-      min-height:480px;position:relative;display:grid;place-items:center;
+    /* Hero */
+    .hero{padding:42px 0 20px}
+    .hero-box{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;
+      padding:34px;background:linear-gradient(135deg,var(--dark),#0c3225 70%,#0d3d2c);
+      color:white;border-radius:24px;overflow:hidden;position:relative;
+      box-shadow:0 22px 70px rgba(8,30,22,.17);
     }
-    .globe{
-      position:absolute;width:500px;height:250px;left:50%;bottom:0;transform:translateX(-50%);
-      border-radius:50% 50% 0 0/100% 100% 0 0;
-      background:
-        radial-gradient(circle at 50% 30%,rgba(22,215,127,.22),transparent 48%),
-        linear-gradient(180deg,rgba(11,49,35,.35),rgba(2,11,8,.06));
-      border-top:1px solid rgba(56,242,158,.18);
-      box-shadow:0 -20px 100px rgba(22,215,127,.10);
-      overflow:hidden;
+    .hero-box::after{
+      content:"";position:absolute;width:360px;height:360px;border-radius:50%;
+      right:-110px;bottom:-180px;border:1px solid rgba(255,255,255,.10);
+      box-shadow:0 0 0 35px rgba(255,255,255,.025),0 0 0 70px rgba(255,255,255,.018);
     }
-    .globe::before{
-      content:"";position:absolute;inset:0;
-      background-image:radial-gradient(circle,rgba(56,242,158,.50) 1px,transparent 1.4px);
-      background-size:26px 26px;opacity:.26;
-      transform:perspective(350px) rotateX(62deg) scale(1.25);
+    .hero-copy{position:relative;z-index:2}
+    .hero .eyebrow{color:#9bf2c8}
+    .hero h1{
+      font-size:clamp(38px,5vw,64px);line-height:1;letter-spacing:-.045em;
+      margin:14px 0 16px;max-width:740px;
     }
-    .orbit{
-      position:absolute;width:310px;height:310px;border:1px solid rgba(150,245,199,.38);
-      border-radius:50%;top:58px;left:50%;transform:translateX(-50%);
-      box-shadow:0 0 50px rgba(22,215,127,.08) inset;
-    }
-    .orbit::before,.orbit::after{
-      content:"";position:absolute;inset:42px;border:1px dashed rgba(150,245,199,.16);border-radius:50%;
-    }
-    .orbit::after{inset:86px}
-    .core{
-      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      width:138px;height:138px;border-radius:50%;
-      display:grid;place-items:center;
-      background:radial-gradient(circle at 40% 35%,#0d3a2a,#05130e 72%);
-      border:1px solid rgba(56,242,158,.40);
-      box-shadow:0 0 0 14px rgba(22,215,127,.05),0 0 70px rgba(22,215,127,.24);
-    }
-    .core svg{width:84px;height:84px}
-    .net-node{
-      position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;z-index:4;
-    }
-    .net-node .bubble{
-      width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
-      border:1px solid rgba(102,255,184,.52);background:#081d15;box-shadow:0 0 22px rgba(22,215,127,.13);
-      font-size:19px;
-    }
-    .net-node strong{font-size:10px}
-    .net-node small{font-size:9px;color:#8ca198}
-    .nn1{top:18px;left:16%}.nn2{top:18px;right:16%}.nn3{top:210px;left:5%}.nn4{top:210px;right:4%}.nn5{bottom:55px;left:50%;transform:translateX(-50%)}
-    .connector{
-      position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(56,242,158,.55),transparent);
-      transform-origin:left center;opacity:.6;
-    }
-    .c1{width:130px;top:108px;left:28%;transform:rotate(23deg)}
-    .c2{width:130px;top:108px;right:28%;transform:rotate(-23deg)}
-    .c3{width:140px;top:260px;left:24%;transform:rotate(-10deg)}
-    .c4{width:140px;top:260px;right:24%;transform:rotate(10deg)}
+    .hero h1 span{color:#58e7a7}
+    .hero p{max-width:700px;color:#c1d1c9;font-size:15px;line-height:1.7}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+    .hero-trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;color:#b7c9c0;font-size:10px}
+    .hero-trust span{display:flex;align-items:center;gap:6px}
+    .hero-trust i{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:#13b973;color:#00150c;font-style:normal;font-size:9px;font-weight:900}
 
-    /* ACTION PANEL */
-    .action-panel{
-      align-self:center;background:linear-gradient(180deg,rgba(8,23,18,.95),rgba(5,16,12,.98));
-      border:1px solid rgba(120,255,192,.13);border-radius:18px;padding:18px;
-      box-shadow:var(--shadow);
+    .hero-search{
+      position:relative;z-index:2;background:rgba(255,255,255,.96);border-radius:18px;padding:18px;color:var(--ink);
+      border:1px solid rgba(255,255,255,.18);box-shadow:0 24px 70px rgba(0,0,0,.20);
     }
-    .action-panel h3{font-size:18px;margin-bottom:13px}
-    .quick-action{
-      width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:13px 14px;border-radius:12px;
-      border:1px solid #173229;background:#091913;color:#fff;margin-bottom:9px;transition:.18s;
+    .hero-search h3{font-size:16px;margin-bottom:5px}
+    .hero-search p{color:var(--muted);font-size:10px;margin-bottom:13px}
+    .search-main{display:grid;grid-template-columns:1fr 150px;gap:8px}
+    .search-main input,.search-main select{
+      height:46px;border:1px solid var(--line);border-radius:10px;padding:0 12px;outline:0;background:white;
     }
-    .quick-action:hover{border-color:#2b5f49;background:#0c2119;transform:translateX(2px)}
-    .quick-action .qicon{
-      width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:17px;
-    }
-    .q-green{background:rgba(22,215,127,.14);color:var(--green)}
-    .q-gold{background:rgba(230,189,98,.12);color:var(--gold)}
-    .q-blue{background:rgba(59,166,255,.12);color:var(--blue)}
-    .q-purple{background:rgba(158,97,255,.12);color:#b88aff}
-    .quick-action strong{display:block;font-size:12px}
-    .quick-action small{display:block;color:#7e958a;font-size:10px;margin-top:2px}
-    .action-sep{margin:14px 0;border:0;border-top:1px solid rgba(255,255,255,.08)}
-    .secure{
-      margin-top:12px;padding:10px 11px;border-radius:10px;border:1px solid rgba(255,255,255,.07);
-      color:#789086;font-size:9px;line-height:1.5;background:rgba(255,255,255,.02)
+    .search-main input:focus,.search-main select:focus{border-color:#7cc7a3;box-shadow:0 0 0 3px rgba(15,169,104,.08)}
+    .search-main .btn{grid-column:1/-1}
+    .popular{margin-top:12px;display:flex;gap:7px;flex-wrap:wrap}
+    .popular button{
+      border:1px solid var(--line);background:#f7faf8;border-radius:999px;padding:6px 9px;font-size:9px;color:#496056;
     }
 
-    /* STATS */
-    .stats-wrap{position:relative;z-index:4;margin-top:-24px}
-    .stats{
-      background:rgba(5,17,13,.96);border:1px solid rgba(255,255,255,.10);border-radius:16px;
-      display:grid;grid-template-columns:repeat(4,1fr);max-width:630px;overflow:hidden;
-      box-shadow:0 22px 60px rgba(0,0,0,.25);
+    /* Intent cards */
+    .intents{padding:16px 0 10px}
+    .intent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .intent{
+      background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px;
+      display:flex;gap:11px;align-items:flex-start;transition:.18s;cursor:pointer;
     }
-    .stat{padding:17px 22px;border-right:1px solid rgba(255,255,255,.07)}
-    .stat:last-child{border-right:0}
-    .stat b{font-size:27px;color:var(--green);letter-spacing:-.04em}
-    .stat span{display:block;font-size:9px;color:#879a91;margin-top:3px}
+    .intent:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#c7d9d0}
+    .intent-icon{
+      width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:0 0 42px;
+      background:var(--greenSoft);color:var(--green);font-size:17px;
+    }
+    .intent:nth-child(2) .intent-icon{background:#fff5df;color:var(--amber)}
+    .intent:nth-child(3) .intent-icon{background:#efeafb;color:var(--purple)}
+    .intent:nth-child(4) .intent-icon{background:#eaf2ff;color:var(--blue)}
+    .intent h3{font-size:13px;margin-bottom:3px}
+    .intent p{font-size:10px;color:var(--muted)}
 
-    /* MARKETPLACE */
-    .market{padding:48px 0 28px}
-    .market-grid{display:grid;grid-template-columns:230px 1fr 255px;gap:18px}
-    .side-card,.trend-card{
-      background:#071611;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:15px;height:max-content;
+    /* Marketplace */
+    .market{padding:24px 0 16px}
+    .section-head{
+      display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:14px;
     }
-    .side-card h4,.trend-card h4{font-size:13px;margin-bottom:12px}
-    .search-field{position:relative;margin-bottom:15px}
-    .search-field input,.filter-select{
-      width:100%;height:40px;border-radius:9px;border:1px solid #183128;background:#05100c;color:#dce6e1;padding:0 11px;outline:0;
-      font-size:10px;
+    .section-head h2{font-size:28px;letter-spacing:-.03em}
+    .section-head p{font-size:11px;color:var(--muted);margin-top:4px}
+    .live{font-size:9px;color:var(--green);font-weight:900;margin-left:7px}
+    .filterbar{
+      display:grid;grid-template-columns:1.4fr repeat(3,minmax(130px,.6fr));gap:8px;
+      padding:12px;margin-bottom:12px;
     }
-    .filter-select{margin-bottom:10px}
-    .side-card label{display:block;font-size:9px;color:#7f958a;margin:11px 0 6px}
-    .side-card .btn{width:100%;margin-top:8px}
-    .reset{display:block;text-align:center;font-size:9px;color:#70857a;margin-top:10px;background:none;border:0;width:100%}
-
-    .radar-head{
-      display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px;
+    .filterbar input,.filterbar select{
+      height:42px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 11px;outline:0;
     }
-    .radar-title h2{font-size:20px;letter-spacing:-.03em}
-    .radar-title p{font-size:10px;color:#7f938a;margin-top:3px}
-    .live{display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:9px;font-weight:900}
-    .tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+    .tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
     .tab{
-      padding:8px 12px;border:1px solid #153026;background:#071611;color:#8ca198;border-radius:9px;
-      font-size:9px;font-weight:800;
+      border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 12px;font-size:10px;font-weight:800;color:#5c6d64;
     }
-    .tab.active{background:var(--green);color:#00100a;border-color:var(--green)}
+    .tab.active{background:var(--green);border-color:var(--green);color:#fff}
     .opps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
     .opp{
-      min-height:248px;border-radius:14px;padding:13px;display:flex;flex-direction:column;
-      border:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,#09201a,#06130f);
-      transition:.2s;
+      min-height:244px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;
+      display:flex;flex-direction:column;transition:.18s;
     }
-    .opp:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(0,0,0,.22)}
-    .opp.demand{background:linear-gradient(180deg,rgba(23,68,115,.62),#071712)}
-    .opp.offer{background:linear-gradient(180deg,rgba(28,93,50,.62),#071712)}
-    .opp.dest{background:linear-gradient(180deg,rgba(72,39,110,.62),#071712)}
-    .opp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-    .pill{font-size:8px;font-weight:900;padding:5px 7px;border-radius:6px}
-    .p-demand{background:#1d70ff}.p-offer{background:#1c994f}.p-dest{background:#7540c3}
-    .new{font-size:8px;padding:4px 6px;border-radius:999px;background:rgba(255,255,255,.09);color:#d2ded8}
+    .opp:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .opp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .pill{font-size:8px;font-weight:900;padding:4px 7px;border-radius:6px;color:#fff}
+    .demand{background:var(--blue)} .offer{background:var(--green)} .dest{background:var(--purple)}
+    .opp-status{font-size:8px;color:var(--muted);font-weight:750}
     .opp h3{font-size:15px;margin-bottom:4px}
-    .opp .company{font-size:8px;color:#90a399;margin-bottom:12px}
-    .opp-data{display:grid;gap:6px;margin-bottom:12px}
-    .opp-data div{display:flex;justify-content:space-between;gap:10px;font-size:8px;color:#a0b1a8}
-    .opp-data b{color:#dce7e1;font-weight:700;text-align:right}
-    .opp .btn{width:100%;margin-top:auto;min-height:36px;padding:0 9px;font-size:9px}
-
-    .trend-list{display:grid;gap:8px}
-    .trend{
-      border:1px solid rgba(255,255,255,.06);background:#0a1c15;border-radius:10px;padding:10px;
-      display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;
+    .meta{font-size:9px;color:var(--muted);margin-bottom:12px}
+    .opp-data{display:grid;gap:6px;margin-bottom:14px}
+    .opp-data div{display:flex;justify-content:space-between;gap:10px;font-size:9px;color:#6b7c73}
+    .opp-data b{text-align:right;color:#1d3027}
+    .opp .btn{width:100%;margin-top:auto;min-height:38px;font-size:10px}
+    .empty{
+      grid-column:1/-1;text-align:center;padding:46px;border:1px dashed #cbd8d1;border-radius:14px;color:var(--muted);display:none;background:#fff;
     }
-    .trend strong{font-size:10px}
-    .trend small{display:block;color:#7c9187;font-size:8px;margin-top:2px}
-    .spark{color:var(--green);font-size:11px;font-weight:900}
 
-    /* BENEFITS */
-    .benefits{padding:10px 0 22px}
-    .benefit-grid{
-      display:grid;grid-template-columns:repeat(4,1fr);border:1px solid rgba(255,255,255,.08);
-      background:#06130f;border-radius:14px;overflow:hidden;
-    }
-    .benefit{padding:16px;border-right:1px solid rgba(255,255,255,.06);display:flex;gap:10px}
-    .benefit:last-child{border-right:0}
-    .benefit .bi{
-      width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#0d2b1f;color:var(--green);
-      flex:0 0 36px;
-    }
-    .benefit strong{font-size:9px;display:block;margin-bottom:3px}
-    .benefit span{font-size:8px;color:#7e9489;line-height:1.5}
+    /* Platform section */
+    .platform{padding:34px 0 12px}
+    .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .platform-card{padding:22px}
+    .platform-card h3{font-size:19px;margin:8px 0}
+    .platform-card p{font-size:11px;color:var(--muted);line-height:1.7}
+    .platform-list{display:grid;gap:9px;margin-top:14px}
+    .platform-list div{display:flex;gap:8px;font-size:10px;color:#44584e}
+    .platform-list i{color:var(--green);font-style:normal;font-weight:900}
 
-    /* MODAL */
+    /* CTA */
+    .cta{padding:24px 0 8px}
+    .cta-box{
+      padding:26px;border-radius:20px;background:linear-gradient(135deg,var(--dark),#0e382a);color:white;
+      display:flex;justify-content:space-between;align-items:center;gap:20px;
+    }
+    .cta h2{font-size:28px;letter-spacing:-.03em}
+    .cta p{font-size:11px;color:#b8cbc2;margin-top:4px}
+    .cta-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+    /* Modal */
     .modal-backdrop{
-      position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.74);backdrop-filter:blur(10px);
-      display:none;align-items:center;justify-content:center;padding:20px;
+      position:fixed;inset:0;z-index:100;background:rgba(5,15,11,.58);backdrop-filter:blur(8px);
+      display:none;align-items:center;justify-content:center;padding:18px;
     }
     .modal-backdrop.open{display:flex}
     .modal{
-      width:min(820px,100%);max-height:92vh;overflow:auto;border-radius:20px;
-      background:#071712;border:1px solid rgba(255,255,255,.10);box-shadow:0 40px 120px rgba(0,0,0,.55);
+      width:min(820px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;border:1px solid var(--line);
+      box-shadow:0 40px 120px rgba(0,0,0,.28);
     }
     .modal-head{
-      position:sticky;top:0;z-index:2;background:rgba(7,23,18,.96);backdrop-filter:blur(14px);
-      padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;gap:15px;align-items:flex-start;
+      position:sticky;top:0;z-index:3;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);
+      padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;align-items:flex-start;
     }
     .modal-head h3{font-size:20px}
-    .modal-head p{font-size:10px;color:#80968a;margin-top:4px}
-    .close{
-      width:36px;height:36px;border-radius:9px;border:1px solid #234135;background:#0a1b15;color:#fff;
-    }
+    .modal-head p{font-size:10px;color:var(--muted);margin-top:4px}
+    .close{width:36px;height:36px;border:1px solid var(--line);border-radius:9px;background:#fff}
     .modal-body{padding:20px}
-    .form-tabs{display:flex;gap:6px;background:#04100c;border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:4px;margin-bottom:18px}
-    .form-tab{
-      flex:1;border:0;background:transparent;color:#83998e;border-radius:8px;padding:10px;font-size:10px;font-weight:850;
+    .type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:18px}
+    .type-btn{
+      border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;font-size:10px;font-weight:850;color:#5d6e65;
     }
-    .form-tab.active{background:#0f3023;color:#fff}
-    .form-pane{display:none}
-    .form-pane.active{display:block}
+    .type-btn.active{background:var(--greenSoft);border-color:#acd8c3;color:#08784b}
+    .stepbar{display:flex;gap:7px;margin:2px 0 18px}
+    .stepdot{height:4px;flex:1;background:#e8eeeb;border-radius:999px}
+    .stepdot.active{background:var(--green)}
+    .form-step{display:none}
+    .form-step.active{display:block}
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .field{display:flex;flex-direction:column;gap:6px}
     .field.full{grid-column:1/-1}
-    .field label{font-size:9px;color:#a8b8b0;font-weight:800}
+    .field label{font-size:9px;font-weight:850;color:#52645b}
     .field input,.field select,.field textarea{
-      width:100%;border-radius:9px;border:1px solid #1a362b;background:#04100c;color:#fff;padding:11px;outline:0;
-      font-size:10px;
+      width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;outline:0;background:#fff;color:var(--ink);font-size:10px;
     }
-    .field textarea{min-height:90px;resize:vertical}
-    .field input:focus,.field select:focus,.field textarea:focus{border-color:#2b7658;box-shadow:0 0 0 3px rgba(22,215,127,.08)}
-    .submit-row{display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}
-    .form-note{font-size:8px;color:#6f867b;max-width:470px}
+    .field textarea{min-height:88px;resize:vertical}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:#7cc7a3;box-shadow:0 0 0 3px rgba(15,169,104,.08)}
+    .conditional{display:none}
+    .conditional.show{display:flex}
+    .form-nav{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:16px}
+    .form-note{font-size:8px;color:var(--muted);max-width:450px}
     .success{
-      display:none;margin-top:14px;border:1px solid rgba(22,215,127,.24);background:rgba(22,215,127,.08);color:#88efbd;
-      padding:11px 12px;border-radius:9px;font-size:10px;font-weight:800;
+      display:none;margin-top:14px;padding:11px 12px;border-radius:10px;background:var(--greenSoft);color:#087347;border:1px solid #cbe9da;font-size:10px;font-weight:800;
     }
 
-    footer{
-      margin-top:16px;padding:30px 0;border-top:1px solid rgba(255,255,255,.07);color:#6f847a;
-      font-size:8px;
-    }
-    .footer-row{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}
+    footer{padding:28px 0 34px;color:var(--muted);font-size:9px}
+    .footer-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
 
-    @media(max-width:1200px){
-      .hero-grid{grid-template-columns:1fr 1fr}.action-panel{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.action-panel h3,.action-panel .action-sep,.action-panel .secure{grid-column:1/-1}.quick-action{margin:0}
-      .market-grid{grid-template-columns:210px 1fr}.trend-card{grid-column:1/-1}.trend-list{grid-template-columns:repeat(5,1fr)}
-      .opps{grid-template-columns:repeat(2,1fr)}
+    @media(max-width:1000px){
+      .nav-links{display:none}.menu{display:block}
+      .hero-box{grid-template-columns:1fr}
+      .intent-grid{grid-template-columns:1fr 1fr}
+      .filterbar{grid-template-columns:1fr 1fr}
+      .opps{grid-template-columns:1fr 1fr}
     }
-    @media(max-width:900px){
-      .navlinks{display:none}.hamb{display:inline-grid}.brand{min-width:auto}
-      .hero-grid{grid-template-columns:1fr}.network{order:2}.action-panel{order:3;grid-template-columns:1fr 1fr}.hero-left{order:1}
-      .stats{grid-template-columns:1fr 1fr;max-width:none}
-      .market-grid{grid-template-columns:1fr}.side-card{order:1}.market-center{order:2}.trend-card{order:3}.trend-list{grid-template-columns:1fr 1fr}
-      .benefit-grid{grid-template-columns:1fr 1fr}
-    }
-    @media(max-width:620px){
+    @media(max-width:650px){
       .container{width:min(var(--container),calc(100% - 24px))}
-      .nav{min-height:68px}.nav-actions .btn{display:none}
-      .hero-grid{padding-top:32px}.hero-left h1{font-size:44px}.hero-left p{font-size:14px}
-      .network{min-height:400px;transform:scale(.88);margin-inline:-35px}.orbit{width:270px;height:270px}.globe{width:430px}
-      .action-panel{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr 1fr}.stat{padding:14px}
-      .opps{grid-template-columns:1fr}
-      .trend-list{grid-template-columns:1fr}
-      .benefit-grid{grid-template-columns:1fr}.benefit{border-right:0;border-bottom:1px solid rgba(255,255,255,.06)}
+      .brand{min-width:auto}.brand-copy small{display:none}.nav-actions .btn{display:none}
+      .hero{padding-top:24px}.hero-box{padding:22px}.hero h1{font-size:40px}
+      .search-main{grid-template-columns:1fr}
+      .search-main .btn{grid-column:auto}
+      .intent-grid,.platform-grid,.opps{grid-template-columns:1fr}
+      .filterbar{grid-template-columns:1fr}
+      .cta-box{flex-direction:column;align-items:flex-start}
+      .type-grid{grid-template-columns:1fr 1fr}
       .form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
     }
   </style>
 </head>
-
 <body>
+
 <header>
   <div class="container nav">
-    <a class="brand" href="#inicio">
-      <div class="brand-symbol">
-        <svg viewBox="0 0 64 64" width="33" height="33" aria-hidden="true">
-          <defs>
-            <linearGradient id="g1" x1="0" x2="1"><stop stop-color="#f1d083"/><stop offset="1" stop-color="#c8973f"/></linearGradient>
-            <linearGradient id="g2" x1="0" x2="1"><stop stop-color="#19d67f"/><stop offset="1" stop-color="#64f2af"/></linearGradient>
-          </defs>
-          <path d="M14 18c8-8 21-8 29 0l5 5-8 8-5-5c-4-4-10-4-14 0l-7 7c-4 4-4 10 0 14s10 4 14 0l7-7 8 8-7 7c-8 8-21 8-29 0s-8-21 0-29z" fill="url(#g1)"/>
-          <path d="M50 46c-8 8-21 8-29 0l-5-5 8-8 5 5c4 4 10 4 14 0l7-7c4-4 4-10 0-14s-10-4-14 0l-7 7-8-8 7-7c8-8 21-8 29 0s8 21 0 29z" fill="url(#g2)"/>
+    <a class="brand" href="#top">
+      <span class="brand-mark">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M14 18c8-8 21-8 29 0l5 5-8 8-5-5c-4-4-10-4-14 0l-7 7c-4 4-4 10 0 14s10 4 14 0l7-7 8 8-7 7c-8 8-21 8-29 0s-8-21 0-29z" fill="#d4a84f"/>
+          <path d="M50 46c-8 8-21 8-29 0l-5-5 8-8 5 5c4 4 10 4 14 0l7-7c4-4 4-10 0-14s-10-4-14 0l-7 7-8-8 7-7c8-8 21-8 29 0s8 21 0 29z" fill="#17c77b"/>
         </svg>
-      </div>
-      <div class="brand-copy">
-        <strong>CIRCULAR <span style="font-size:14px;letter-spacing:.13em;color:#c8d6cf">B2B</span></strong>
-        <span>Conectamos valor. Reduzimos desperdício.</span>
-      </div>
+      </span>
+      <span class="brand-copy">
+        <strong>CIRCULAR B2B</strong>
+        <small>Mercado inteligente de materiais industriais</small>
+      </span>
     </a>
 
-    <nav class="navlinks">
-      <a class="active" href="#inicio">Início</a>
-      <a href="#oportunidades">Oportunidades</a>
-      <a href="#como-funciona">Como funciona</a>
-      <a href="#beneficios">Soluções</a>
-      <a href="#sobre">Sobre nós</a>
+    <nav class="nav-links">
+      <a href="#marketplace">Oportunidades</a>
+      <a href="#plataforma">Como funciona</a>
+      <a href="#plataforma">Para empresas</a>
     </nav>
 
     <div class="nav-actions">
-      <button class="icon-btn" aria-label="Buscar">⌕</button>
-      <button class="btn btn-outline" onclick="openModal('compra')">Entrar</button>
-      <button class="btn btn-primary" onclick="openModal('venda')">Cadastrar empresa →</button>
-      <button class="icon-btn hamb">☰</button>
+      <button class="btn btn-outline" onclick="openOpportunity('compra')">Cadastrar demanda</button>
+      <button class="btn btn-primary" onclick="openOpportunity('venda')">Publicar oportunidade →</button>
+      <button class="menu">☰</button>
     </div>
   </div>
 </header>
 
-<main id="inicio">
+<main id="top">
   <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-left">
-        <div class="badge">◉ Marketplace B2B • Economia circular</div>
-        <h1>Materiais encontram destino. <span>Empresas encontram valor.</span></h1>
-        <p>
-          A Circular B2B conecta empresas que têm materiais com quem precisa,
-          e com quem tem a solução para destinar corretamente.
-        </p>
+    <div class="container">
+      <div class="hero-box">
+        <div class="hero-copy">
+          <div class="eyebrow">Rede B2B de materiais industriais</div>
+          <h1>Compre, venda e encontre destino para <span>materiais industriais.</span></h1>
+          <p>
+            Uma única rede para conectar empresas, materiais, excedentes, insumos,
+            resíduos e soluções comerciais ou ambientais.
+          </p>
 
-        <div class="hero-points">
-          <span><i>✓</i>Mais valor para o material</span>
-          <span><i>✓</i>Menos custo, mais eficiência</span>
-          <span><i>✓</i>Impacto real no planeta</span>
-        </div>
-      </div>
-
-      <div class="network">
-        <div class="globe"></div>
-        <div class="orbit">
-          <div class="connector c1"></div>
-          <div class="connector c2"></div>
-          <div class="connector c3"></div>
-          <div class="connector c4"></div>
-          <div class="core">
-            <svg viewBox="0 0 64 64" aria-hidden="true">
-              <path d="M14 18c8-8 21-8 29 0l5 5-8 8-5-5c-4-4-10-4-14 0l-7 7c-4 4-4 10 0 14s10 4 14 0l7-7 8 8-7 7c-8 8-21 8-29 0s-8-21 0-29z" fill="#e6bd62"/>
-              <path d="M50 46c-8 8-21 8-29 0l-5-5 8-8 5 5c4 4 10 4 14 0l7-7c4-4 4-10 0-14s-10-4-14 0l-7 7-8-8 7-7c8-8 21-8 29 0s8 21 0 29z" fill="#38f29e"/>
-            </svg>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="openOpportunity('venda')">Tenho material →</button>
+            <button class="btn btn-outline" onclick="openOpportunity('compra')">Procuro material</button>
+            <button class="btn btn-outline" onclick="openOpportunity('destinacao')">Preciso de solução</button>
           </div>
 
-          <div class="net-node nn1"><div class="bubble">♙</div><strong>FORNECEDORES</strong><small>Têm materiais</small></div>
-          <div class="net-node nn2"><div class="bubble">♙</div><strong>COMPRADORES</strong><small>Precisam de materiais</small></div>
-          <div class="net-node nn3"><div class="bubble">🏭</div><strong>INDÚSTRIAS</strong><small>Transformam</small></div>
-          <div class="net-node nn4"><div class="bubble">♻</div><strong>DESTINAÇÃO</strong><small>Soluções ambientais</small></div>
-          <div class="net-node nn5"><div class="bubble">↻</div><strong>CIRCULAR B2B</strong><small>Conexão + Inteligência</small></div>
+          <div class="hero-trust">
+            <span><i>✓</i>Cadastro gratuito no piloto</span>
+            <span><i>✓</i>Dados comerciais preservados</span>
+            <span><i>✓</i>Oportunidades qualificadas</span>
+          </div>
+        </div>
+
+        <div class="hero-search">
+          <h3>Encontre oportunidades</h3>
+          <p>Pesquise qualquer material, categoria ou região.</p>
+
+          <div class="search-main">
+            <input id="heroSearch" placeholder="O que você procura? Ex.: cobre, PET, pallet, tecido, vidro...">
+            <select id="heroType">
+              <option value="all">Todas</option>
+              <option value="demanda">Demandas</option>
+              <option value="oferta">Ofertas</option>
+              <option value="destinacao">Destinação</option>
+            </select>
+            <button class="btn btn-dark" onclick="heroApply()">Buscar oportunidades →</button>
+          </div>
+
+          <div class="popular">
+            <button onclick="quickSearch('PP')">PP</button>
+            <button onclick="quickSearch('PEAD')">PEAD</button>
+            <button onclick="quickSearch('Papelão')">Papelão</button>
+            <button onclick="quickSearch('Vidro')">Vidro</button>
+            <button onclick="quickSearch('Alumínio')">Alumínio</button>
+          </div>
         </div>
       </div>
-
-      <aside class="action-panel">
-        <h3>O que sua empresa precisa?</h3>
-
-        <button class="quick-action" onclick="openModal('venda')">
-          <span class="qicon q-green">↗</span>
-          <span><strong>Quero vender</strong><small>Tenho material disponível</small></span>
-        </button>
-
-        <button class="quick-action" onclick="openModal('compra')">
-          <span class="qicon q-gold">⌕</span>
-          <span><strong>Quero comprar</strong><small>Procuro material</small></span>
-        </button>
-
-        <button class="quick-action" onclick="openModal('destinacao')">
-          <span class="qicon q-blue">♻</span>
-          <span><strong>Preciso destinar</strong><small>Tenho resíduo para destinar</small></span>
-        </button>
-
-        <hr class="action-sep">
-
-        <button class="quick-action" onclick="openModal('solucao')">
-          <span class="qicon q-purple">◇</span>
-          <span><strong>Tenho solução</strong><small>Quero oferecer serviço ou tecnologia</small></span>
-        </button>
-
-        <div class="secure">🔒 Seus dados comerciais ficam protegidos. As oportunidades públicas não exibem seus contatos.</div>
-      </aside>
     </div>
   </section>
 
-  <div class="container stats-wrap">
-    <div class="stats">
-      <div class="stat"><b>9</b><span>Materiais com demanda ativa</span></div>
-      <div class="stat"><b>6</b><span>Ofertas recorrentes</span></div>
-      <div class="stat"><b>2</b><span>Cidades no piloto</span></div>
-      <div class="stat"><b>100%</b><span>Foco em economia circular</span></div>
+  <section class="intents">
+    <div class="container intent-grid">
+      <article class="intent" onclick="openOpportunity('venda')">
+        <div class="intent-icon">↗</div>
+        <div><h3>Vender material</h3><p>Publique excedentes, matérias-primas ou lotes disponíveis.</p></div>
+      </article>
+
+      <article class="intent" onclick="openOpportunity('compra')">
+        <div class="intent-icon">⌕</div>
+        <div><h3>Comprar material</h3><p>Cadastre sua demanda, especificação e faixa de compra.</p></div>
+      </article>
+
+      <article class="intent" onclick="openOpportunity('destinacao')">
+        <div class="intent-icon">♻</div>
+        <div><h3>Encontrar destinação</h3><p>Busque alternativas para resíduos, sobras ou materiais sem uso.</p></div>
+      </article>
+
+      <article class="intent" onclick="openOpportunity('solucao')">
+        <div class="intent-icon">◇</div>
+        <div><h3>Oferecer uma solução</h3><p>Cadastre serviços, coleta, reciclagem, logística ou tecnologia.</p></div>
+      </article>
     </div>
-  </div>
+  </section>
 
-  <section class="market" id="oportunidades">
-    <div class="container market-grid">
-      <aside class="side-card">
-        <h4>Busque por material</h4>
-        <div class="search-field"><input id="search" placeholder="Ex.: PP, PEAD, PET, ABS..." /></div>
+  <section class="market" id="marketplace">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Marketplace</div>
+          <h2>Oportunidades na rede <span class="live">● ATIVAS</span></h2>
+          <p>Empresas permanecem anonimizadas até existir aderência comercial.</p>
+        </div>
+        <button class="btn btn-outline" onclick="openOpportunity('venda')">+ Nova oportunidade</button>
+      </div>
 
-        <label>Tipo de oportunidade</label>
-        <select class="filter-select" id="filterType">
-          <option value="all">Todas</option>
-          <option value="demanda">Demanda</option>
-          <option value="oferta">Oferta</option>
+      <div class="filterbar card">
+        <input id="marketSearch" placeholder="Buscar material, especificação ou palavra-chave...">
+        <select id="marketType">
+          <option value="all">Todos os tipos</option>
+          <option value="demanda">Demandas</option>
+          <option value="oferta">Ofertas</option>
           <option value="destinacao">Destinação</option>
         </select>
-
-        <label>Material</label>
-        <select class="filter-select" id="filterMaterial">
-          <option value="all">Todos</option>
-          <option>PP</option><option>PEAD</option><option>PEBD</option><option>PET</option><option>ABS</option><option>Papelão</option><option>Vidro</option><option>Alumínio</option><option>Baquelite</option>
+        <select id="marketCategory">
+          <option value="all">Todas as categorias</option>
+          <option value="plastico">Plásticos</option>
+          <option value="metal">Metais</option>
+          <option value="papel">Papel e papelão</option>
+          <option value="vidro">Vidro</option>
+          <option value="madeira">Madeira e MDF</option>
+          <option value="textil">Têxteis e couro</option>
+          <option value="borracha">Borracha</option>
+          <option value="quimico">Químicos e insumos</option>
+          <option value="eletronico">Eletrônicos e componentes</option>
+          <option value="construcao">Construção</option>
+          <option value="embalagem">Embalagens</option>
+          <option value="biomassa">Orgânicos e biomassa</option>
+          <option value="outros">Outros</option>
         </select>
-
-        <label>Cidade / Região</label>
-        <select class="filter-select" id="filterCity">
-          <option value="all">Todas</option>
-          <option>Piracicaba</option><option>Limeira</option>
+        <select id="marketCity">
+          <option value="all">Todas as regiões</option>
+          <option value="Piracicaba">Piracicaba/SP</option>
+          <option value="Limeira">Limeira/SP</option>
         </select>
+      </div>
 
-        <button class="btn btn-primary" onclick="applyFilters()">Buscar oportunidades →</button>
-        <button class="reset" onclick="resetFilters()">Limpar filtros</button>
-      </aside>
+      <div class="tabs">
+        <button class="tab active" data-tab="all">Todas</button>
+        <button class="tab" data-tab="demanda">Demandas</button>
+        <button class="tab" data-tab="oferta">Ofertas</button>
+        <button class="tab" data-tab="destinacao">Destinação</button>
+      </div>
 
-      <section class="market-center">
-        <div class="radar-head">
-          <div class="radar-title">
-            <div class="live">● AO VIVO</div>
-            <h2>Radar de oportunidades</h2>
-            <p>Conectamos oferta, demanda e soluções em uma única rede.</p>
+      <div class="opps" id="opportunityGrid">
+        <article class="opp" data-type="demanda" data-category="plastico" data-city="Piracicaba" data-search="pp pead pebd pet piracicaba peças aparas">
+          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Ativa</span></div>
+          <h3>PP • PEAD • PEBD • PET</h3>
+          <div class="meta">Piracicaba/SP • Compra recorrente</div>
+          <div class="opp-data">
+            <div><span>Quantidade</span><b>A partir de 1.000 kg</b></div>
+            <div><span>Condição</span><b>Peças / aparas</b></div>
+            <div><span>Logística</span><b>Retirada conforme lote</b></div>
           </div>
-        </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('venda','plastico','PP / PEAD / PEBD / PET')">Tenho este material →</button>
+        </article>
 
-        <div class="tabs">
-          <button class="tab active" data-tab="all">Todas</button>
-          <button class="tab" data-tab="demanda">Demandas</button>
-          <button class="tab" data-tab="oferta">Ofertas</button>
-          <button class="tab" data-tab="destinacao">Destinação</button>
-        </div>
+        <article class="opp" data-type="demanda" data-category="plastico" data-city="Piracicaba" data-search="abs psai tpv pom pa6 piracicaba recorrente">
+          <div class="opp-top"><span class="pill demand">DEMANDA</span><span class="opp-status">Recorrente</span></div>
+          <h3>ABS • PSAI • TPV • POM • PA6</h3>
+          <div class="meta">Região de Piracicaba/SP</div>
+          <div class="opp-data">
+            <div><span>Frequência</span><b>Recorrente</b></div>
+            <div><span>Formatos</span><b>Sob avaliação</b></div>
+            <div><span>Perfil</span><b>Comprador industrial</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('venda','plastico','ABS / PSAI / TPV / POM / PA6')">Tenho este material →</button>
+        </article>
 
-        <div class="opps" id="opps">
-          <article class="opp demand" data-type="demanda" data-material="PP" data-city="Piracicaba" data-search="pp pead pebd pet piracicaba">
-            <div class="opp-top"><span class="pill p-demand">DEMANDA</span><span class="new">Novo</span></div>
-            <h3>PP • PEAD • PEBD • PET</h3>
-            <div class="company">Indústria compradora • Piracicaba/SP</div>
-            <div class="opp-data">
-              <div><span>Quantidade mínima</span><b>1.000 kg</b></div>
-              <div><span>Condição</span><b>Peças / aparas</b></div>
-              <div><span>Retirada</span><b>Conforme lote</b></div>
-            </div>
-            <button class="btn btn-outline" onclick="prefill('venda','PP / PEAD / PEBD / PET')">Tenho para vender →</button>
-          </article>
+        <article class="opp" data-type="oferta" data-category="papel" data-city="Piracicaba" data-search="papelão papelao 10 toneladas piracicaba 15 dias">
+          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Recorrente</span></div>
+          <h3>Papelão</h3>
+          <div class="meta">Piracicaba/SP • Oferta recorrente</div>
+          <div class="opp-data">
+            <div><span>Quantidade</span><b>10 toneladas</b></div>
+            <div><span>Frequência</span><b>A cada 15 dias</b></div>
+            <div><span>Preço</span><b>Aceita propostas</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('compra','papel','Papelão')">Tenho interesse →</button>
+        </article>
 
-          <article class="opp demand" data-type="demanda" data-material="ABS" data-city="Piracicaba" data-search="abs psai tpv pom pa6 piracicaba">
-            <div class="opp-top"><span class="pill p-demand">DEMANDA</span><span class="new">Recorrente</span></div>
-            <h3>ABS • PSAI • TPV • POM • PA6</h3>
-            <div class="company">Demanda recorrente • Região</div>
-            <div class="opp-data">
-              <div><span>Frequência</span><b>Recorrente</b></div>
-              <div><span>Formatos</span><b>Sob avaliação</b></div>
-              <div><span>Região</span><b>Piracicaba</b></div>
-            </div>
-            <button class="btn btn-outline" onclick="prefill('venda','ABS / PSAI / TPV / POM / PA6')">Tenho para vender →</button>
-          </article>
+        <article class="opp" data-type="oferta" data-category="plastico" data-city="Piracicaba" data-search="pead 300 kg semana piracicaba">
+          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Semanal</span></div>
+          <h3>PEAD</h3>
+          <div class="meta">Piracicaba/SP • Disponibilidade semanal</div>
+          <div class="opp-data">
+            <div><span>Quantidade</span><b>300 kg / semana</b></div>
+            <div><span>Frequência</span><b>Semanal</b></div>
+            <div><span>Preço</span><b>Aceita propostas</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('compra','plastico','PEAD')">Tenho interesse →</button>
+        </article>
 
-          <article class="opp offer" data-type="oferta" data-material="Papelão" data-city="Piracicaba" data-search="papelão papelao piracicaba 10 toneladas">
-            <div class="opp-top"><span class="pill p-offer">OFERTA</span><span class="new">Recorrente</span></div>
-            <h3>Papelão</h3>
-            <div class="company">Fornecedor industrial • Piracicaba/SP</div>
-            <div class="opp-data">
-              <div><span>Quantidade</span><b>10 toneladas</b></div>
-              <div><span>Frequência</span><b>A cada 15 dias</b></div>
-              <div><span>Preço</span><b>Aceita propostas</b></div>
-            </div>
-            <button class="btn btn-outline" onclick="prefill('compra','Papelão')">Tenho interesse →</button>
-          </article>
+        <article class="opp" data-type="oferta" data-category="vidro" data-city="Piracicaba" data-search="vidro 1 tonelada 15 dias piracicaba">
+          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Recorrente</span></div>
+          <h3>Vidro</h3>
+          <div class="meta">Piracicaba/SP</div>
+          <div class="opp-data">
+            <div><span>Quantidade</span><b>1 tonelada</b></div>
+            <div><span>Frequência</span><b>A cada 15 dias</b></div>
+            <div><span>Preço</span><b>Aceita propostas</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('compra','vidro','Vidro')">Tenho interesse →</button>
+        </article>
 
-          <article class="opp offer" data-type="oferta" data-material="PEAD" data-city="Piracicaba" data-search="pead piracicaba semanal">
-            <div class="opp-top"><span class="pill p-offer">OFERTA</span><span class="new">Semanal</span></div>
-            <h3>PEAD</h3>
-            <div class="company">Fornecedor industrial • Piracicaba/SP</div>
-            <div class="opp-data">
-              <div><span>Quantidade</span><b>300 kg / semana</b></div>
-              <div><span>Frequência</span><b>Semanal</b></div>
-              <div><span>Preço</span><b>Aceita propostas</b></div>
-            </div>
-            <button class="btn btn-outline" onclick="prefill('compra','PEAD')">Tenho interesse →</button>
-          </article>
+        <article class="opp" data-type="oferta" data-category="metal" data-city="Piracicaba" data-search="latinha aluminio alumínio 50 kg 15 dias piracicaba">
+          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Recorrente</span></div>
+          <h3>Latinhas de alumínio</h3>
+          <div class="meta">Piracicaba/SP</div>
+          <div class="opp-data">
+            <div><span>Quantidade</span><b>50 kg</b></div>
+            <div><span>Frequência</span><b>A cada 15 dias</b></div>
+            <div><span>Preço</span><b>Aceita propostas</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('compra','metal','Latinhas de alumínio')">Tenho interesse →</button>
+        </article>
 
-          <article class="opp dest" data-type="destinacao" data-material="Baquelite" data-city="Limeira" data-search="baquelite limeira">
-            <div class="opp-top"><span class="pill p-dest">DESTINAÇÃO</span><span class="new">Em análise</span></div>
-            <h3>Baquelite</h3>
-            <div class="company">Sobra industrial • Limeira/SP</div>
-            <div class="opp-data">
-              <div><span>Volume</span><b>Em levantamento</b></div>
-              <div><span>Necessidade</span><b>Solução de destinação</b></div>
-              <div><span>Origem</span><b>Processo industrial</b></div>
-            </div>
-            <button class="btn btn-outline" onclick="prefill('solucao','Baquelite')">Tenho solução →</button>
-          </article>
+        <article class="opp" data-type="oferta" data-category="plastico" data-city="Piracicaba" data-search="apara colorida branca 1000 500 kg piracicaba">
+          <div class="opp-top"><span class="pill offer">OFERTA</span><span class="opp-status">Quinzenal</span></div>
+          <h3>Aparas plásticas</h3>
+          <div class="meta">Piracicaba/SP</div>
+          <div class="opp-data">
+            <div><span>Colorida</span><b>1.000 kg / 15 dias</b></div>
+            <div><span>Branca</span><b>500 kg / 15 dias</b></div>
+            <div><span>Preço</span><b>Aceita propostas</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('compra','plastico','Aparas plásticas')">Tenho interesse →</button>
+        </article>
 
-          <article class="opp offer" data-type="oferta" data-material="Vidro" data-city="Piracicaba" data-search="vidro piracicaba 1 tonelada">
-            <div class="opp-top"><span class="pill p-offer">OFERTA</span><span class="new">Recorrente</span></div>
-            <h3>Vidro</h3>
-            <div class="company">Fornecedor industrial • Piracicaba/SP</div>
-            <div class="opp-data">
-              <div><span>Quantidade</span><b>1 tonelada</b></div>
-              <div><span>Frequência</span><b>A cada 15 dias</b></div>
-              <div><span>Preço</span><b>Aceita propostas</b></div>
-            </div>
-            <button class="btn btn-outline" onclick="prefill('compra','Vidro')">Tenho interesse →</button>
-          </article>
+        <article class="opp" data-type="destinacao" data-category="plastico" data-city="Limeira" data-search="baquelite limeira sobra industrial destinação">
+          <div class="opp-top"><span class="pill dest">DESTINAÇÃO</span><span class="opp-status">Em análise</span></div>
+          <h3>Baquelite</h3>
+          <div class="meta">Limeira/SP • Sobra de processo industrial</div>
+          <div class="opp-data">
+            <div><span>Volume</span><b>Em levantamento</b></div>
+            <div><span>Objetivo</span><b>Encontrar solução</b></div>
+            <div><span>Status</span><b>Avaliando alternativas</b></div>
+          </div>
+          <button class="btn btn-outline" onclick="prefillOpportunity('solucao','plastico','Baquelite')">Tenho uma solução →</button>
+        </article>
 
-          <article class="opp offer" data-type="oferta" data-material="Alumínio" data-city="Piracicaba" data-search="latinha aluminio alumínio piracicaba 50 kg">
-            <div class="opp-top"><span class="pill p-offer">OFERTA</span><span class="new">Recorrente</span></div>
-            <h3>Latinhas de alumínio</h3>
-            <div class="company">Fornecedor industrial • Piracicaba/SP</div>
-            <div class="opp-data">
-              <div><span>Quantidade</span><b>50 kg</b></div>
-              <div><span>Frequência</span><b>A cada 15 dias</b></div>
-              <div><span>Preço</span><b>Aceita propostas</b></div>
-            </div>
-            <button class="btn btn-outline" onclick="prefill('compra','Latinhas de alumínio')">Tenho interesse →</button>
-          </article>
-
-          <article class="opp offer" data-type="oferta" data-material="PP" data-city="Piracicaba" data-search="apara branca colorida pp piracicaba">
-            <div class="opp-top"><span class="pill p-offer">OFERTA</span><span class="new">Recorrente</span></div>
-            <h3>Aparas plásticas</h3>
-            <div class="company">Fornecedor industrial • Piracicaba/SP</div>
-            <div class="opp-data">
-              <div><span>Colorida</span><b>1.000 kg / 15 dias</b></div>
-              <div><span>Branca</span><b>500 kg / 15 dias</b></div>
-              <div><span>Preço</span><b>Aceita propostas</b></div>
-            </div>
-            <button class="btn btn-outline" onclick="prefill('compra','Aparas plásticas')">Tenho interesse →</button>
-          </article>
-        </div>
-      </section>
-
-      <aside class="trend-card">
-        <h4>Materiais em alta</h4>
-        <div class="trend-list">
-          <div class="trend"><div><strong>PP</strong><small>Alta demanda</small></div><div class="spark">↗ 8</div></div>
-          <div class="trend"><div><strong>PEAD</strong><small>Alta demanda</small></div><div class="spark">↗ 6</div></div>
-          <div class="trend"><div><strong>PET</strong><small>Demanda estável</small></div><div class="spark">→ 5</div></div>
-          <div class="trend"><div><strong>ABS</strong><small>Demanda crescente</small></div><div class="spark">↗ 4</div></div>
-          <div class="trend"><div><strong>PS</strong><small>Demanda estável</small></div><div class="spark">→ 3</div></div>
-        </div>
-        <button class="btn btn-panel" style="width:100%;margin-top:12px" onclick="openModal('compra')">Cadastrar demanda →</button>
-      </aside>
+        <div class="empty" id="emptyState">Nenhuma oportunidade encontrada com esses filtros.</div>
+      </div>
     </div>
   </section>
 
-  <section class="benefits" id="beneficios">
-    <div class="container benefit-grid">
-      <div class="benefit"><div class="bi">◎</div><div><strong>INTELIGÊNCIA DE MATCHING</strong><span>Organizamos materiais, volumes, regiões e condições para reduzir conexões irrelevantes.</span></div></div>
-      <div class="benefit"><div class="bi">◇</div><div><strong>SEGURANÇA E PRIVACIDADE</strong><span>As oportunidades públicas preservam os dados comerciais e o contato das empresas.</span></div></div>
-      <div class="benefit"><div class="bi">↗</div><div><strong>EFICIÊNCIA COMERCIAL</strong><span>Menos material parado, mais alternativas de compra, venda e destinação.</span></div></div>
-      <div class="benefit"><div class="bi">♻</div><div><strong>IMPACTO POSITIVO</strong><span>Cada conexão ajuda a manter materiais em circulação e reduz desperdício industrial.</span></div></div>
+  <section class="platform" id="plataforma">
+    <div class="container platform-grid">
+      <div class="platform-card card">
+        <div class="eyebrow">Para empresas</div>
+        <h3>Uma infraestrutura comercial, não apenas um mural de anúncios.</h3>
+        <p>
+          A Circular organiza dados de materiais, volumes, preços, frequência, localização e logística para melhorar a qualidade dos matchings.
+        </p>
+        <div class="platform-list">
+          <div><i>✓</i><span>Compradores podem informar faixa de preço e volume desejado.</span></div>
+          <div><i>✓</i><span>Fornecedores podem publicar lotes pontuais ou recorrentes.</span></div>
+          <div><i>✓</i><span>Empresas podem registrar necessidades de destinação.</span></div>
+          <div><i>✓</i><span>Prestadores podem oferecer coleta, reciclagem, logística e outras soluções.</span></div>
+        </div>
+      </div>
+
+      <div class="platform-card card">
+        <div class="eyebrow">Visão de plataforma</div>
+        <h3>Estruturada para crescer com liquidez, dados e confiança.</h3>
+        <p>
+          Cada cadastro fortalece a rede e melhora a capacidade de conectar oferta, demanda e soluções. A identidade das empresas permanece preservada durante a etapa pública.
+        </p>
+        <div class="platform-list">
+          <div><i>✓</i><span>Taxonomia por categoria + material em texto livre.</span></div>
+          <div><i>✓</i><span>Modelo único para diferentes tipos de materiais industriais.</span></div>
+          <div><i>✓</i><span>Base preparada para matching por região, quantidade, condição e preço.</span></div>
+          <div><i>✓</i><span>Arquitetura preparada para migrar futuramente de Sheets para banco de dados.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="cta-box">
+        <div>
+          <h2>Publique uma necessidade em poucos minutos.</h2>
+          <p>A Circular busca aderência entre empresas, materiais e soluções.</p>
+        </div>
+        <div class="cta-actions">
+          <button class="btn btn-primary" onclick="openOpportunity('venda')">Publicar oportunidade →</button>
+          <button class="btn btn-outline" onclick="openOpportunity('compra')">Cadastrar demanda</button>
+        </div>
+      </div>
     </div>
   </section>
 </main>
 
-<footer id="sobre">
+<footer>
   <div class="container footer-row">
-    <span>CIRCULAR B2B © 2026. Todos os direitos reservados.</span>
-    <span>Privacidade · Termos · Contato</span>
+    <span>© 2026 Circular B2B.</span>
+    <span>Marketplace B2B de materiais industriais</span>
   </div>
 </footer>
 
-<!-- MODAL -->
+<!-- UNIFIED OPPORTUNITY MODAL -->
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal">
     <div class="modal-head">
       <div>
-        <h3 id="modalTitle">Cadastrar oportunidade</h3>
-        <p id="modalSubtitle">Informe os dados essenciais para análise da Circular B2B.</p>
+        <h3 id="modalTitle">Publicar oportunidade</h3>
+        <p>Um único cadastro para compra, venda, destinação ou solução.</p>
       </div>
       <button class="close" onclick="closeModal()">✕</button>
     </div>
 
     <div class="modal-body">
-      <div class="form-tabs">
-        <button class="form-tab active" data-form="venda">Vender</button>
-        <button class="form-tab" data-form="compra">Comprar</button>
-        <button class="form-tab" data-form="destinacao">Destinar</button>
-        <button class="form-tab" data-form="solucao">Tenho solução</button>
+      <div class="type-grid">
+        <button class="type-btn active" data-type="venda">Vender</button>
+        <button class="type-btn" data-type="compra">Comprar</button>
+        <button class="type-btn" data-type="destinacao">Destinar</button>
+        <button class="type-btn" data-type="solucao">Oferecer solução</button>
       </div>
 
-      <form class="form-pane active" id="form-venda" data-type="venda">
-        <div class="form-grid">
-          <div class="field"><label>Empresa *</label><input name="empresa" required></div>
-          <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
-          <div class="field"><label>WhatsApp *</label><input name="whatsapp" required></div>
-          <div class="field"><label>E-mail</label><input name="email" type="email"></div>
-          <div class="field"><label>Cidade / UF *</label><input name="cidade" required></div>
-          <div class="field"><label>Material *</label><input name="material" required></div>
-          <div class="field"><label>Condição</label><input name="condicao" placeholder="Apara, peça, moído..."></div>
-          <div class="field"><label>Quantidade *</label><input name="quantidade" required></div>
-          <div class="field"><label>Frequência</label><select name="frequencia"><option></option><option>Única</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Recorrente</option></select></div>
-          <div class="field"><label>Preço pretendido</label><input name="preco" placeholder="Ex.: R$ 3,50/kg ou aceita propostas"></div>
-          <div class="field full"><label>Logística / retirada</label><input name="logistica"></div>
-          <div class="field full"><label>Observações</label><textarea name="observacoes"></textarea></div>
-        </div>
-        <div class="submit-row">
-          <button class="btn btn-primary" type="submit">Cadastrar oferta →</button>
-          <span class="form-note">Os dados comerciais não são exibidos publicamente.</span>
-        </div>
-        <div class="success">✓ Cadastro recebido. Vamos analisar e considerar essa oferta nos próximos matchings.</div>
-      </form>
+      <div class="stepbar">
+        <span class="stepdot active"></span>
+        <span class="stepdot"></span>
+        <span class="stepdot"></span>
+      </div>
 
-      <form class="form-pane" id="form-compra" data-type="compra">
-        <div class="form-grid">
-          <div class="field"><label>Empresa *</label><input name="empresa" required></div>
-          <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
-          <div class="field"><label>WhatsApp *</label><input name="whatsapp" required></div>
-          <div class="field"><label>E-mail</label><input name="email" type="email"></div>
-          <div class="field"><label>Cidade / UF *</label><input name="cidade" required></div>
-          <div class="field"><label>Material procurado *</label><input name="material" required></div>
-          <div class="field"><label>Condição aceita</label><input name="condicao"></div>
-          <div class="field"><label>Quantidade mínima</label><input name="quantidade"></div>
-          <div class="field"><label>Faixa que pretende pagar</label><input name="precoPretendido" placeholder="Ex.: até R$ 3,90/kg"></div>
-          <div class="field"><label>Frequência</label><select name="frequencia"><option></option><option>Única</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Recorrente</option></select></div>
-          <div class="field"><label>Faz retirada?</label><select name="retirada"><option></option><option>Sim</option><option>Não</option><option>Depende do lote</option></select></div>
-          <div class="field"><label>Região de interesse</label><input name="regiao"></div>
-          <div class="field full"><label>Observações</label><textarea name="observacoes"></textarea></div>
-        </div>
-        <div class="submit-row">
-          <button class="btn btn-primary" type="submit">Cadastrar demanda →</button>
-          <span class="form-note">A faixa de compra ajuda a Circular a filtrar oportunidades comercialmente compatíveis.</span>
-        </div>
-        <div class="success">✓ Demanda recebida. Vamos considerar esse perfil nos próximos matchings.</div>
-      </form>
+      <form id="opportunityForm">
+        <input type="hidden" name="tipo" id="tipo" value="venda">
 
-      <form class="form-pane" id="form-destinacao" data-type="destinacao">
-        <div class="form-grid">
-          <div class="field"><label>Empresa *</label><input name="empresa" required></div>
-          <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
-          <div class="field"><label>WhatsApp *</label><input name="whatsapp" required></div>
-          <div class="field"><label>E-mail</label><input name="email" type="email"></div>
-          <div class="field"><label>Cidade / UF *</label><input name="cidade" required></div>
-          <div class="field"><label>Material / resíduo *</label><input name="material" required></div>
-          <div class="field"><label>Quantidade</label><input name="quantidade"></div>
-          <div class="field"><label>Frequência</label><select name="frequencia"><option></option><option>Única</option><option>Semanal</option><option>Quinzenal</option><option>Mensal</option><option>Contínua</option></select></div>
-          <div class="field"><label>Condição do material</label><input name="condicao"></div>
-          <div class="field"><label>Limpo ou contaminado?</label><select name="contaminacao"><option></option><option>Limpo</option><option>Misturado</option><option>Possui contaminação</option><option>Não sei informar</option></select></div>
-          <div class="field"><label>Destinação atual</label><select name="destinacaoAtual"><option></option><option>Vendemos</option><option>Doamos</option><option>Retiram sem custo</option><option>Pagamos pela destinação</option><option>Sem solução definida</option></select></div>
-          <div class="field"><label>Custo atual</label><input name="custoDestinacao"></div>
-          <div class="field full"><label>Observações</label><textarea name="observacoes"></textarea></div>
-        </div>
-        <div class="submit-row">
-          <button class="btn btn-primary" type="submit">Cadastrar necessidade →</button>
-          <span class="form-note">A Circular busca alternativas compatíveis de reaproveitamento ou destinação.</span>
-        </div>
-        <div class="success">✓ Necessidade recebida. Vamos avaliar possibilidades dentro da rede.</div>
-      </form>
+        <!-- STEP 1 -->
+        <div class="form-step active" data-step="1">
+          <div class="form-grid">
+            <div class="field">
+              <label>Categoria *</label>
+              <select name="categoria" id="categoria" required>
+                <option value="">Selecione</option>
+                <option value="plastico">Plásticos</option>
+                <option value="metal">Metais</option>
+                <option value="papel">Papel e papelão</option>
+                <option value="vidro">Vidro</option>
+                <option value="madeira">Madeira e MDF</option>
+                <option value="textil">Têxteis e couro</option>
+                <option value="borracha">Borracha</option>
+                <option value="quimico">Químicos e insumos</option>
+                <option value="eletronico">Eletrônicos e componentes</option>
+                <option value="construcao">Construção</option>
+                <option value="embalagem">Embalagens</option>
+                <option value="biomassa">Orgânicos e biomassa</option>
+                <option value="outros">Outros</option>
+              </select>
+            </div>
 
-      <form class="form-pane" id="form-solucao" data-type="solucao">
-        <div class="form-grid">
-          <div class="field"><label>Empresa *</label><input name="empresa" required></div>
-          <div class="field"><label>Responsável *</label><input name="responsavel" required></div>
-          <div class="field"><label>WhatsApp *</label><input name="whatsapp" required></div>
-          <div class="field"><label>E-mail</label><input name="email" type="email"></div>
-          <div class="field"><label>Cidade / UF *</label><input name="cidade" required></div>
-          <div class="field"><label>Material / tipo de resíduo</label><input name="material"></div>
-          <div class="field full"><label>Qual solução sua empresa oferece? *</label><textarea name="observacoes" required placeholder="Reciclagem, coleta, transformação, tecnologia, logística, destinação..."></textarea></div>
+            <div class="field">
+              <label>Material *</label>
+              <input name="material" id="material" required placeholder="Ex.: cobre, PET, pallet, tecido, resina, vidro...">
+            </div>
+
+            <div class="field">
+              <label>Condição / formato</label>
+              <input name="condicao" placeholder="Ex.: apara, peça, fardo, moído, chapa...">
+            </div>
+
+            <div class="field">
+              <label>Especificação</label>
+              <input name="especificacao" placeholder="Cor, composição, pureza, dimensão, tipo etc.">
+            </div>
+
+            <div class="field">
+              <label>Quantidade</label>
+              <input name="quantidade" placeholder="Ex.: 5">
+            </div>
+
+            <div class="field">
+              <label>Unidade</label>
+              <select name="unidade">
+                <option value="">Selecione</option>
+                <option>kg</option>
+                <option>toneladas</option>
+                <option>unidades</option>
+                <option>m²</option>
+                <option>m³</option>
+                <option>litros</option>
+                <option>outro</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Frequência</label>
+              <select name="frequencia">
+                <option value="">Selecione</option>
+                <option>Única</option>
+                <option>Semanal</option>
+                <option>Quinzenal</option>
+                <option>Mensal</option>
+                <option>Recorrente / variável</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label id="priceLabel">Preço pretendido</label>
+              <input name="precoReferencia" id="precoReferencia" placeholder="Ex.: R$ 3,50/kg ou aceita propostas">
+            </div>
+          </div>
         </div>
-        <div class="submit-row">
-          <button class="btn btn-primary" type="submit">Cadastrar solução →</button>
-          <span class="form-note">Esse perfil poderá ser considerado quando surgir uma necessidade compatível.</span>
+
+        <!-- STEP 2 -->
+        <div class="form-step" data-step="2">
+          <div class="form-grid">
+            <div class="field">
+              <label>Cidade / UF *</label>
+              <input name="cidadeUF" required placeholder="Ex.: Piracicaba/SP">
+            </div>
+
+            <div class="field">
+              <label>Logística / cobertura</label>
+              <input name="logistica" placeholder="Retirada, entrega, raio de atendimento etc.">
+            </div>
+
+            <div class="field conditional dest-field">
+              <label>Material limpo ou contaminado?</label>
+              <select name="contaminacao">
+                <option value="">Selecione</option>
+                <option>Limpo</option>
+                <option>Misturado</option>
+                <option>Possui contaminação</option>
+                <option>Não sei informar</option>
+              </select>
+            </div>
+
+            <div class="field conditional dest-field">
+              <label>Destinação atual</label>
+              <select name="destinacaoAtual">
+                <option value="">Selecione</option>
+                <option>Vendemos</option>
+                <option>Doamos</option>
+                <option>Retiram sem custo</option>
+                <option>Pagamos pela destinação</option>
+                <option>Sem solução definida</option>
+              </select>
+            </div>
+
+            <div class="field conditional dest-field">
+              <label>Custo atual</label>
+              <input name="custoAtual" placeholder="Opcional">
+            </div>
+
+            <div class="field full conditional solution-field">
+              <label>Solução oferecida *</label>
+              <textarea name="solucaoOferecida" placeholder="Ex.: coleta, reciclagem, moagem, transporte, descaracterização, tecnologia..."></textarea>
+            </div>
+
+            <div class="field full">
+              <label>Observações</label>
+              <textarea name="observacoes" placeholder="Informações adicionais relevantes para a negociação ou análise."></textarea>
+            </div>
+          </div>
         </div>
-        <div class="success">✓ Solução recebida. Vamos considerar sua empresa em necessidades compatíveis.</div>
+
+        <!-- STEP 3 -->
+        <div class="form-step" data-step="3">
+          <div class="form-grid">
+            <div class="field">
+              <label>Empresa *</label>
+              <input name="empresa" required>
+            </div>
+
+            <div class="field">
+              <label>Responsável *</label>
+              <input name="responsavel" required>
+            </div>
+
+            <div class="field">
+              <label>WhatsApp *</label>
+              <input name="whatsapp" required>
+            </div>
+
+            <div class="field">
+              <label>E-mail</label>
+              <input name="email" type="email">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn btn-outline" type="button" id="backBtn" onclick="prevStep()" style="visibility:hidden">← Voltar</button>
+          <span class="form-note">A oportunidade pública não exibe seus dados de contato.</span>
+          <button class="btn btn-primary" type="button" id="nextBtn" onclick="nextStep()">Continuar →</button>
+          <button class="btn btn-primary" type="submit" id="submitBtn" style="display:none">Publicar oportunidade →</button>
+        </div>
+
+        <div class="success" id="successBox">✓ Oportunidade recebida. A Circular vai analisar as informações e considerar o cadastro nos próximos matchings.</div>
       </form>
     </div>
   </div>
@@ -784,108 +778,200 @@
 
 <script>
   const API_URL = "https://script.google.com/macros/s/AKfycbwDiTc6cjlZdh_b6LkdPqxKHmeh8_rSY3VS0AfVASZICZatMjnF8vm3BohBgmawFU_r/exec";
-  const modal = document.getElementById('modalBackdrop');
-  const panes = [...document.querySelectorAll('.form-pane')];
-  const formTabs = [...document.querySelectorAll('.form-tab')];
 
-  function openModal(type='venda'){
+  // Marketplace filters
+  let tabType = 'all';
+
+  const marketSearch = document.getElementById('marketSearch');
+  const marketType = document.getElementById('marketType');
+  const marketCategory = document.getElementById('marketCategory');
+  const marketCity = document.getElementById('marketCity');
+  const cards = [...document.querySelectorAll('.opp')];
+
+  document.querySelectorAll('.tab').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      btn.classList.add('active');
+      tabType = btn.dataset.tab;
+      applyFilters();
+    });
+  });
+
+  [marketSearch,marketType,marketCategory,marketCity].forEach(el=>{
+    el.addEventListener(el===marketSearch?'input':'change',applyFilters);
+  });
+
+  function applyFilters(){
+    const q=(marketSearch.value||'').toLowerCase().trim();
+    const type=tabType!=='all'?tabType:marketType.value;
+    const category=marketCategory.value;
+    const city=marketCity.value;
+    let count=0;
+
+    cards.forEach(card=>{
+      const text=(card.dataset.search+' '+card.innerText).toLowerCase();
+      const okQ=!q||text.includes(q);
+      const okT=type==='all'||card.dataset.type===type;
+      const okC=category==='all'||card.dataset.category===category;
+      const okCity=city==='all'||card.dataset.city===city;
+      const show=okQ&&okT&&okC&&okCity;
+      card.style.display=show?'flex':'none';
+      if(show) count++;
+    });
+
+    document.getElementById('emptyState').style.display=count?'none':'block';
+  }
+
+  function heroApply(){
+    marketSearch.value=document.getElementById('heroSearch').value;
+    marketType.value=document.getElementById('heroType').value;
+    tabType='all';
+    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab==='all'));
+    applyFilters();
+    document.getElementById('marketplace').scrollIntoView({behavior:'smooth'});
+  }
+
+  function quickSearch(q){
+    document.getElementById('heroSearch').value=q;
+    heroApply();
+  }
+
+  // Modal / unified opportunity
+  const modal=document.getElementById('modalBackdrop');
+  const typeButtons=[...document.querySelectorAll('.type-btn')];
+  const form=document.getElementById('opportunityForm');
+  const tipo=document.getElementById('tipo');
+  const priceLabel=document.getElementById('priceLabel');
+  const priceInput=document.getElementById('precoReferencia');
+  let currentStep=1;
+
+  function openOpportunity(type='venda'){
     modal.classList.add('open');
     document.body.style.overflow='hidden';
-    selectForm(type);
+    setType(type);
+    goStep(1);
   }
+
   function closeModal(){
     modal.classList.remove('open');
     document.body.style.overflow='';
   }
+
   modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
-  function selectForm(type){
-    formTabs.forEach(t=>t.classList.toggle('active',t.dataset.form===type));
-    panes.forEach(p=>p.classList.toggle('active',p.dataset.type===type));
-    const titles={
-      venda:['Cadastrar oferta','Informe o material disponível para análise da Circular B2B.'],
-      compra:['Cadastrar demanda','Informe material, volume e faixa de compra para priorizarmos ofertas compatíveis.'],
-      destinacao:['Buscar destinação','Conte qual resíduo ou sobra precisa encontrar uma solução.'],
-      solucao:['Cadastrar solução','Apresente o serviço, tecnologia ou destino que sua empresa oferece.']
-    };
-    document.getElementById('modalTitle').textContent=titles[type][0];
-    document.getElementById('modalSubtitle').textContent=titles[type][1];
-  }
-  formTabs.forEach(t=>t.addEventListener('click',()=>selectForm(t.dataset.form)));
+  typeButtons.forEach(btn=>btn.addEventListener('click',()=>setType(btn.dataset.type)));
 
-  function prefill(type,material){
-    openModal(type);
-    const f=document.querySelector(`.form-pane[data-type="${type}"]`);
-    const i=f?.querySelector('[name="material"]');
-    if(i)i.value=material;
-  }
+  function setType(type){
+    tipo.value=type;
+    typeButtons.forEach(x=>x.classList.toggle('active',x.dataset.type===type));
 
-  // filters
-  let currentTab='all';
-  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active'); currentTab=t.dataset.tab; applyFilters();
-  }));
-  ['search','filterType','filterMaterial','filterCity'].forEach(id=>{
-    document.getElementById(id)?.addEventListener(id==='search'?'input':'change',applyFilters);
-  });
+    document.querySelectorAll('.dest-field').forEach(x=>x.classList.toggle('show',type==='destinacao'));
+    document.querySelectorAll('.solution-field').forEach(x=>x.classList.toggle('show',type==='solucao'));
 
-  function applyFilters(){
-    const q=(document.getElementById('search').value||'').toLowerCase().trim();
-    const type=document.getElementById('filterType').value;
-    const material=document.getElementById('filterMaterial').value;
-    const city=document.getElementById('filterCity').value;
-    document.querySelectorAll('.opp').forEach(c=>{
-      const text=(c.dataset.search+' '+c.innerText).toLowerCase();
-      const okQ=!q||text.includes(q);
-      const effectiveType=currentTab!=='all'?currentTab:type;
-      const okT=effectiveType==='all'||c.dataset.type===effectiveType;
-      const okM=material==='all'||text.includes(material.toLowerCase());
-      const okC=city==='all'||c.dataset.city===city;
-      c.style.display=okQ&&okT&&okM&&okC?'flex':'none';
-    });
-  }
-  function resetFilters(){
-    document.getElementById('search').value='';
-    document.getElementById('filterType').value='all';
-    document.getElementById('filterMaterial').value='all';
-    document.getElementById('filterCity').value='all';
-    currentTab='all';
-    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab==='all'));
-    applyFilters();
+    const solutionTextarea=document.querySelector('[name="solucaoOferecida"]');
+    solutionTextarea.required = type==='solucao';
+
+    if(type==='compra'){
+      priceLabel.textContent='Faixa que pretende pagar';
+      priceInput.placeholder='Ex.: até R$ 3,90/kg';
+    } else if(type==='venda'){
+      priceLabel.textContent='Preço pretendido';
+      priceInput.placeholder='Ex.: R$ 3,50/kg ou aceita propostas';
+    } else if(type==='destinacao'){
+      priceLabel.textContent='Valor / condição comercial';
+      priceInput.placeholder='Opcional';
+    } else {
+      priceLabel.textContent='Preço / condição da solução';
+      priceInput.placeholder='Opcional';
+    }
   }
 
-  // fast submit queue
-  const KEY='circularB2B_pending';
-  const qget=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]}};
-  const qset=q=>{try{localStorage.setItem(KEY,JSON.stringify(q))}catch{}};
+  function prefillOpportunity(type,category,material){
+    openOpportunity(type);
+    document.getElementById('categoria').value=category;
+    document.getElementById('material').value=material;
+  }
+
+  function goStep(n){
+    currentStep=n;
+    document.querySelectorAll('.form-step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===n));
+    document.querySelectorAll('.stepdot').forEach((x,i)=>x.classList.toggle('active',i<n));
+    document.getElementById('backBtn').style.visibility=n===1?'hidden':'visible';
+    document.getElementById('nextBtn').style.display=n===3?'none':'inline-flex';
+    document.getElementById('submitBtn').style.display=n===3?'inline-flex':'none';
+  }
+
+  function validateStep(step){
+    const current=document.querySelector(`.form-step[data-step="${step}"]`);
+    const required=[...current.querySelectorAll('[required]')].filter(el=>el.offsetParent!==null);
+    for(const el of required){
+      if(!el.checkValidity()){
+        el.reportValidity();
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function nextStep(){
+    if(!validateStep(currentStep)) return;
+    if(currentStep<3) goStep(currentStep+1);
+  }
+
+  function prevStep(){
+    if(currentStep>1) goStep(currentStep-1);
+  }
+
+  // Fast queue
+  const KEY='circularB2B_pendingV4';
+  function getQueue(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]}}
+  function setQueue(q){try{localStorage.setItem(KEY,JSON.stringify(q))}catch{}}
   function enqueue(payload){
-    const q=qget(); const id=(crypto?.randomUUID?.()||String(Date.now()+Math.random()));
-    q.push({id,payload});qset(q);return id;
+    const q=getQueue();
+    const id=(crypto?.randomUUID?.()||String(Date.now()+Math.random()));
+    q.push({id,payload});
+    setQueue(q);
+    return id;
   }
-  function done(id){qset(qget().filter(x=>x.id!==id))}
+  function removeQueue(id){setQueue(getQueue().filter(x=>x.id!==id))}
   function send(id,payload){
-    fetch(API_URL,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
-      .then(()=>done(id)).catch(()=>{});
+    fetch(API_URL,{
+      method:'POST',
+      mode:'no-cors',
+      keepalive:true,
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)
+    }).then(()=>removeQueue(id)).catch(()=>{});
   }
-  function retry(){qget().forEach(x=>send(x.id,x.payload))}
-  window.addEventListener('online',retry);setTimeout(retry,1200);
+  function retryQueue(){getQueue().forEach(x=>send(x.id,x.payload))}
+  window.addEventListener('online',retryQueue);
+  setTimeout(retryQueue,1200);
 
-  panes.forEach(form=>{
-    form.addEventListener('submit',e=>{
-      e.preventDefault();
-      if(!form.reportValidity())return;
-      const payload=Object.fromEntries(new FormData(form).entries());
-      payload.tipo=form.dataset.type;
-      const id=enqueue(payload);
-      const btn=form.querySelector('button[type="submit"]');
-      const success=form.querySelector('.success');
-      const old=btn.textContent;
-      btn.disabled=true;btn.textContent='✓ Cadastro recebido';success.style.display='block';
-      send(id,payload);
-      setTimeout(()=>{form.reset();btn.disabled=false;btn.textContent=old},1800);
-    });
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    if(!validateStep(3)) return;
+
+    const payload=Object.fromEntries(new FormData(form).entries());
+    const id=enqueue(payload);
+
+    const btn=document.getElementById('submitBtn');
+    const success=document.getElementById('successBox');
+    const original=btn.textContent;
+
+    btn.disabled=true;
+    btn.textContent='✓ Recebido';
+    success.style.display='block';
+
+    send(id,payload);
+
+    setTimeout(()=>{
+      form.reset();
+      setType('venda');
+      goStep(1);
+      btn.disabled=false;
+      btn.textContent=original;
+    },1800);
   });
 </script>
 </body>
