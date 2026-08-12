@@ -196,15 +196,6 @@
     .benefit{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px}
     .benefit h3{font-size:14px;margin-bottom:5px}
     .benefit p{font-size:12px;color:var(--muted);line-height:1.5}
-    .metrics{padding:12px 0 30px}
-    .metric-wrap{background:linear-gradient(135deg,var(--dark),#0d392a);border-radius:20px;padding:24px;color:#fff}
-    .metric-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:18px}
-    .metric-head h2{font-size:27px}
-    .metric-head p{font-size:11px;color:#bdd0c6}
-    .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .metric{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:17px}
-    .metric strong{display:block;font-size:30px;line-height:1;margin-bottom:6px}
-    .metric span{font-size:11px;color:#cfe0d7}
     .mission{padding:8px 0 38px}
     .mission-box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
     .mission-box h2{font-size:27px;margin-bottom:8px}
@@ -216,22 +207,296 @@
     }
     @media(max-width:600px){
       .how-grid,.benefit-grid,.metric-grid{grid-template-columns:1fr}
-      .metric-head{display:block}
     }
 
-  </style>
+
+    /* ===== Premium dark-green visual system ===== */
+    :root{
+      --bg:#06110d;
+      --card:#0b1b15;
+      --ink:#f3f8f5;
+      --muted:#a6b8af;
+      --line:rgba(130,180,153,.18);
+      --green:#18b36b;
+      --green2:#39d98a;
+      --greenSoft:rgba(24,179,107,.12);
+      --dark:#03100b;
+      --blue:#2d72df;
+      --purple:#7b5cc4;
+      --amber:#e6a229;
+      --shadow:0 20px 60px rgba(0,0,0,.28);
+      --radius:18px;
+      --container:1240px;
+    }
+
+    html{scroll-behavior:smooth}
+    body{
+      background:
+        radial-gradient(circle at 85% 0%,rgba(39,123,74,.20),transparent 26%),
+        radial-gradient(circle at 15% 20%,rgba(18,78,51,.18),transparent 30%),
+        linear-gradient(180deg,#03100b 0%,#07150f 38%,#06110d 100%);
+      color:var(--ink);
+    }
+
+    .premium-header{
+      position:sticky;top:0;z-index:40;
+      background:rgba(3,16,11,.88);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line)
+    }
+    .premium-nav{
+      min-height:82px;display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;gap:28px
+    }
+    .wordmark{
+      text-decoration:none;color:#fff;display:inline-flex;
+      flex-direction:column;gap:2px;justify-self:start
+    }
+    .wordmark-main{
+      font-size:18px;font-weight:900;letter-spacing:.12em
+    }
+    .wordmark-sub{
+      color:#849b90;font-size:10px;letter-spacing:.02em
+    }
+    .nav-links{display:flex;gap:28px;align-items:center}
+    .nav-links a{
+      color:#c9d7d0;text-decoration:none;font-size:12px;font-weight:700;
+      transition:.2s
+    }
+    .nav-links a:hover{color:#fff}
+    .nav-cta{justify-self:end;box-shadow:0 10px 26px rgba(24,179,107,.22)}
+
+    .hero{padding:58px 0 26px}
+    .hero-box{
+      position:relative;overflow:hidden;
+      background:
+        linear-gradient(90deg,rgba(3,16,11,.98) 0%,rgba(4,26,18,.94) 56%,rgba(7,46,30,.82) 100%);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      border-radius:26px;
+      padding:54px;
+      grid-template-columns:1.05fr .95fr;
+      min-height:520px
+    }
+    .hero-box::after{
+      content:"";position:absolute;inset:auto -12% -38% auto;
+      width:560px;height:560px;border-radius:50%;
+      background:radial-gradient(circle,rgba(48,179,102,.22),rgba(48,179,102,0) 66%);
+      pointer-events:none
+    }
+    .hero h1{
+      font-size:clamp(46px,6vw,76px);
+      max-width:730px;line-height:.98;margin-bottom:22px
+    }
+    .hero h1 span{color:var(--green2)}
+    .hero p{font-size:16px;line-height:1.7;color:#bfd0c7;max-width:680px}
+    .hero-actions{margin-top:28px}
+    .hero .btn{min-height:50px;font-size:13px;padding:0 20px}
+    .btn-outline{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.18);color:#fff}
+    .hero-side{
+      position:relative;z-index:1;
+      background:linear-gradient(180deg,rgba(17,55,39,.72),rgba(7,29,20,.78));
+      border:1px solid rgba(93,194,132,.22);
+      color:#fff;border-radius:22px;padding:28px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.03)
+    }
+    .hero-side h3{font-size:20px}
+    .hero-side p{font-size:12px;color:#a9beb4}
+    .search input,.search select{
+      background:#0b1b15;border-color:var(--line);color:#fff
+    }
+
+    .trust-strip{padding:8px 0 22px}
+    .trust-card,.about-card,.how-card,.benefit,.opp,.filters,.mission-box{
+      background:linear-gradient(180deg,rgba(11,27,21,.96),rgba(7,22,16,.96));
+      border-color:var(--line);color:#fff;
+      box-shadow:0 10px 30px rgba(0,0,0,.12)
+    }
+    .trust-card span,.about-card p,.how-card p,.benefit p,.mission-box p,
+    .section-head p,.meta,.data{color:#9fb2a8}
+
+    .about{padding:38px 0 14px}
+    .about-card h2,.section-head h2,.mission-box h2{color:#fff}
+    .about-points div{color:#c4d2cb}
+
+    .how{padding:34px 0}
+    .how-card .n{
+      background:rgba(24,179,107,.16);
+      color:#63e7a5;border:1px solid rgba(99,231,165,.16)
+    }
+
+    .benefit-grid{gap:14px}
+    .benefit{min-height:155px}
+
+    .intents{padding:18px 0 24px}
+    .intent-grid{
+      background:linear-gradient(180deg,rgba(11,27,21,.92),rgba(6,20,14,.96));
+      border:1px solid var(--line);border-radius:20px;padding:4px
+    }
+    .intent{
+      background:transparent;border:0;border-right:1px solid var(--line);
+      border-radius:0;padding:24px 20px;color:#fff
+    }
+    .intent:last-child{border-right:0}
+    .intent:hover{background:rgba(24,179,107,.06);box-shadow:none;transform:none}
+    .intent b{font-size:16px}
+    .intent p{font-size:12px;color:#9fb2a8}
+
+    .market{padding:34px 0 48px}
+    .filters input,.filters select{
+      background:#0b1b15;border-color:var(--line);color:#fff
+    }
+    .opp{min-height:230px}
+    .data b{color:#dbe7e1}
+
+    .mission{padding:16px 0 42px}
+    .mission-box{
+      background:linear-gradient(90deg,#0b1b15 0%,#0d241a 100%);
+      padding:26px 28px
+    }
+
+    footer{
+      border-top:1px solid var(--line);
+      color:#7f958a;padding:30px 0
+    }
+
+    /* Modal stays easy to read */
+    .modal{background:#f7faf8;color:#0b1d16}
+    .modal-head{background:#f7faf8;border-color:#dfe7e3}
+    .modal-body{background:#f7faf8}
+    .modal .step-title,.modal .material-title strong,.modal h3,.modal h4{color:#0b1d16}
+    .modal .step-subtitle,.modal .helper,.modal .optional,.modal .material-cell small{color:#6a7a72}
+    .modal .field label,.modal .material-cell label{color:#33483e}
+    .modal input,.modal select,.modal textarea{
+      background:#fff!important;color:#0b1d16!important;border-color:#d7e2dc!important
+    }
+    .modal .review-card,.modal .choice-help,.modal .material-row{
+      background:#fff;color:#0b1d16;border-color:#d7e2dc
+    }
+
+    @media(max-width:980px){
+      .premium-nav{grid-template-columns:1fr auto}
+      .nav-links{display:none}
+      .hero-box{grid-template-columns:1fr;padding:34px}
+      .intent-grid{grid-template-columns:1fr 1fr}
+      .intent{border-right:0;border-bottom:1px solid var(--line)}
+    }
+    @media(max-width:600px){
+      .wordmark-sub{display:none}
+      .premium-nav{min-height:68px}
+      .nav-cta{min-height:42px;padding:0 12px}
+      .hero{padding-top:26px}
+      .hero-box{padding:24px;min-height:auto}
+      .hero h1{font-size:42px}
+      .intent-grid{grid-template-columns:1fr}
+    }
+
+  
+    /* ===== V7.5 conversion + hierarchy ===== */
+    .conversion-trust{padding:4px 0 18px}
+    .conversion-trust-inner{
+      display:flex;justify-content:center;align-items:center;gap:16px;
+      color:#9fb2a8;font-size:11px;font-weight:800;letter-spacing:.02em
+    }
+    .conversion-trust-inner i{
+      width:3px;height:3px;border-radius:50%;background:#2bc47b;display:block
+    }
+
+    .quick-chips{
+      display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px
+    }
+    .quick-chips button{
+      border:1px solid rgba(130,180,153,.18);
+      background:rgba(255,255,255,.025);color:#aebfb7;
+      border-radius:999px;padding:9px 14px;font-size:11px;font-weight:800;
+      cursor:pointer;transition:.18s
+    }
+    .quick-chips button:hover,.quick-chips button.active{
+      background:rgba(24,179,107,.13);color:#65e5a6;
+      border-color:rgba(67,213,139,.28)
+    }
+
+    .market{padding-top:24px}
+    .market .section-head{margin-bottom:16px}
+    .market .section-head h2{font-size:clamp(30px,4vw,46px)}
+    .opp-grid{gap:14px}
+    .opp{
+      transition:transform .18s,border-color .18s,background .18s;
+      background:linear-gradient(180deg,rgba(13,33,25,.98),rgba(7,23,17,.98))
+    }
+    .opp:hover{
+      transform:translateY(-2px);
+      border-color:rgba(67,213,139,.28);
+      background:linear-gradient(180deg,rgba(15,39,29,.98),rgba(8,27,19,.98))
+    }
+
+    .how,.benefits,.about,.mission{position:relative}
+    .how{background:rgba(255,255,255,.018);padding:54px 0}
+    .benefits{padding:54px 0}
+    .about{
+      background:linear-gradient(180deg,rgba(14,31,24,.45),rgba(4,17,12,.20));
+      padding:54px 0
+    }
+
+    .final-cta{padding:26px 0 56px}
+    .final-cta-box{
+      display:grid;grid-template-columns:1fr auto;align-items:center;gap:36px;
+      padding:38px 42px;border-radius:24px;
+      background:
+        radial-gradient(circle at 90% 20%,rgba(58,218,137,.16),transparent 34%),
+        linear-gradient(110deg,#0a2118,#0b2c1e);
+      border:1px solid rgba(83,205,139,.22);
+      box-shadow:0 22px 60px rgba(0,0,0,.22)
+    }
+    .final-cta-box .eyebrow{
+      display:block;color:#4ddd98;font-size:10px;font-weight:900;
+      letter-spacing:.16em;margin-bottom:10px
+    }
+    .final-cta-box h2{
+      margin:0 0 9px;font-size:clamp(28px,3.4vw,42px);line-height:1.08;
+      max-width:760px
+    }
+    .final-cta-box p{margin:0;color:#a8bbb1;max-width:700px;line-height:1.65}
+    .final-cta-btn{white-space:nowrap;min-height:52px;padding:0 22px}
+
+    /* Better reading rhythm */
+    .section-head p,.about-card p,.mission-box p{max-width:680px;line-height:1.7}
+    .section-head h2{letter-spacing:-.025em}
+    .how-card,.benefit,.about-card{border-radius:18px}
+
+    @media(max-width:760px){
+      .conversion-trust-inner{justify-content:flex-start;overflow-x:auto;padding-bottom:4px}
+      .conversion-trust-inner span{white-space:nowrap}
+      .final-cta-box{grid-template-columns:1fr;padding:28px 24px}
+      .final-cta-btn{width:100%}
+      .quick-chips{overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}
+      .quick-chips button{white-space:nowrap}
+    }
+
+</style>
 </head>
 
 <body>
-<header>
-  <div class="container nav">
-    <div class="brand">
-      <div class="brand-mark">C</div>
-      <div><strong>CIRCULAR B2B</strong><small>Mercado inteligente de materiais industriais</small></div>
-    </div>
-    <button class="btn btn-primary" onclick="openForm('venda')">Cadastrar material</button>
+
+<header class="premium-header">
+  <div class="container premium-nav">
+    <a class="wordmark" href="#" aria-label="Circular B2B">
+      <span class="wordmark-main">CIRCULAR B2B</span>
+      <span class="wordmark-sub">Mercado inteligente de materiais industriais</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Navegação principal">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#oportunidades">Oportunidades</a>
+      <a href="#para-empresas">Para empresas</a>
+      <a href="#sobre">Sobre a Circular</a>
+    </nav>
+
+    <button class="btn btn-primary nav-cta" onclick="openForm('venda')">Cadastrar material</button>
   </div>
 </header>
+
 
 <main>
   <section class="hero">
@@ -266,101 +531,24 @@
     </div>
   </section>
 
-
-  <section class="trust-strip">
-    <div class="container trust-grid">
-      <div class="trust-card"><b>Cadastro sem custo</b><span>Entre na rede e receba oportunidades compatíveis.</span></div>
-      <div class="trust-card"><b>Contatos preservados</b><span>Seus dados não são exibidos publicamente no marketplace.</span></div>
-      <div class="trust-card"><b>Você decide se avança</b><span>Nenhuma negociação acontece sem interesse das partes.</span></div>
+<section class="conversion-trust">
+  <div class="container">
+    <div class="conversion-trust-inner">
+      <span>Cadastro gratuito</span><i></i>
+      <span>Contato protegido</span><i></i>
+      <span>Sem compromisso</span><i></i>
+      <span>Matching direcionado</span>
     </div>
-  </section>
-
-  <section class="about">
-    <div class="container about-grid">
-      <div class="about-card">
-        <h2>Excedente para uma empresa. Matéria-prima para outra.</h2>
-        <p>A Circular B2B conecta empresas que possuem materiais industriais disponíveis com empresas que precisam comprar, reaproveitar ou encontrar uma destinação adequada para esses materiais.</p>
-        <div class="about-points">
-          <div><i>✓</i><span>Cadastre excedentes, aparas, refugos, sobras de produção e estoques parados.</span></div>
-          <div><i>✓</i><span>Informe materiais que sua empresa compra regularmente.</span></div>
-          <div><i>✓</i><span>Registre materiais que precisam de destinação ou saída.</span></div>
-        </div>
-      </div>
-      <div class="about-card">
-        <h2 style="font-size:22px">Uma rede comercial para materiais industriais</h2>
-        <p>Você informa o que tem ou o que procura. A Circular organiza os dados, identifica empresas com perfil compatível e aproxima as partes quando existe uma oportunidade real.</p>
-        <div class="about-points">
-          <div><i>✓</i><span>Menos tempo procurando comprador ou fornecedor.</span></div>
-          <div><i>✓</i><span>Mais qualidade nas oportunidades recebidas.</span></div>
-          <div><i>✓</i><span>Mais reaproveitamento e menos material parado.</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="how">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h2>Como funciona</h2>
-          <p>Um processo simples para transformar informação em oportunidade.</p>
-        </div>
-      </div>
-      <div class="how-grid">
-        <div class="how-card"><div class="n">1</div><h3>Você cadastra</h3><p>Material, quantidade, condição, localização e informações básicas.</p></div>
-        <div class="how-card"><div class="n">2</div><h3>A Circular cruza</h3><p>A base identifica empresas compradoras, fornecedoras ou com perfil compatível.</p></div>
-        <div class="how-card"><div class="n">3</div><h3>Validamos o interesse</h3><p>Antes de avançar, confirmamos se a oportunidade faz sentido para as partes.</p></div>
-        <div class="how-card"><div class="n">4</div><h3>A negociação evolui</h3><p>Com interesse real, a oportunidade pode seguir para cotação, logística e fechamento.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="benefits">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h2>Por que usar a Circular B2B?</h2>
-          <p>Mais organização comercial e menos desperdício de tempo e material.</p>
-        </div>
-      </div>
-      <div class="benefit-grid">
-        <div class="benefit"><h3>Menos desperdício</h3><p>Materiais parados podem voltar para a cadeia produtiva.</p></div>
-        <div class="benefit"><h3>Mais oportunidades</h3><p>Compradores recebem ofertas alinhadas ao que realmente utilizam.</p></div>
-        <div class="benefit"><h3>Menos trabalho comercial</h3><p>Em vez de procurar empresas uma por uma, a rede ajuda a encontrar compatibilidade.</p></div>
-        <div class="benefit"><h3>Informação organizada</h3><p>Materiais, demandas e empresas ficam estruturados para facilitar novos negócios.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="metrics">
-    <div class="container">
-      <div class="metric-wrap">
-        <div class="metric-head">
-          <div>
-            <h2>A rede Circular B2B em números</h2>
-            <p>Dados reais atualizados conforme novas empresas e oportunidades entram na plataforma.</p>
-          </div>
-        </div>
-        <div class="metric-grid">
-          <div class="metric"><strong id="metricCompanies">—</strong><span>Empresas na rede</span></div>
-          <div class="metric"><strong id="metricMaterials">—</strong><span>Materiais / demandas cadastradas</span></div>
-          <div class="metric"><strong id="metricMatches">—</strong><span>Matches identificados</span></div>
-          <div class="metric"><strong id="metricDeals">—</strong><span>Negociações registradas</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="intents">
+  </div>
+</section>
+<section class="intents">
     <div class="container intent-grid">
       <article class="intent" onclick="openForm('compra')"><b>Comprar material</b><p>Cadastre o que sua empresa procura.</p></article>
       <article class="intent" onclick="openForm('venda')"><b>Vender material</b><p>Publique lotes e excedentes disponíveis.</p></article>
       <article class="intent" onclick="openForm('cessao')"><b>Ceder material</b><p>Disponibilize material sem cobrança.</p></article>
       <article class="intent" onclick="openForm('destinacao')"><b>Encontrar destinação</b><p>Cadastre resíduos ou materiais que precisam de saída.</p></article>
     </div>
-  </section>
-
-  <section class="market">
+  </section><section class="market" id="oportunidades">
     <div class="container">
       <div class="section-head">
         <div>
@@ -369,7 +557,14 @@
         </div>
       </div>
 
-      <div class="filters">
+      <div class="quick-chips" aria-label="Filtros rápidos">
+  <button type="button" data-quick-cat="">Todos</button>
+  <button type="button" data-quick-cat="Plásticos">Plásticos</button>
+  <button type="button" data-quick-cat="Metais">Metais</button>
+  <button type="button" data-quick-cat="Papel">Papel</button>
+  <button type="button" data-quick-cat="Outros">Outros</button>
+</div>
+<div class="filters">
         <input id="filterText" placeholder="Buscar material, especificação ou cidade...">
         <select id="filterType">
           <option value="all">Todos</option>
@@ -394,11 +589,58 @@
 
       <div id="opps" class="opps"><div class="empty">Carregando oportunidades...</div></div>
     </div>
-  </section>
-</main>
-
-
-  <section class="mission">
+  </section><section class="how" id="como-funciona">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Como funciona</h2>
+          <p>Um processo simples para transformar informação em oportunidade.</p>
+        </div>
+      </div>
+      <div class="how-grid">
+        <div class="how-card"><div class="n">1</div><h3>Você cadastra</h3><p>Material, quantidade, condição, localização e informações básicas.</p></div>
+        <div class="how-card"><div class="n">2</div><h3>A Circular cruza</h3><p>A base identifica empresas compradoras, fornecedoras ou com perfil compatível.</p></div>
+        <div class="how-card"><div class="n">3</div><h3>Validamos o interesse</h3><p>Antes de avançar, confirmamos se a oportunidade faz sentido para as partes.</p></div>
+        <div class="how-card"><div class="n">4</div><h3>A negociação evolui</h3><p>Com interesse real, a oportunidade pode seguir para cotação, logística e fechamento.</p></div>
+      </div>
+    </div>
+  </section><section class="benefits" id="para-empresas">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Por que usar a Circular B2B?</h2>
+          <p>Mais organização comercial e menos desperdício de tempo e material.</p>
+        </div>
+      </div>
+      <div class="benefit-grid">
+        <div class="benefit"><h3>Menos desperdício</h3><p>Materiais parados podem voltar para a cadeia produtiva.</p></div>
+        <div class="benefit"><h3>Mais oportunidades</h3><p>Compradores recebem ofertas alinhadas ao que realmente utilizam.</p></div>
+        <div class="benefit"><h3>Menos trabalho comercial</h3><p>Em vez de procurar empresas uma por uma, a rede ajuda a encontrar compatibilidade.</p></div>
+        <div class="benefit"><h3>Informação organizada</h3><p>Materiais, demandas e empresas ficam estruturados para facilitar novos negócios.</p></div>
+      </div>
+    </div>
+  </section><section class="about">
+    <div class="container about-grid">
+      <div class="about-card">
+        <h2>Excedente para uma empresa. Matéria-prima para outra.</h2>
+        <p>A Circular B2B conecta empresas que possuem materiais industriais disponíveis com empresas que precisam comprar, reaproveitar ou encontrar uma destinação adequada para esses materiais.</p>
+        <div class="about-points">
+          <div><i>✓</i><span>Cadastre excedentes, aparas, refugos, sobras de produção e estoques parados.</span></div>
+          <div><i>✓</i><span>Informe materiais que sua empresa compra regularmente.</span></div>
+          <div><i>✓</i><span>Registre materiais que precisam de destinação ou saída.</span></div>
+        </div>
+      </div>
+      <div class="about-card">
+        <h2 style="font-size:22px">Uma rede comercial para materiais industriais</h2>
+        <p>Você informa o que tem ou o que procura. A Circular organiza os dados, identifica empresas com perfil compatível e aproxima as partes quando existe uma oportunidade real.</p>
+        <div class="about-points">
+          <div><i>✓</i><span>Menos tempo procurando comprador ou fornecedor.</span></div>
+          <div><i>✓</i><span>Mais qualidade nas oportunidades recebidas.</span></div>
+          <div><i>✓</i><span>Mais reaproveitamento e menos material parado.</span></div>
+        </div>
+      </div>
+    </div>
+  </section><section class="mission" id="sobre">
     <div class="container">
       <div class="mission-box">
         <h2>Estamos construindo uma rede de circulação de materiais entre empresas.</h2>
@@ -407,6 +649,41 @@
     </div>
   </section>
 
+
+  <section class="trust-strip">
+    <div class="container trust-grid">
+      <div class="trust-card"><b>Cadastro sem custo</b><span>Entre na rede e receba oportunidades compatíveis.</span></div>
+      <div class="trust-card"><b>Contatos preservados</b><span>Seus dados não são exibidos publicamente no marketplace.</span></div>
+      <div class="trust-card"><b>Você decide se avança</b><span>Nenhuma negociação acontece sem interesse das partes.</span></div>
+    </div>
+  </section>
+
+  
+
+  
+
+  
+  
+
+  
+</main>
+
+
+  
+
+
+<section class="final-cta">
+  <div class="container">
+    <div class="final-cta-box">
+      <div>
+        <span class="eyebrow">CIRCULAR B2B</span>
+        <h2>Tem material disponível ou procura um fornecedor?</h2>
+        <p>Cadastre em poucos minutos. A Circular B2B procura oportunidades compatíveis para sua empresa.</p>
+      </div>
+      <button class="btn btn-primary final-cta-btn" onclick="openForm('venda')">Cadastrar material</button>
+    </div>
+  </div>
+</section>
 <footer><div class="container">© 2026 Circular B2B • Marketplace B2B de materiais industriais</div></footer>
 
 <div class="modal-bg" id="modalBg">
@@ -844,7 +1121,6 @@
         btn.textContent='Enviar cadastro';
         closeForm();
         loadOpportunities();
-  loadMetrics();
       },1500);
     })
     .catch(()=>{
@@ -853,14 +1129,6 @@
       alert('Não foi possível enviar agora. Tente novamente.');
     });
   });
-
-
-  async function loadMetrics(){
-    const ids=['metricCompanies','metricMaterials','metricMatches','metricDeals'];
-    if(!API_URL.startsWith('https://script.google.com/')){
-      ids.forEach(id=>document.getElementById(id).textContent='—');
-      return;
-    }
     try{
       const r=await fetch(API_URL+'?action=metrics');
       const data=await r.json();
@@ -948,7 +1216,34 @@
 
   addMaterial();
   loadOpportunities();
-  loadMetrics();
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const chips = document.querySelectorAll('[data-quick-cat]');
+  const selects = Array.from(document.querySelectorAll('select'));
+  const categorySelect = selects.find(s =>
+    /categoria/i.test((s.id || '') + ' ' + (s.name || '') + ' ' + (s.getAttribute('aria-label') || ''))
+  ) || selects.find(s => Array.from(s.options || []).some(o => /pl[aá]st/i.test(o.textContent || '')));
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', function(){
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      if (!categorySelect) return;
+      const wanted = (chip.dataset.quickCat || '').toLowerCase();
+      const option = Array.from(categorySelect.options).find(o => {
+        const t = (o.textContent || '').toLowerCase();
+        return !wanted ? (o.value === '' || /todas|todos/.test(t)) : t.includes(wanted.slice(0,5));
+      });
+      if (option) {
+        categorySelect.value = option.value;
+        categorySelect.dispatchEvent(new Event('change', {bubbles:true}));
+      }
+    });
+  });
+});
+</script>
+
 </body>
 </html>
