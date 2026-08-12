@@ -474,6 +474,38 @@
       .quick-chips button{white-space:nowrap}
     }
 
+
+    /* V7.6 — ajuste fino do hero */
+    @media (min-width:1100px){
+      .hero-box{grid-template-columns:1.18fr .82fr}
+      .hero h1{
+        font-size:clamp(48px,4.35vw,66px);
+        line-height:1.02;
+        max-width:760px;
+        letter-spacing:-.045em;
+      }
+      .hero-side{max-width:500px;justify-self:end;width:100%}
+    }
+
+
+    /* V7.7 — navegação persistente e cadastro múltiplo */
+    .step-indicator{border:0;text-align:left;cursor:pointer;font-family:inherit}
+    .step-indicator:disabled{cursor:not-allowed;opacity:.48}
+    .step-indicator.reachable:hover{filter:brightness(1.04)}
+    .btn-add-material{
+      margin-top:14px;min-height:54px;padding:0 20px;border:1px solid #9fd8bb;
+      background:#eaf7f1;color:#08784b;border-radius:12px;font-size:15px;font-weight:900;
+      cursor:pointer
+    }
+    .btn-add-material:hover{background:#def2e8}
+    .add-material-help{margin-top:7px}
+    .material-actions{display:flex;align-items:center;gap:8px}
+    .duplicate-material{
+      border:1px solid #d7e2dc;background:#fff;color:#315244;border-radius:9px;
+      min-height:38px;padding:0 11px;font-size:12px;font-weight:850;cursor:pointer
+    }
+    .duplicate-material:hover{background:#f2f8f5}
+
 </style>
 </head>
 
@@ -698,10 +730,10 @@
 
     <div class="modal-body">
       <div class="stepper">
-        <div class="step-indicator active" data-step-indicator="1"><span class="num">1</span><span>Objetivo</span></div>
-        <div class="step-indicator" data-step-indicator="2"><span class="num">2</span><span>Material</span></div>
-        <div class="step-indicator" data-step-indicator="3"><span class="num">3</span><span>Local e empresa</span></div>
-        <div class="step-indicator" data-step-indicator="4"><span class="num">4</span><span>Conferir</span></div>
+        <button type="button" class="step-indicator active" data-step-indicator="1" onclick="goToStep(1)"><span class="num">1</span><span>Objetivo</span></button>
+        <button type="button" class="step-indicator" data-step-indicator="2" onclick="goToStep(2)"><span class="num">2</span><span>Material</span></button>
+        <button type="button" class="step-indicator" data-step-indicator="3" onclick="goToStep(3)"><span class="num">3</span><span>Local e empresa</span></button>
+        <button type="button" class="step-indicator" data-step-indicator="4" onclick="goToStep(4)"><span class="num">4</span><span>Conferir</span></button>
       </div>
 
       <form id="form">
@@ -732,7 +764,8 @@
           <p class="step-subtitle">Cadastre um ou vários materiais da mesma necessidade. Os campos com * são essenciais.</p>
 
           <div id="materials"></div>
-          <button class="btn btn-outline" type="button" style="margin-top:12px;min-height:50px;font-size:14px" onclick="addMaterial()">+ Adicionar outro material</button>
+          <button class="btn btn-add-material" type="button" onclick="addMaterial()">＋ Adicionar outro material</button>
+          <div class="helper add-material-help">Tem mais de um material? Adicione todos aqui sem precisar cadastrar a empresa novamente.</div>
 
           <details class="examples">
             <summary>Não sei a diferença entre material, formato e especificação — ver exemplos</summary>
@@ -856,7 +889,10 @@
     return `<div class="material-row">
       <div class="material-title">
         <strong>Material ${n}</strong>
-        <button type="button" class="remove" onclick="removeMaterial(this)" title="Remover material">×</button>
+        <div class="material-actions">
+          <button type="button" class="duplicate-material" onclick="duplicateMaterial(this)" title="Duplicar material">Duplicar</button>
+          <button type="button" class="remove" onclick="removeMaterial(this)" title="Remover material">×</button>
+        </div>
       </div>
       <div class="material-grid">
         <div class="material-cell">
@@ -903,11 +939,41 @@
     </div>`;
   }
 
-  function addMaterial(){ document.getElementById('materials').insertAdjacentHTML('beforeend',materialHtml()); }
+  function addMaterial(){
+    document.getElementById('materials').insertAdjacentHTML('beforeend',materialHtml());
+    renumberMaterials();
+    const rows=[...document.querySelectorAll('.material-row')];
+    const last=rows[rows.length-1];
+    if(last) last.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+
+  function duplicateMaterial(btn){
+    const source=btn.closest('.material-row');
+    if(!source) return;
+    const values={};
+    source.querySelectorAll('[data-field]').forEach(el=>values[el.dataset.field]=el.value);
+
+    document.getElementById('materials').insertAdjacentHTML('beforeend',materialHtml());
+    const rows=[...document.querySelectorAll('.material-row')];
+    const target=rows[rows.length-1];
+    target.querySelectorAll('[data-field]').forEach(el=>{
+      if(Object.prototype.hasOwnProperty.call(values,el.dataset.field)) el.value=values[el.dataset.field];
+    });
+    renumberMaterials();
+    target.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+
+  function renumberMaterials(){
+    [...document.querySelectorAll('.material-row')].forEach((row,i)=>{
+      const title=row.querySelector('.material-title strong');
+      if(title) title.textContent='Material '+(i+1);
+    });
+  }
   function removeMaterial(btn){
     const rows=[...document.querySelectorAll('.material-row')];
     if(rows.length<=1){ rows[0].querySelectorAll('input,select').forEach(x=>x.value=''); return; }
     btn.closest('.material-row').remove();
+    renumberMaterials();
   }
   function collectMaterials(){
     return [...document.querySelectorAll('.material-row')].map(row=>{
@@ -919,6 +985,7 @@
 
 
   let currentStep=1;
+  let maxReachedStep=1;
 
   const TYPE_HELP={
     venda:'<b>Venda:</b> sua empresa tem um material e quer receber por ele.',
@@ -929,15 +996,29 @@
 
   function showStep(step){
     currentStep=Math.max(1,Math.min(4,step));
-    document.querySelectorAll('.form-step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===currentStep));
+    maxReachedStep=Math.max(maxReachedStep,currentStep);
+
+    document.querySelectorAll('.form-step').forEach(x=>{
+      x.classList.toggle('active',Number(x.dataset.step)===currentStep);
+    });
+
     document.querySelectorAll('.step-indicator').forEach(x=>{
       const n=Number(x.dataset.stepIndicator);
       x.classList.toggle('active',n===currentStep);
       x.classList.toggle('done',n<currentStep);
+      x.classList.toggle('reachable',n<=maxReachedStep);
+      x.disabled=n>maxReachedStep;
     });
+
     if(currentStep===4) buildReview();
+
     const modal=document.querySelector('.modal');
     if(modal) modal.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function goToStep(step){
+    step=Number(step);
+    if(step<=maxReachedStep) showStep(step);
   }
 
   function validateStep(step){
@@ -1116,6 +1197,7 @@
         document.getElementById('materials').innerHTML='';
         addMaterial();
         setType('venda');
+        maxReachedStep=1;
         showStep(1);
         btn.disabled=false;
         btn.textContent='Enviar cadastro';
