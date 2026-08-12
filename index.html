@@ -519,7 +519,7 @@
     @media(max-width:720px){.opp{min-height:auto;padding:19px}.opp h3{font-size:19px}.section-head h2{font-size:34px}}
 
 
-    /* V7.9 — oportunidades compactas, detalhes sob demanda */
+    /* V7.14 — oportunidades compactas, detalhes sob demanda */
     #opps{grid-template-columns:1fr!important;gap:8px!important}
     .opp{
       min-height:0!important;padding:15px 16px!important;
@@ -1304,7 +1304,8 @@
     }
 
     try{
-      const r=await fetch(API_URL+'?action=public');
+      const r=await fetch('/api/opportunities',{cache:'no-store'});
+      if(!r.ok) throw new Error('HTTP '+r.status);
       const data=await r.json();
       opportunities=(data.opportunities||[]);
       renderOpportunities();
