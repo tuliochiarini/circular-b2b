@@ -1357,7 +1357,7 @@
 
     grid.innerHTML=rows.map((o,i)=>{
       const qty=o.quantidade ? [o.quantidade,o.unidade].filter(Boolean).join(' ') : 'Qualquer quantidade';
-      const classification=o.formato||o.especificacao||o.condicao||'Sob avaliação';
+      const classification=String(o.formato||o.especificacao||o.condicao||'Sob avaliação');
       const title=classification && classification.toLowerCase()!==String(o.material||'').toLowerCase()
         ? `${o.material} — ${classification}` : (o.material||'Material');
 
