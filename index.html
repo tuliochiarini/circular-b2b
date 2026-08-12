@@ -41,7 +41,7 @@
     .search input,.search select{height:44px;border:1px solid var(--line);border-radius:10px;padding:0 11px;background:#fff}
     .intents{padding:16px 0}
     .intent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .intent{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;cursor:pointer;transition:.18s}
+    .intent{cursor:pointer;background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;cursor:pointer;transition:.18s}
     .intent:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
     .intent b{display:block;margin-bottom:5px}
     .intent p{font-size:11px;color:var(--muted)}
@@ -334,12 +334,12 @@
       background:linear-gradient(180deg,rgba(11,27,21,.92),rgba(6,20,14,.96));
       border:1px solid var(--line);border-radius:20px;padding:4px
     }
-    .intent{
+    .intent{cursor:pointer;
       background:transparent;border:0;border-right:1px solid var(--line);
       border-radius:0;padding:24px 20px;color:#fff
     }
     .intent:last-child{border-right:0}
-    .intent:hover{background:rgba(24,179,107,.06);box-shadow:none;transform:none}
+    .intent:hover{background:rgba(24,179,107,.08);box-shadow:none;transform:translateY(-1px);border-color:rgba(67,213,139,.22)}
     .intent b{font-size:16px}
     .intent p{font-size:12px;color:#9fb2a8}
 
@@ -380,7 +380,7 @@
       .nav-links{display:none}
       .hero-box{grid-template-columns:1fr;padding:34px}
       .intent-grid{grid-template-columns:1fr 1fr}
-      .intent{border-right:0;border-bottom:1px solid var(--line)}
+      .intent{cursor:pointer;border-right:0;border-bottom:1px solid var(--line)}
     }
     @media(max-width:600px){
       .wordmark-sub{display:none}
@@ -543,10 +543,10 @@
 </section>
 <section class="intents">
     <div class="container intent-grid">
-      <article class="intent" onclick="openForm('compra')"><b>Comprar material</b><p>Cadastre o que sua empresa procura.</p></article>
-      <article class="intent" onclick="openForm('venda')"><b>Vender material</b><p>Publique lotes e excedentes disponíveis.</p></article>
-      <article class="intent" onclick="openForm('cessao')"><b>Ceder material</b><p>Disponibilize material sem cobrança.</p></article>
-      <article class="intent" onclick="openForm('destinacao')"><b>Encontrar destinação</b><p>Cadastre resíduos ou materiais que precisam de saída.</p></article>
+      <article class="intent" role="button" tabindex="0" onclick="openForm('compra')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openForm('compra')}"><b>Comprar material</b><p>Cadastre o que sua empresa procura.</p></article>
+      <article class="intent" role="button" tabindex="0" onclick="openForm('venda')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openForm('venda')}"><b>Vender material</b><p>Publique lotes e excedentes disponíveis.</p></article>
+      <article class="intent" role="button" tabindex="0" onclick="openForm('cessao')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openForm('cessao')}"><b>Ceder material</b><p>Disponibilize material sem cobrança.</p></article>
+      <article class="intent" role="button" tabindex="0" onclick="openForm('destinacao')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openForm('destinacao')}"><b>Encontrar destinação</b><p>Cadastre resíduos ou materiais que precisam de saída.</p></article>
     </div>
   </section><section class="market" id="oportunidades">
     <div class="container">
@@ -1129,19 +1129,6 @@
       alert('Não foi possível enviar agora. Tente novamente.');
     });
   });
-    try{
-      const r=await fetch(API_URL+'?action=metrics');
-      const data=await r.json();
-      if(data && data.success && data.metrics){
-        document.getElementById('metricCompanies').textContent=data.metrics.companies ?? '—';
-        document.getElementById('metricMaterials').textContent=data.metrics.materials ?? '—';
-        document.getElementById('metricMatches').textContent=data.metrics.matches ?? '—';
-        document.getElementById('metricDeals').textContent=data.metrics.deals ?? '—';
-        return;
-      }
-    }catch(e){}
-    ids.forEach(id=>document.getElementById(id).textContent='Em crescimento');
-  }
 
   async function loadOpportunities(){
     const grid=document.getElementById('opps');
