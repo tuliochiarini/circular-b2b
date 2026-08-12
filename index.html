@@ -954,6 +954,7 @@
   const FREQ_OPTIONS = ['','Única','Semanal','Quinzenal','Mensal','Recorrente / variável'];
 
   let opportunities = [];
+  let renderedOpportunities = [];
 
   function opts(items){
     return items.map(i=>{
@@ -1310,6 +1311,7 @@
       opportunities=(data.opportunities||[]);
       renderOpportunities();
     }catch(e){
+      console.error('Erro ao carregar/renderizar oportunidades:', e);
       grid.innerHTML='<div class="empty">Não foi possível carregar as oportunidades agora.</div>';
     }
   }
