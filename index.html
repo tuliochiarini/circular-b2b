@@ -518,6 +518,124 @@
     .opp-cta:hover{transform:translateY(-1px);filter:brightness(1.06)}
     @media(max-width:720px){.opp{min-height:auto;padding:19px}.opp h3{font-size:19px}.section-head h2{font-size:34px}}
 
+
+    /* V7.9 — oportunidades compactas, detalhes sob demanda */
+    #opps{grid-template-columns:1fr!important;gap:8px!important}
+    .opp{
+      min-height:0!important;padding:15px 16px!important;
+      display:grid!important;
+      grid-template-columns:minmax(190px,1.35fr) minmax(125px,.8fr) minmax(145px,.9fr) minmax(150px,.9fr) auto;
+      gap:16px;align-items:center
+    }
+    .opp-main{min-width:0}
+    .opp-main-top{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+    .opp h3{font-size:17px!important;line-height:1.2!important;margin:0!important}
+    .opp .meta{font-size:13px!important;margin:0!important}
+    .opp-mini{min-width:0}
+    .opp-mini span{display:block;font-size:11px;color:#8da79b;margin-bottom:3px}
+    .opp-mini b{display:block;font-size:13px;line-height:1.3;color:#f4faf7;overflow-wrap:anywhere}
+    .opp-actions{display:flex;gap:8px;align-items:center}
+    .opp-details-btn,.opp-cta{
+      width:auto!important;min-height:40px!important;margin:0!important;padding:0 13px!important;
+      border-radius:9px!important;font-size:12px!important;white-space:nowrap
+    }
+    .opp-details-btn{
+      border:1px solid rgba(255,255,255,.14);background:transparent;color:#dce9e3;font-weight:800;cursor:pointer
+    }
+    .opp-cta{background:#18b36b!important;border:1px solid rgba(61,220,139,.28)!important;color:#fff}
+    .opp-detail-bg{
+      position:fixed;inset:0;background:rgba(3,13,9,.72);backdrop-filter:blur(7px);
+      z-index:130;display:none;align-items:center;justify-content:center;padding:18px
+    }
+    .opp-detail-bg.open{display:flex}
+    .opp-detail-card{
+      width:min(620px,100%);background:#071d15;border:1px solid rgba(80,180,128,.25);
+      border-radius:18px;padding:22px;color:#fff;box-shadow:0 25px 80px rgba(0,0,0,.35)
+    }
+    .opp-detail-head{display:flex;justify-content:space-between;gap:16px;align-items:start}
+    .opp-detail-head h3{font-size:25px;margin:8px 0 5px}
+    .opp-detail-close{width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:transparent;color:#fff;font-size:21px;cursor:pointer}
+    .opp-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+    .opp-detail-item{padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:rgba(255,255,255,.025)}
+    .opp-detail-item span{display:block;color:#8da79b;font-size:11px;margin-bottom:4px}
+    .opp-detail-item b{font-size:14px;line-height:1.35}
+    .opp-detail-wide{grid-column:1/-1}
+    .opp-detail-cta{width:100%!important;margin-top:16px!important;min-height:48px!important;font-size:14px!important}
+    @media(max-width:900px){
+      .opp{grid-template-columns:1fr 1fr!important;gap:11px!important}
+      .opp-main,.opp-actions{grid-column:1/-1}
+      .opp-actions{justify-content:stretch}
+      .opp-actions button{flex:1}
+    }
+    @media(max-width:560px){
+      #opps{gap:9px!important}
+      .opp{padding:14px!important;grid-template-columns:1fr 1fr!important}
+      .opp h3{font-size:16px!important}
+      .opp-mini b{font-size:12px}
+      .opp-actions{gap:7px}
+      .opp-details-btn,.opp-cta{min-height:38px!important;padding:0 10px!important;font-size:11.5px!important}
+      .opp-detail-grid{grid-template-columns:1fr}
+      .opp-detail-wide{grid-column:auto}
+    }
+
+
+    /* V7.10 — skeleton loading premium */
+    .skeleton-wrap{display:grid;gap:8px}
+    .skeleton-row{
+      min-height:86px;
+      display:grid;
+      grid-template-columns:minmax(190px,1.35fr) minmax(125px,.8fr) minmax(145px,.9fr) minmax(150px,.9fr) auto;
+      gap:16px;
+      align-items:center;
+      padding:15px 16px;
+      border:1px solid rgba(130,180,153,.12);
+      border-radius:14px;
+      background:linear-gradient(180deg,rgba(11,27,21,.88),rgba(7,22,16,.88));
+      overflow:hidden;
+      position:relative;
+    }
+    .skeleton-row::after{
+      content:"";
+      position:absolute;inset:0;
+      transform:translateX(-100%);
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.045),transparent);
+      animation:skeletonShimmer 1.35s infinite;
+    }
+    .skeleton-block{
+      height:13px;border-radius:999px;
+      background:rgba(255,255,255,.075)
+    }
+    .skeleton-main{display:grid;gap:8px}
+    .skeleton-pill{width:64px;height:22px;border-radius:7px}
+    .skeleton-title{width:72%;height:18px}
+    .skeleton-city{width:44%;height:11px}
+    .skeleton-mid{width:78%}
+    .skeleton-action{width:170px;height:40px;border-radius:9px;justify-self:end}
+    .loading-label{
+      display:flex;align-items:center;gap:8px;
+      color:#8fa79c;font-size:12px;font-weight:750;
+      margin-bottom:10px;padding-left:2px
+    }
+    .loading-dot{
+      width:7px;height:7px;border-radius:50%;
+      background:#26c77c;box-shadow:0 0 0 0 rgba(38,199,124,.35);
+      animation:loadingPulse 1.25s infinite
+    }
+    @keyframes skeletonShimmer{100%{transform:translateX(100%)}}
+    @keyframes loadingPulse{
+      0%{box-shadow:0 0 0 0 rgba(38,199,124,.32)}
+      70%{box-shadow:0 0 0 8px rgba(38,199,124,0)}
+      100%{box-shadow:0 0 0 0 rgba(38,199,124,0)}
+    }
+    @media(max-width:900px){
+      .skeleton-row{grid-template-columns:1fr 1fr}
+      .skeleton-main,.skeleton-action{grid-column:1/-1}
+      .skeleton-action{justify-self:stretch;width:100%}
+    }
+    @media(max-width:560px){
+      .skeleton-row{min-height:170px;padding:14px}
+    }
+
 </style>
 </head>
 
@@ -631,7 +749,7 @@
         </select>
       </div>
 
-      <div id="opps" class="opps"><div class="empty">Carregando oportunidades...</div></div>
+      <div id="opps" class="opps"><div class="empty">Preparando oportunidades...</div></div>
     </div>
   </section><section class="how" id="como-funciona">
     <div class="container">
@@ -729,6 +847,13 @@
   </div>
 </section>
 <footer><div class="container">© 2026 Circular B2B • Marketplace B2B de materiais industriais</div></footer>
+
+
+<div class="opp-detail-bg" id="oppDetailBg" onclick="if(event.target===this) closeOpportunityDetails()">
+  <div class="opp-detail-card" role="dialog" aria-modal="true" aria-labelledby="oppDetailTitle">
+    <div id="oppDetailContent"></div>
+  </div>
+</div>
 
 <div class="modal-bg" id="modalBg">
   <div class="modal">
@@ -1228,8 +1353,34 @@
     });
   });
 
+
+  function renderOpportunitySkeleton(){
+    const grid=document.getElementById('opps');
+    if(!grid) return;
+
+    const rows=Array.from({length:6},()=>`
+      <div class="skeleton-row" aria-hidden="true">
+        <div class="skeleton-main">
+          <div class="skeleton-block skeleton-pill"></div>
+          <div class="skeleton-block skeleton-title"></div>
+          <div class="skeleton-block skeleton-city"></div>
+        </div>
+        <div class="skeleton-block skeleton-mid"></div>
+        <div class="skeleton-block skeleton-mid"></div>
+        <div class="skeleton-block skeleton-mid"></div>
+        <div class="skeleton-block skeleton-action"></div>
+      </div>
+    `).join('');
+
+    grid.innerHTML=`
+      <div class="loading-label"><span class="loading-dot"></span>Buscando oportunidades na rede…</div>
+      <div class="skeleton-wrap">${rows}</div>
+    `;
+  }
+
   async function loadOpportunities(){
     const grid=document.getElementById('opps');
+    renderOpportunitySkeleton();
 
     if(!API_URL.startsWith('https://script.google.com/')){
       grid.innerHTML='<div class="empty">Conecte a URL do Web App V7 Lite para carregar as oportunidades.</div>';
@@ -1246,6 +1397,24 @@
     }
   }
 
+  function isOfficialOpportunity(o){
+    const material=String(o.material||'').trim().toLowerCase();
+    const city=String(o.cidadeUF||'').trim();
+    const type=String(o.tipo||'').trim().toLowerCase();
+    const status=String(o.status||o.situacao||'').trim().toLowerCase();
+
+    // Se futuramente a API enviar status, só publica registros ativos/oficiais.
+    if(status && !['ativo','ativa','oficial','publicado','publicada','active'].includes(status)) return false;
+
+    // Requisitos mínimos para uma oportunidade pública útil.
+    if(!material || !city || !['compra','venda','cessao','destinacao'].includes(type)) return false;
+
+    // Bloqueia resíduos óbvios de testes antigos.
+    if(['x','xx','xxx','teste','test','material teste'].includes(material)) return false;
+
+    return true;
+  }
+
   function renderOpportunities(){
     const grid=document.getElementById('opps');
     const q=(document.getElementById('filterText').value||'').toLowerCase().trim();
@@ -1253,7 +1422,8 @@
     const cat=document.getElementById('filterCategory').value;
 
     const rows=opportunities.filter(o=>{
-      const text=[o.material,o.especificacao,o.condicao,o.cidadeUF].join(' ').toLowerCase();
+      if(!isOfficialOpportunity(o)) return false;
+      const text=[o.material,o.formato,o.especificacao,o.condicao,o.cidadeUF].join(' ').toLowerCase();
       return (!q||text.includes(q)) &&
              (type==='all'||o.tipo===type) &&
              (cat==='all'||o.categoria===cat);
@@ -1268,21 +1438,70 @@
 
     grid.innerHTML=rows.map((o,i)=>{
       const qty=o.quantidade ? [o.quantidade,o.unidade].filter(Boolean).join(' ') : 'Qualquer quantidade';
-      const cta=o.tipo==='compra' ? '<button type="button" class="opp-cta" onclick="offerMaterial('+i+')">Tenho este material →</button>' : '';
+      const classification=o.formato||o.especificacao||o.condicao||'Sob avaliação';
+      const title=classification && classification.toLowerCase()!==String(o.material||'').toLowerCase()
+        ? `${o.material} — ${classification}` : (o.material||'Material');
+
+      const primary=o.tipo==='compra'
+        ? `<button type="button" class="opp-cta" onclick="offerMaterial(${i})">Tenho este material →</button>`
+        : `<button type="button" class="opp-cta" onclick="openOpportunityDetails(${i})">Tenho interesse →</button>`;
+
       return `
       <article class="opp">
-        <div><span class="pill ${escapeHtml(o.tipo)}">${labelType(o.tipo)}</span></div>
-        <h3>${escapeHtml(o.material||'Material')}</h3>
-        <div class="meta">${escapeHtml(o.cidadeUF||'Local sob consulta')}</div>
-        <div class="data">
-          <div><span>Especificação</span><b>${escapeHtml(o.especificacao||o.condicao||'Sob avaliação')}</b></div>
-          <div><span>Quantidade</span><b>${escapeHtml(qty)}</b></div>
-          <div><span>Frequência</span><b>${escapeHtml(o.frequencia||'A combinar')}</b></div>
-          <div><span>Preço</span><b>${escapeHtml(o.preco||'Sob consulta')}</b></div>
+        <div class="opp-main">
+          <div class="opp-main-top"><span class="pill ${escapeHtml(o.tipo)}">${labelType(o.tipo)}</span></div>
+          <h3>${escapeHtml(title)}</h3>
+          <div class="meta">📍 ${escapeHtml(o.cidadeUF)}</div>
         </div>
-        ${cta}
+        <div class="opp-mini"><span>Quantidade</span><b>${escapeHtml(qty)}</b></div>
+        <div class="opp-mini"><span>Frequência</span><b>${escapeHtml(o.frequencia||'A combinar')}</b></div>
+        <div class="opp-mini"><span>Preço</span><b>${escapeHtml(o.preco||'Sob consulta')}</b></div>
+        <div class="opp-actions">
+          <button type="button" class="opp-details-btn" onclick="openOpportunityDetails(${i})">Ver detalhes</button>
+          ${primary}
+        </div>
       </article>`;
     }).join('');
+  }
+
+  function openOpportunityDetails(index){
+    const o=renderedOpportunities[index];
+    if(!o) return;
+
+    const qty=o.quantidade ? [o.quantidade,o.unidade].filter(Boolean).join(' ') : 'Qualquer quantidade';
+    const classification=o.formato||o.especificacao||o.condicao||'Sob avaliação';
+    const logistics=o.logistica||'A combinar';
+    const notes=o.observacoes||o.observacao||'Nenhuma informação adicional.';
+    const restrictions=o.materiaisNaoInteressam||o.naoInteressam||'Não informado';
+
+    const action=o.tipo==='compra'
+      ? `<button type="button" class="opp-cta opp-detail-cta" onclick="closeOpportunityDetails();offerMaterial(${index})">Tenho este material →</button>`
+      : '';
+
+    document.getElementById('oppDetailContent').innerHTML=`
+      <div class="opp-detail-head">
+        <div>
+          <span class="pill ${escapeHtml(o.tipo)}">${labelType(o.tipo)}</span>
+          <h3 id="oppDetailTitle">${escapeHtml(o.material||'Material')}</h3>
+          <div class="meta">📍 ${escapeHtml(o.cidadeUF||'Local sob consulta')}</div>
+        </div>
+        <button class="opp-detail-close" type="button" onclick="closeOpportunityDetails()" aria-label="Fechar">×</button>
+      </div>
+      <div class="opp-detail-grid">
+        <div class="opp-detail-item"><span>Formato / especificação</span><b>${escapeHtml(classification)}</b></div>
+        <div class="opp-detail-item"><span>Quantidade</span><b>${escapeHtml(qty)}</b></div>
+        <div class="opp-detail-item"><span>Frequência</span><b>${escapeHtml(o.frequencia||'A combinar')}</b></div>
+        <div class="opp-detail-item"><span>Preço</span><b>${escapeHtml(o.preco||'Sob consulta')}</b></div>
+        <div class="opp-detail-item opp-detail-wide"><span>Logística</span><b>${escapeHtml(logistics)}</b></div>
+        <div class="opp-detail-item opp-detail-wide"><span>Restrições</span><b>${escapeHtml(restrictions)}</b></div>
+        <div class="opp-detail-item opp-detail-wide"><span>Observações</span><b>${escapeHtml(notes)}</b></div>
+      </div>
+      ${action}`;
+    document.getElementById('oppDetailBg').classList.add('open');
+  }
+
+  function closeOpportunityDetails(){
+    document.getElementById('oppDetailBg').classList.remove('open');
   }
 
   function offerMaterial(index){
