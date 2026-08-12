@@ -1407,75 +1407,41 @@
     `;
   }
 
-  async function loadOpportunities(options={}){
+  async function loadOpportunities(){
     const grid=document.getElementById('opps');
-    const force=!!options.force;
-    const CACHE_KEY='circular_b2b_opportunities_v1';
-    const CACHE_TIME_KEY='circular_b2b_opportunities_time_v1';
 
     document.querySelectorAll('.cached-note').forEach(el=>el.remove());
     renderOpportunitySkeleton();
 
-    const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-
-    async function requestOnce(){
-      const controller=new AbortController();
-      const timeout=setTimeout(()=>controller.abort(),9000);
-      try{
-        const separator=API_URL.includes('?')?'&':'?';
-        const response=await fetch(API_URL+separator+'action=public&t='+Date.now(),{
-          method:'GET',
-          cache:'no-store',
-          signal:controller.signal
-        });
-        if(!response.ok) throw new Error('HTTP '+response.status);
-        const data=await response.json();
-        if(!data || data.ok===false) throw new Error((data&&data.error)||'Resposta inválida');
-        const rows=Array.isArray(data)?data:(Array.isArray(data.opportunities)?data.opportunities:(Array.isArray(data.data)?data.data:[]));
-        return rows;
-      }finally{
-        clearTimeout(timeout);
-      }
+    if(!API_URL.startsWith('https://script.google.com/')){
+      grid.innerHTML=`
+        <div class="opps-error">
+          <strong>Conexão não configurada.</strong>
+          <span>Precisamos conectar o Web App da Circular para carregar as oportunidades.</span>
+        </div>`;
+      return;
     }
 
-    let lastError=null;
-    for(let attempt=1;attempt<=3;attempt++){
-      try{
-        const rows=await requestOnce();
-        opportunities=rows;
-        try{
-          localStorage.setItem(CACHE_KEY,JSON.stringify(rows));
-          localStorage.setItem(CACHE_TIME_KEY,String(Date.now()));
-        }catch(_){}
-        renderOpportunities();
-        return;
-      }catch(err){
-        lastError=err;
-        if(attempt<3) await sleep(attempt===1?700:1400);
-      }
-    }
-
-    // Se a API estiver temporariamente indisponível, preserva a vitrine com o último carregamento válido.
     try{
-      const cached=JSON.parse(localStorage.getItem(CACHE_KEY)||'[]');
-      if(Array.isArray(cached) && cached.length){
-        opportunities=cached;
-        renderOpportunities();
-        const note=document.createElement('div');
-        note.className='cached-note';
-        note.textContent='Exibindo as últimas oportunidades disponíveis enquanto atualizamos a rede.';
-        grid.parentNode.insertBefore(note,grid);
-        return;
-      }
-    }catch(_){}
+      // Mantemos a chamada simples que já funcionava nas versões anteriores.
+      // Sem timeout: o Apps Script pode demorar alguns segundos para responder.
+      const response=await fetch(API_URL+'?action=public');
+      const data=await response.json();
 
-    grid.innerHTML=`
-      <div class="opps-error">
-        <strong>As oportunidades estão sendo atualizadas.</strong>
-        <span>Não conseguimos sincronizar a rede neste momento.</span>
-        <button type="button" class="retry-opps" onclick="loadOpportunities({force:true})">Tentar novamente</button>
-      </div>`;
-    console.warn('Falha ao carregar oportunidades:',lastError);
+      opportunities=Array.isArray(data)
+        ? data
+        : (Array.isArray(data.opportunities) ? data.opportunities : []);
+
+      renderOpportunities();
+    }catch(err){
+      console.warn('Falha ao carregar oportunidades:',err);
+      grid.innerHTML=`
+        <div class="opps-error">
+          <strong>Não conseguimos atualizar as oportunidades agora.</strong>
+          <span>A conexão pode estar demorando mais do que o normal.</span>
+          <button type="button" class="retry-opps" onclick="loadOpportunities()">Tentar novamente</button>
+        </div>`;
+    }
   }
   function isOfficialOpportunity(o){
     const material=String(o.material||'').trim().toLowerCase();
