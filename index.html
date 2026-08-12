@@ -153,6 +153,72 @@
       .grid{grid-template-columns:1fr}
     }
 
+
+    .review-card{position:relative;padding-right:120px}
+    .review-edit{
+      position:absolute;top:12px;right:12px;border:1px solid var(--line);background:#fff;
+      border-radius:9px;padding:8px 10px;font-size:12px;font-weight:850;color:#0b6b46
+    }
+    .review-edit:hover{background:var(--greenSoft)}
+    .review-list{display:grid;gap:6px;font-size:14px;color:#52645b}
+    .review-list div{display:flex;gap:8px;align-items:flex-start}
+    .review-list b{min-width:145px;color:#20352b}
+    .review-empty{color:#8a9790;font-style:italic}
+    @media(max-width:600px){
+      .review-card{padding-right:15px;padding-top:52px}
+      .review-edit{left:12px;right:auto;top:10px}
+      .review-list div{display:block}
+      .review-list b{display:block;min-width:0;margin-bottom:2px}
+    }
+
+
+    .trust-strip{padding:4px 0 18px}
+    .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .trust-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+    .trust-card b{display:block;font-size:13px;margin-bottom:3px}
+    .trust-card span{font-size:11px;color:var(--muted)}
+    .about{padding:32px 0 8px}
+    .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+    .about-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+    .about-card h2{font-size:30px;line-height:1.1;margin-bottom:10px}
+    .about-card p{font-size:14px;color:#53675d;line-height:1.7}
+    .about-points{display:grid;gap:11px;margin-top:15px}
+    .about-points div{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#42564c}
+    .about-points i{font-style:normal;color:var(--green);font-weight:900}
+    .how{padding:28px 0}
+    .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .how-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px}
+    .how-card .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--greenSoft);color:#08784b;font-weight:900;margin-bottom:12px}
+    .how-card h3{font-size:15px;margin-bottom:6px}
+    .how-card p{font-size:12px;color:var(--muted);line-height:1.55}
+    .benefits{padding:8px 0 30px}
+    .benefit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .benefit{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px}
+    .benefit h3{font-size:14px;margin-bottom:5px}
+    .benefit p{font-size:12px;color:var(--muted);line-height:1.5}
+    .metrics{padding:12px 0 30px}
+    .metric-wrap{background:linear-gradient(135deg,var(--dark),#0d392a);border-radius:20px;padding:24px;color:#fff}
+    .metric-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:18px}
+    .metric-head h2{font-size:27px}
+    .metric-head p{font-size:11px;color:#bdd0c6}
+    .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .metric{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:17px}
+    .metric strong{display:block;font-size:30px;line-height:1;margin-bottom:6px}
+    .metric span{font-size:11px;color:#cfe0d7}
+    .mission{padding:8px 0 38px}
+    .mission-box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+    .mission-box h2{font-size:27px;margin-bottom:8px}
+    .mission-box p{font-size:14px;color:#53675d;line-height:1.65}
+    @media(max-width:900px){
+      .about-grid{grid-template-columns:1fr}
+      .how-grid,.benefit-grid,.metric-grid{grid-template-columns:1fr 1fr}
+      .trust-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:600px){
+      .how-grid,.benefit-grid,.metric-grid{grid-template-columns:1fr}
+      .metric-head{display:block}
+    }
+
   </style>
 </head>
 
@@ -195,6 +261,91 @@
             </select>
             <button class="btn btn-primary" onclick="applyFilters()">Buscar</button>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="trust-strip">
+    <div class="container trust-grid">
+      <div class="trust-card"><b>Cadastro sem custo</b><span>Entre na rede e receba oportunidades compatíveis.</span></div>
+      <div class="trust-card"><b>Contatos preservados</b><span>Seus dados não são exibidos publicamente no marketplace.</span></div>
+      <div class="trust-card"><b>Você decide se avança</b><span>Nenhuma negociação acontece sem interesse das partes.</span></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="container about-grid">
+      <div class="about-card">
+        <h2>Excedente para uma empresa. Matéria-prima para outra.</h2>
+        <p>A Circular B2B conecta empresas que possuem materiais industriais disponíveis com empresas que precisam comprar, reaproveitar ou encontrar uma destinação adequada para esses materiais.</p>
+        <div class="about-points">
+          <div><i>✓</i><span>Cadastre excedentes, aparas, refugos, sobras de produção e estoques parados.</span></div>
+          <div><i>✓</i><span>Informe materiais que sua empresa compra regularmente.</span></div>
+          <div><i>✓</i><span>Registre materiais que precisam de destinação ou saída.</span></div>
+        </div>
+      </div>
+      <div class="about-card">
+        <h2 style="font-size:22px">Uma rede comercial para materiais industriais</h2>
+        <p>Você informa o que tem ou o que procura. A Circular organiza os dados, identifica empresas com perfil compatível e aproxima as partes quando existe uma oportunidade real.</p>
+        <div class="about-points">
+          <div><i>✓</i><span>Menos tempo procurando comprador ou fornecedor.</span></div>
+          <div><i>✓</i><span>Mais qualidade nas oportunidades recebidas.</span></div>
+          <div><i>✓</i><span>Mais reaproveitamento e menos material parado.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Como funciona</h2>
+          <p>Um processo simples para transformar informação em oportunidade.</p>
+        </div>
+      </div>
+      <div class="how-grid">
+        <div class="how-card"><div class="n">1</div><h3>Você cadastra</h3><p>Material, quantidade, condição, localização e informações básicas.</p></div>
+        <div class="how-card"><div class="n">2</div><h3>A Circular cruza</h3><p>A base identifica empresas compradoras, fornecedoras ou com perfil compatível.</p></div>
+        <div class="how-card"><div class="n">3</div><h3>Validamos o interesse</h3><p>Antes de avançar, confirmamos se a oportunidade faz sentido para as partes.</p></div>
+        <div class="how-card"><div class="n">4</div><h3>A negociação evolui</h3><p>Com interesse real, a oportunidade pode seguir para cotação, logística e fechamento.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="benefits">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Por que usar a Circular B2B?</h2>
+          <p>Mais organização comercial e menos desperdício de tempo e material.</p>
+        </div>
+      </div>
+      <div class="benefit-grid">
+        <div class="benefit"><h3>Menos desperdício</h3><p>Materiais parados podem voltar para a cadeia produtiva.</p></div>
+        <div class="benefit"><h3>Mais oportunidades</h3><p>Compradores recebem ofertas alinhadas ao que realmente utilizam.</p></div>
+        <div class="benefit"><h3>Menos trabalho comercial</h3><p>Em vez de procurar empresas uma por uma, a rede ajuda a encontrar compatibilidade.</p></div>
+        <div class="benefit"><h3>Informação organizada</h3><p>Materiais, demandas e empresas ficam estruturados para facilitar novos negócios.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="metrics">
+    <div class="container">
+      <div class="metric-wrap">
+        <div class="metric-head">
+          <div>
+            <h2>A rede Circular B2B em números</h2>
+            <p>Dados reais atualizados conforme novas empresas e oportunidades entram na plataforma.</p>
+          </div>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><strong id="metricCompanies">—</strong><span>Empresas na rede</span></div>
+          <div class="metric"><strong id="metricMaterials">—</strong><span>Materiais / demandas cadastradas</span></div>
+          <div class="metric"><strong id="metricMatches">—</strong><span>Matches identificados</span></div>
+          <div class="metric"><strong id="metricDeals">—</strong><span>Negociações registradas</span></div>
         </div>
       </div>
     </div>
@@ -245,6 +396,16 @@
     </div>
   </section>
 </main>
+
+
+  <section class="mission">
+    <div class="container">
+      <div class="mission-box">
+        <h2>Estamos construindo uma rede de circulação de materiais entre empresas.</h2>
+        <p>O objetivo da Circular B2B é tornar mais simples encontrar quem tem, quem precisa e quem consegue aproveitar cada material — com informação organizada, oportunidades qualificadas e menos desperdício na cadeia industrial.</p>
+      </div>
+    </div>
+  </section>
 
 <footer><div class="container">© 2026 Circular B2B • Marketplace B2B de materiais industriais</div></footer>
 
@@ -543,23 +704,89 @@
     const data=Object.fromEntries(new FormData(f).entries());
     const mats=collectMaterials();
     const typeLabel={venda:'Venda',compra:'Compra',cessao:'Cessão',destinacao:'Destinação'}[data.tipo]||data.tipo;
-    const matsHtml=mats.map((m,i)=>{
-      const details=[
-        m.condicao && `Formato: ${escapeHtml(m.condicao)}`,
-        m.especificacao && `Especificação: ${escapeHtml(m.especificacao)}`,
-        m.quantidade && `Quantidade: ${escapeHtml([m.quantidade,m.unidade].filter(Boolean).join(' '))}`,
-        m.frequencia && `Frequência: ${escapeHtml(m.frequencia)}`,
-        m.precoReferencia && `Preço/ref.: ${escapeHtml(m.precoReferencia)}`
-      ].filter(Boolean).join(' • ');
-      return `<div class="review-card"><h4>${i+1}. ${escapeHtml(m.material)}</h4><p>${details||'Sem detalhes adicionais.'}</p></div>`;
-    }).join('');
+
+    const row=(label,value)=>`
+      <div><b>${escapeHtml(label)}</b><span>${value ? escapeHtml(value) : '<span class="review-empty">Não informado</span>'}</span></div>
+    `;
+
+    const matsHtml=mats.map((m,i)=>`
+      <div class="review-card">
+        <button type="button" class="review-edit" onclick="editMaterial(${i})">Editar material</button>
+        <h4>${i+1}. ${escapeHtml(m.material||'Material')}</h4>
+        <div class="review-list">
+          ${row('Categoria', categoryLabel(m.categoria))}
+          ${row('Material', m.material)}
+          ${row('Formato / condição', m.condicao)}
+          ${row('Especificação', m.especificacao)}
+          ${row('Quantidade', m.quantidade ? [m.quantidade,m.unidade].filter(Boolean).join(' ') : '')}
+          ${row('Frequência', m.frequencia)}
+          ${row('Preço / referência', m.precoReferencia)}
+        </div>
+      </div>
+    `).join('');
 
     document.getElementById('review').innerHTML=`
-      <div class="review-card"><h4>Objetivo</h4><p>${escapeHtml(typeLabel)}</p></div>
+      <div class="review-card">
+        <button type="button" class="review-edit" onclick="editSection(1)">Editar objetivo</button>
+        <h4>Objetivo</h4>
+        <div class="review-list">
+          ${row('Tipo', typeLabel)}
+        </div>
+      </div>
+
       ${matsHtml}
-      <div class="review-card"><h4>Local</h4><p>${escapeHtml(data.cidadeUF||'')} ${data.logistica?' • '+escapeHtml(data.logistica):''}</p></div>
-      <div class="review-card"><h4>Empresa e contato</h4><p>${escapeHtml(data.empresa||'')} • ${escapeHtml(data.responsavel||'')}${data.whatsapp?' • '+escapeHtml(data.whatsapp):''}${data.email?' • '+escapeHtml(data.email):''}</p></div>
+
+      <div class="review-card">
+        <button type="button" class="review-edit" onclick="editSection(3,'cidadeUF')">Editar local e logística</button>
+        <h4>Local e logística</h4>
+        <div class="review-list">
+          ${row('Cidade / UF', data.cidadeUF)}
+          ${row('Logística', data.logistica)}
+          ${row('Materiais que não interessam', data.restricoes)}
+          ${data.tipo==='destinacao' ? row('Custo atual de destinação', data.custoAtual) : ''}
+          ${row('Observações', data.observacoes)}
+        </div>
+      </div>
+
+      <div class="review-card">
+        <button type="button" class="review-edit" onclick="editSection(3,'empresa')">Editar empresa e contato</button>
+        <h4>Empresa e contato</h4>
+        <div class="review-list">
+          ${row('Empresa', data.empresa)}
+          ${row('Responsável', data.responsavel)}
+          ${row('WhatsApp', data.whatsapp)}
+          ${row('E-mail', data.email)}
+        </div>
+      </div>
     `;
+  }
+
+  function categoryLabel(value){
+    const found=CATEGORY_OPTIONS.find(x=>Array.isArray(x)&&x[0]===value);
+    return found ? found[1] : (value||'');
+  }
+
+  function editSection(step,fieldName){
+    showStep(step);
+    if(fieldName){
+      setTimeout(()=>{
+        const el=document.querySelector(`[name="${fieldName}"]`);
+        if(el){ el.focus(); el.scrollIntoView({behavior:'smooth',block:'center'}); }
+      },180);
+    }
+  }
+
+  function editMaterial(index){
+    showStep(2);
+    setTimeout(()=>{
+      const rows=[...document.querySelectorAll('.material-row')];
+      const row=rows[index];
+      if(row){
+        const el=row.querySelector('[data-field="material"]')||row;
+        el.focus?.();
+        row.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    },180);
   }
 
   function openForm(type='venda'){
@@ -617,6 +844,7 @@
         btn.textContent='Enviar cadastro';
         closeForm();
         loadOpportunities();
+  loadMetrics();
       },1500);
     })
     .catch(()=>{
@@ -625,6 +853,27 @@
       alert('Não foi possível enviar agora. Tente novamente.');
     });
   });
+
+
+  async function loadMetrics(){
+    const ids=['metricCompanies','metricMaterials','metricMatches','metricDeals'];
+    if(!API_URL.startsWith('https://script.google.com/')){
+      ids.forEach(id=>document.getElementById(id).textContent='—');
+      return;
+    }
+    try{
+      const r=await fetch(API_URL+'?action=metrics');
+      const data=await r.json();
+      if(data && data.success && data.metrics){
+        document.getElementById('metricCompanies').textContent=data.metrics.companies ?? '—';
+        document.getElementById('metricMaterials').textContent=data.metrics.materials ?? '—';
+        document.getElementById('metricMatches').textContent=data.metrics.matches ?? '—';
+        document.getElementById('metricDeals').textContent=data.metrics.deals ?? '—';
+        return;
+      }
+    }catch(e){}
+    ids.forEach(id=>document.getElementById(id).textContent='Em crescimento');
+  }
 
   async function loadOpportunities(){
     const grid=document.getElementById('opps');
@@ -699,6 +948,7 @@
 
   addMaterial();
   loadOpportunities();
+  loadMetrics();
 </script>
 </body>
 </html>
