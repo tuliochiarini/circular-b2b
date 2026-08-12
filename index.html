@@ -506,6 +506,18 @@
     }
     .duplicate-material:hover{background:#f2f8f5}
 
+
+    /* V7.8 — leitura e conversão */
+    .section-head h2{font-size:clamp(34px,4vw,48px)}
+    .section-head p{font-size:14px}.filters input,.filters select{font-size:16px;min-height:54px}
+    .opp{min-height:286px;padding:22px;display:flex;flex-direction:column}
+    .opp h3{font-size:20px;line-height:1.2;margin-top:12px}.opp .meta{font-size:13px;margin-top:6px}
+    .opp .data{margin-top:18px;gap:10px}.opp .data div{font-size:13px;line-height:1.4}.opp .data span{font-size:12px}.opp .data b{font-size:13px}
+    .pill{font-size:11px;padding:6px 10px}
+    .opp-cta{margin-top:auto;padding-top:0;width:100%;min-height:48px;border:1px solid rgba(61,220,139,.28);border-radius:11px;background:#18b36b;color:#fff;font-size:14px;font-weight:900;cursor:pointer;transition:.18s}
+    .opp-cta:hover{transform:translateY(-1px);filter:brightness(1.06)}
+    @media(max-width:720px){.opp{min-height:auto;padding:19px}.opp h3{font-size:19px}.section-head h2{font-size:34px}}
+
 </style>
 </head>
 
@@ -1148,6 +1160,10 @@
   }
 
   function openForm(type='venda'){
+    const mt=document.querySelector('[data-step="2"] .step-title');
+    const ms=document.querySelector('[data-step="2"] .step-subtitle');
+    if(mt) mt.textContent='Qual é o material?';
+    if(ms) ms.textContent='Cadastre um ou vários materiais da mesma necessidade. Os campos com * são essenciais.';
     document.getElementById('modalBg').classList.add('open');
     document.body.style.overflow='hidden';
     setType(type);
@@ -1243,24 +1259,46 @@
              (cat==='all'||o.categoria===cat);
     });
 
+    renderedOpportunities=rows;
+
     if(!rows.length){
       grid.innerHTML='<div class="empty">Nenhuma oportunidade encontrada com esses filtros.</div>';
       return;
     }
 
-    grid.innerHTML=rows.map(o=>`
+    grid.innerHTML=rows.map((o,i)=>{
+      const qty=o.quantidade ? [o.quantidade,o.unidade].filter(Boolean).join(' ') : 'Qualquer quantidade';
+      const cta=o.tipo==='compra' ? '<button type="button" class="opp-cta" onclick="offerMaterial('+i+')">Tenho este material →</button>' : '';
+      return `
       <article class="opp">
         <div><span class="pill ${escapeHtml(o.tipo)}">${labelType(o.tipo)}</span></div>
         <h3>${escapeHtml(o.material||'Material')}</h3>
         <div class="meta">${escapeHtml(o.cidadeUF||'Local sob consulta')}</div>
         <div class="data">
           <div><span>Especificação</span><b>${escapeHtml(o.especificacao||o.condicao||'Sob avaliação')}</b></div>
-          <div><span>Quantidade</span><b>${escapeHtml([o.quantidade,o.unidade].filter(Boolean).join(' ')||'A combinar')}</b></div>
+          <div><span>Quantidade</span><b>${escapeHtml(qty)}</b></div>
           <div><span>Frequência</span><b>${escapeHtml(o.frequencia||'A combinar')}</b></div>
           <div><span>Preço</span><b>${escapeHtml(o.preco||'Sob consulta')}</b></div>
         </div>
-      </article>
-    `).join('');
+        ${cta}
+      </article>`;
+    }).join('');
+  }
+
+  function offerMaterial(index){
+    const o=renderedOpportunities[index];
+    if(!o) return;
+    openForm('venda');
+    maxReachedStep=2;
+    showStep(2);
+    const row=document.querySelector('.material-row');
+    if(!row) return;
+    const set=(field,value)=>{const el=row.querySelector('[data-field="'+field+'"]');if(el && value) el.value=value;};
+    set('categoria',o.categoria);set('material',o.material);set('formato',o.formato);set('especificacao',o.especificacao||o.condicao);set('unidade',o.unidade||'kg');
+    const title=document.querySelector('[data-step="2"] .step-title');
+    const subtitle=document.querySelector('[data-step="2"] .step-subtitle');
+    if(title) title.textContent='Você tem este material?';
+    if(subtitle) subtitle.textContent='Já trouxemos os dados da oportunidade. Complete apenas as informações do seu lote.';
   }
 
   function labelType(t){
