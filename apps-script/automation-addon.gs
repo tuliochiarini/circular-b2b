@@ -320,3 +320,24 @@ function getMatchesPayload_(ss, limit) {
       };
     });
 }
+
+function testarAutomacaoV8() {
+  const ss = getSS_();
+  const result = handleAutomationAction_(ss, {
+    action:'lead',
+    empresa:'TESTE AUTOMACAO CIRCULAR',
+    responsavel:'Teste interno',
+    whatsapp:'5511999999999',
+    cidadeUF:'São Paulo/SP',
+    origem:'teste',
+    fonte:'teste interno Apps Script',
+    statusLead:'novo',
+    tipo:'compra',
+    materiais:[
+      {tipo:'compra',categoria:'plastico',material:'PP',condicao:'aparas'}
+    ],
+    proximaAcao:'Remover lead de teste após validação'
+  });
+  Logger.log(JSON.stringify(result));
+  return result;
+}
