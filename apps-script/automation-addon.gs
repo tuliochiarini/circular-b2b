@@ -106,7 +106,7 @@ function handleAutomationAction_(ss, data) {
 function handleEmailEvent_(ss, data) {
   const eventId = String(data.eventId || data.svixId || '').trim();
   const emailId = String(data.emailId || '').trim();
-  const eventType = normalizeText_(data.eventType || data.type || '');
+  const eventType = String(data.eventType || data.type || '').trim().toLowerCase();
   if (!eventId) throw new Error('EMAIL_EVENT_INVALID: Event ID não informado.');
   if (!emailId) throw new Error('EMAIL_EVENT_INVALID: Email ID não informado.');
   if (!eventType.startsWith('email.')) throw new Error('EMAIL_EVENT_INVALID: tipo de evento inválido.');
