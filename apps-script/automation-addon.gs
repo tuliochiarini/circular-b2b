@@ -1,6 +1,7 @@
 const AUTOMATION_VERSION = 'v8-automation';
 const LEADS_SHEET = 'Leads';
 const INTERACTIONS_SHEET = 'Interacoes';
+const EMAIL_EVENTS_SHEET = 'Eventos Email';
 
 function instalarAutomacaoV8() {
   const ss = getSS_();
@@ -23,6 +24,11 @@ function instalarAutomacaoV8() {
     'Interaction ID','Company ID','Contact ID','Data','Canal','Direção','Resumo','Resultado',
     'Próxima ação','Data próxima ação','Responsável Circular','Fonte','Observações',
     'Evidence ID','Evento confirmado'
+  ]);
+
+  prepararAbaSegura_(ss, EMAIL_EVENTS_SHEET, [
+    'Event ID','Email ID','Data','Tipo de evento','Destinatário','Assunto',
+    'Campanha','Lead ID','Status','Registrado em'
   ]);
 
   seedAutomationConfig_(ss);
@@ -89,7 +95,122 @@ function handleAutomationAction_(ss, data) {
     };
   }
 
+  if (action === 'email event' || action === 'email_event') {
+    if (!ss.getSheetByName(EMAIL_EVENTS_SHEET)) instalarAutomacaoV8();
+    return handleEmailEvent_(ss, data);
+  }
+
   return null;
+}
+
+function handleEmailEvent_(ss, data) {
+  const eventId = String(data.eventId || data.svixId || '').trim();
+  const emailId = String(data.emailId || '').trim();
+  const eventType = normalizeText_(data.eventType || data.type || '');
+  if (!eventId) throw new Error('EMAIL_EVENT_INVALID: Event ID não informado.');
+  if (!emailId) throw new Error('EMAIL_EVENT_INVALID: Email ID não informado.');
+  if (!eventType.startsWith('email.')) throw new Error('EMAIL_EVENT_INVALID: tipo de evento inválido.');
+
+  const sheet = prepararAbaSegura_(ss, EMAIL_EVENTS_SHEET, [
+    'Event ID','Email ID','Data','Tipo de evento','Destinatário','Assunto',
+    'Campanha','Lead ID','Status','Registrado em'
+  ]);
+  const rows = sheetObjects_(sheet);
+  if (rows.some(r => String(r['Event ID'] || '').trim() === eventId)) {
+    return {success:true,version:AUTOMATION_VERSION,duplicate:true,event_id:eventId};
+  }
+
+  const tags = data.tags && typeof data.tags === 'object' ? data.tags : {};
+  const leadId = String(data.leadId || tags.lead || '').trim();
+  const recipients = Array.isArray(data.recipients) ? data.recipients : [];
+  const status = emailEventStatus_(eventType);
+
+  appendObjectRow_(sheet, {
+    'Event ID':eventId,
+    'Email ID':emailId,
+    'Data':data.createdAt || new Date(),
+    'Tipo de evento':eventType,
+    'Destinatário':recipients.join(', '),
+    'Assunto':data.subject || '',
+    'Campanha':data.campaignId || tags.campaign || '',
+    'Lead ID':leadId,
+    'Status':status,
+    'Registrado em':new Date()
+  });
+
+  let leadUpdated = false;
+  if (leadId) {
+    const leadsSheet = ss.getSheetByName(LEADS_SHEET);
+    const lead = leadsSheet && sheetObjects_(leadsSheet)
+      .find(r => String(r['Lead ID'] || '').trim() === leadId);
+    if (lead) {
+      const next = emailEventNextAction_(eventType);
+      const newStatus = emailEventLeadStatus_(eventType, lead['Status lead']);
+      const dueDate = new Date();
+      dueDate.setDate(dueDate.getDate() + (eventType === 'email.delivered' ? 3 : 1));
+
+      updateObjectRow_(leadsSheet, 'Lead ID', leadId, {
+        'Status lead':newStatus,
+        'Última interação':data.createdAt || new Date(),
+        'Próxima ação':next,
+        'Data próxima ação':next ? dueDate : (lead['Data próxima ação'] || ''),
+        'Atualizado em':new Date()
+      });
+
+      recordConfirmedLeadEvent_(ss, leadId, lead, {
+        companyId:lead['Company ID'] || '',
+        dataEvento:data.createdAt || new Date(),
+        canal:'E-mail',
+        direcao:'saída',
+        resumoEvento:'Evento Resend: ' + eventType + (data.subject ? ' — ' + data.subject : ''),
+        resultado:status,
+        proximaAcao:next,
+        dataProximaAcao:next ? dueDate : '',
+        fonte:'Webhook Resend',
+        observacoes:'Email ID: ' + emailId
+      }, {confirmed:true,evidenceId:eventId,status:newStatus});
+      leadUpdated = true;
+    }
+  }
+
+  refreshDashboard_(ss);
+  return {
+    success:true,version:AUTOMATION_VERSION,duplicate:false,
+    event_id:eventId,email_id:emailId,status:status,lead_updated:leadUpdated
+  };
+}
+
+function emailEventStatus_(eventType) {
+  const map = {
+    'email.sent':'Enviado',
+    'email.delivered':'Entregue',
+    'email.delivery_delayed':'Entrega atrasada',
+    'email.failed':'Falha',
+    'email.bounced':'Rejeitado',
+    'email.complained':'Denúncia de spam',
+    'email.suppressed':'Suprimido',
+    'email.opened':'Aberto',
+    'email.clicked':'Clicado'
+  };
+  return map[eventType] || eventType;
+}
+
+function emailEventNextAction_(eventType) {
+  if (eventType === 'email.delivered') return 'Realizar follow-up se não houver resposta';
+  if (eventType === 'email.opened' || eventType === 'email.clicked') return 'Priorizar follow-up comercial';
+  if (['email.failed','email.bounced','email.suppressed','email.delivery_delayed'].includes(eventType)) {
+    return 'Validar e-mail e localizar contato alternativo';
+  }
+  if (eventType === 'email.complained') return 'Bloquear novos envios para este contato';
+  return '';
+}
+
+function emailEventLeadStatus_(eventType, currentStatus) {
+  const current = humanLeadStatus_(currentStatus || 'Novo');
+  if (eventType === 'email.complained') return 'Sem interesse';
+  if (['email.failed','email.bounced','email.suppressed'].includes(eventType)) return 'Follow-up';
+  if (eventType === 'email.delivered' && current === 'Novo') return 'Contatado';
+  return current;
 }
 
 function handleLeadAction_(ss, data) {
