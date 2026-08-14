@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { requireInternalKey } from '../../_circular.js';
+import { requireInternalKey } from '../_circular.js';
 
 const MAX_MESSAGES = 30;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
