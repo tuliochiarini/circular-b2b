@@ -1,5 +1,6 @@
 const AUTOMATION_VERSION = 'v8-automation';
 const LEADS_SHEET = 'Leads';
+const INTERACTIONS_SHEET = 'Interacoes';
 
 function instalarAutomacaoV8() {
   const ss = getSS_();
@@ -16,6 +17,12 @@ function instalarAutomacaoV8() {
 
   aplicarLista_(ss.getSheetByName(LEADS_SHEET),'Tipo principal',[
     'compra','venda','cessao','destinacao'
+  ]);
+
+  prepararAbaSegura_(ss, INTERACTIONS_SHEET, [
+    'Interaction ID','Company ID','Contact ID','Data','Canal','Direção','Resumo','Resultado',
+    'Próxima ação','Data próxima ação','Responsável Circular','Fonte','Observações',
+    'Evidence ID','Evento confirmado'
   ]);
 
   seedAutomationConfig_(ss);
@@ -88,6 +95,7 @@ function handleAutomationAction_(ss, data) {
 function handleLeadAction_(ss, data) {
   if (!data.empresa) throw new Error('Empresa não informada para o lead.');
 
+  const event = validateLeadEvent_(data);
   const leadId = upsertLead_(ss, data);
   const lead = sheetObjects_(ss.getSheetByName(LEADS_SHEET))
     .find(r => String(r['Lead ID']) === String(leadId));
@@ -98,9 +106,14 @@ function handleLeadAction_(ss, data) {
   const eligible = ['qualificado','demanda ativa','convertido'].includes(status);
 
   if (autoConvert && eligible) conversion = convertLeadToDemand_(ss, lead || data);
+  if (event.confirmed) recordConfirmedLeadEvent_(ss, leadId, lead || data, data, event);
   refreshDashboard_(ss);
 
-  return {success:true,version:AUTOMATION_VERSION,lead_id:leadId,status:data.statusLead || data.status || 'Novo',conversion};
+  return {
+    success:true,version:AUTOMATION_VERSION,lead_id:leadId,
+    status:data.statusLead || data.status || 'Novo',
+    evidence_id:event.evidenceId || '',event_confirmed:event.confirmed,conversion
+  };
 }
 
 function upsertLead_(ss, data) {
@@ -110,14 +123,23 @@ function upsertLead_(ss, data) {
   const email = normalizeText_(data.email || '');
   const companyName = normalizeText_(data.empresa || '');
 
-  const existing = rows.find(r =>
+  const matches = rows.filter(r =>
     (phone && normalizePhone_(r['WhatsApp']) === phone) ||
     (email && normalizeText_(r['E-mail']) === email) ||
     (companyName && normalizeText_(r['Empresa']) === companyName)
   );
+  const matchedIds = [...new Set(matches.map(r => String(r['Lead ID'] || '')).filter(Boolean))];
+  if (matchedIds.length > 1) {
+    throw new Error('DUPLICATE_CONFLICT: os identificadores informados apontam para cadastros diferentes (' + matchedIds.join(', ') + ').');
+  }
+  const existing = matches[0] || null;
+  if (data.leadId && existing && String(data.leadId) !== String(existing['Lead ID'])) {
+    throw new Error('DUPLICATE_CONFLICT: o cadastro informado conflita com o lead ' + existing['Lead ID'] + '.');
+  }
 
   const now = new Date();
   const materials = Array.isArray(data.materiais) ? data.materiais : [];
+  const confirmedEvent = isConfirmedEvent_(data);
   const updates = {
     'Empresa':data.empresa || '',
     'Responsável':data.responsavel || '',
@@ -135,7 +157,7 @@ function upsertLead_(ss, data) {
     'Logística':data.logistica || '',
     'Restrições':data.restricoes || '',
     'Observações':data.observacoes || '',
-    'Última interação':data.ultimaInteracao || now,
+    'Última interação':confirmedEvent ? (data.ultimaInteracao || now) : '',
     'Próxima ação':data.proximaAcao || '',
     'Data próxima ação':data.dataProximaAcao || '',
     'Atualizado em':now
@@ -154,6 +176,60 @@ function upsertLead_(ss, data) {
     'Lead ID':id,'Criado em':now,'Company ID':'','Convertido em':''
   },updates));
   return id;
+}
+
+
+function normalizeBoolean_(value) {
+  return value === true || ['true','1','sim','yes'].includes(normalizeText_(value));
+}
+
+function isConfirmedEvent_(data) {
+  return normalizeBoolean_(data && data.eventoConfirmado) && Boolean(String((data && data.evidenciaId) || '').trim());
+}
+
+function validateLeadEvent_(data) {
+  const status = normalizeText_(data.statusLead || data.status || 'novo').replace(/_/g,' ');
+  const operational = ['contatado','respondeu','qualificado','demanda ativa','followup','follow up','sem interesse','convertido'];
+  const evidenceId = String(data.evidenciaId || '').trim();
+  const confirmed = isConfirmedEvent_(data);
+
+  if (operational.includes(status) && !confirmed) {
+    throw new Error('EVIDENCE_REQUIRED: o status ' + status + ' exige evento confirmado e evidenciaId.');
+  }
+  if (normalizeBoolean_(data.eventoConfirmado) && !evidenceId) {
+    throw new Error('EVIDENCE_REQUIRED: evento confirmado sem evidenciaId.');
+  }
+  return {confirmed:confirmed,evidenceId:evidenceId,status:status};
+}
+
+function recordConfirmedLeadEvent_(ss, leadId, lead, data, event) {
+  const sheet = prepararAbaSegura_(ss, INTERACTIONS_SHEET, [
+    'Interaction ID','Company ID','Contact ID','Data','Canal','Direção','Resumo','Resultado',
+    'Próxima ação','Data próxima ação','Responsável Circular','Fonte','Observações',
+    'Evidence ID','Evento confirmado'
+  ]);
+  const duplicateEvidence = sheetObjects_(sheet).some(r =>
+    String(r['Evidence ID'] || '').trim() === event.evidenceId
+  );
+  if (duplicateEvidence) return;
+
+  appendObjectRow_(sheet, {
+    'Interaction ID':createId_('INT'),
+    'Company ID':lead['Company ID'] || data.companyId || '',
+    'Contact ID':data.contactId || '',
+    'Data':data.dataEvento || new Date(),
+    'Canal':data.canal || data.fonte || 'API',
+    'Direção':data.direcao || 'entrada',
+    'Resumo':data.resumoEvento || ('Atualização do lead ' + leadId),
+    'Resultado':data.resultado || humanLeadStatus_(data.statusLead || data.status || 'novo'),
+    'Próxima ação':data.proximaAcao || '',
+    'Data próxima ação':data.dataProximaAcao || '',
+    'Responsável Circular':data.responsavelCircular || '',
+    'Fonte':data.fonte || 'API Circular B2B',
+    'Observações':mergeNotes_(data.observacoes || '', 'Lead ID: ' + leadId),
+    'Evidence ID':event.evidenceId,
+    'Evento confirmado':'SIM'
+  });
 }
 
 function calculateLeadScore_(data) {
