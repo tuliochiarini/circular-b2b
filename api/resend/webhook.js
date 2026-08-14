@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import { callAppsScript } from '../_circular.js';
 
 export const config = {
   api: {
@@ -114,12 +115,42 @@ export default async function handler(req, res) {
       return res.status(200).json({ received: true, ignored: true });
     }
 
+    const normalized = normalizeEvent(event, svixId);
+    const crm = await callAppsScript({
+      action: 'email_event',
+      eventId: normalized.svixId,
+      emailId: normalized.emailId,
+      createdAt: normalized.createdAt,
+      eventType: normalized.eventType,
+      recipients: normalized.recipients,
+      subject: normalized.subject,
+      tags: normalized.tags,
+      campaignId: normalized.tags?.campaign || '',
+      leadId: normalized.tags?.lead || '',
+    });
+
+    if (!crm?.success) {
+      const error = new Error('CRM recusou o evento de e-mail.');
+      error.status = 502;
+      throw error;
+    }
+
     console.log(JSON.stringify({
       kind: 'resend_email_event',
-      ...normalizeEvent(event, svixId),
+      ...normalized,
+      crm: {
+        duplicate: Boolean(crm.duplicate),
+        status: crm.status || null,
+        leadUpdated: Boolean(crm.lead_updated),
+      },
     }));
 
-    return res.status(200).json({ received: true, eventId: svixId });
+    return res.status(200).json({
+      received: true,
+      eventId: svixId,
+      crmRecorded: true,
+      duplicate: Boolean(crm.duplicate),
+    });
   } catch (error) {
     const status = Number(error?.status) || (error instanceof SyntaxError ? 400 : 500);
     console.error(JSON.stringify({
