@@ -1350,13 +1350,18 @@
       .replace(/[\u0300-\u036f]/g,'')
       .split(/[^a-z0-9]+/)
       .filter(Boolean);
-    const isStrategicMaterial=materialTokens.includes('pp') || materialTokens.includes('pebd');
+    const categoryNormalized=category.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const isStrategicPlastic=materialTokens.includes('pp') || materialTokens.includes('pebd');
+    const isStrategicPaper=type==='compra' &&
+      ['papel','papel e papelao'].includes(categoryNormalized) &&
+      materialTokens.includes('papelao');
     const isSaoPaulo=/(^|[\s,/\-])sp($|[\s,/\-])|sao paulo/.test(cityNormalized);
 
     if(status && !['ativo','ativa','oficial','publicado','publicada','active'].includes(status)) return false;
     if(!material || !city || !['compra','venda','cessao','destinacao'].includes(type)) return false;
-    if(category && !['plastico','plasticos'].includes(category.normalize('NFD').replace(/[\u0300-\u036f]/g,''))) return false;
-    if(!isStrategicMaterial || !isSaoPaulo) return false;
+    if(isStrategicPlastic && category && !['plastico','plasticos'].includes(categoryNormalized)) return false;
+    if(!isStrategicPlastic && !isStrategicPaper) return false;
+    if(!isSaoPaulo) return false;
     if(['x','xx','xxx','teste','test','material teste'].includes(material)) return false;
     return true;
   }
