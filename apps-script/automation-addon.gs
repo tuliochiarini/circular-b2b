@@ -2,6 +2,7 @@ const AUTOMATION_VERSION = 'v8-automation';
 const LEADS_SHEET = 'Leads';
 const INTERACTIONS_SHEET = 'Interacoes';
 const EMAIL_EVENTS_SHEET = 'Eventos Email';
+const EMAIL_QUEUE_SHEET = 'Fila Email';
 
 function instalarAutomacaoV8() {
   const ss = getSS_();
@@ -30,6 +31,15 @@ function instalarAutomacaoV8() {
     'Event ID','Email ID','Data','Tipo de evento','Destinatário','Assunto',
     'Campanha','Lead ID','Status','Registrado em'
   ]);
+
+  prepararAbaSegura_(ss, EMAIL_QUEUE_SHEET, [
+    'Queue ID','Criado em','Agendado para','Campanha','Lead ID','Destinatário',
+    'Assunto','Conteúdo','Status','Email ID','Tentativas','Último erro','Enviado em','Atualizado em'
+  ]);
+  aplicarLista_(ss.getSheetByName(EMAIL_QUEUE_SHEET),'Status',[
+    'RASCUNHO','APROVADO','PROCESSANDO','ENVIADO','FALHA','CANCELADO'
+  ]);
+  instalarTriggerFilaEmail_();
 
   seedAutomationConfig_(ss);
   formatarAbas_(ss);
@@ -537,4 +547,119 @@ function testarAutomacaoV8() {
   });
   Logger.log(JSON.stringify(result));
   return result;
+}
+
+
+function instalarTriggerFilaEmail_() {
+  const functionName = 'processarFilaEmail';
+  const exists = ScriptApp.getProjectTriggers().some(trigger =>
+    trigger.getHandlerFunction() === functionName
+  );
+  if (!exists) {
+    ScriptApp.newTrigger(functionName).timeBased().everyMinutes(1).create();
+  }
+}
+
+function configurarChaveFilaEmail(chave) {
+  const value = String(chave || '').trim();
+  if (value.length < 24) throw new Error('Chave interna inválida.');
+  PropertiesService.getScriptProperties().setProperty('CIRCULAR_INTERNAL_API_KEY', value);
+  return {success:true,configured:true};
+}
+
+function diagnosticarFilaEmail() {
+  const ss = getSS_();
+  const sheet = ss.getSheetByName(EMAIL_QUEUE_SHEET);
+  const key = PropertiesService.getScriptProperties().getProperty('CIRCULAR_INTERNAL_API_KEY');
+  const trigger = ScriptApp.getProjectTriggers().some(t => t.getHandlerFunction() === 'processarFilaEmail');
+  return {
+    success:true,
+    sheet:Boolean(sheet),
+    key_configured:Boolean(key),
+    trigger_configured:trigger,
+    pending:sheet ? sheetObjects_(sheet).filter(r => String(r['Status'] || '').trim() === 'APROVADO').length : 0
+  };
+}
+
+function processarFilaEmail() {
+  const lock = LockService.getScriptLock();
+  if (!lock.tryLock(5000)) return {success:false,reason:'locked'};
+  try {
+    const ss = getSS_();
+    const sheet = ss.getSheetByName(EMAIL_QUEUE_SHEET);
+    if (!sheet) throw new Error('Fila Email não instalada.');
+
+    const key = PropertiesService.getScriptProperties().getProperty('CIRCULAR_INTERNAL_API_KEY');
+    if (!key) throw new Error('CIRCULAR_INTERNAL_API_KEY não configurada nas propriedades do script.');
+
+    const endpoint = PropertiesService.getScriptProperties().getProperty('EMAIL_SENDER_ENDPOINT')
+      || 'https://www.circularb2b.eco.br/api/campaigns/send';
+    const now = new Date();
+    const approved = sheetObjects_(sheet)
+      .filter(row => {
+        if (String(row['Status'] || '').trim() !== 'APROVADO') return false;
+        const scheduled = row['Agendado para'];
+        return !scheduled || new Date(scheduled).getTime() <= now.getTime();
+      })
+      .slice(0, 20);
+
+    const results = [];
+    approved.forEach(row => {
+      const queueId = String(row['Queue ID'] || '').trim();
+      if (!queueId) return;
+
+      const attempts = Number(row['Tentativas'] || 0) + 1;
+      updateObjectRow_(sheet,'Queue ID',queueId,{
+        'Status':'PROCESSANDO','Tentativas':attempts,'Último erro':'','Atualizado em':new Date()
+      });
+
+      const campaignId = String(row['Campanha'] || 'circular_crm').trim()
+        .replace(/[^a-z0-9_-]/gi,'_').slice(0,50);
+      const payload = {
+        campaignId:campaignId.length >= 3 ? campaignId : 'circular_crm',
+        messages:[{
+          externalId:String(row['Lead ID'] || queueId).trim(),
+          to:String(row['Destinatário'] || '').trim(),
+          subject:String(row['Assunto'] || '').trim(),
+          text:String(row['Conteúdo'] || '').trim()
+        }]
+      };
+
+      try {
+        const response = UrlFetchApp.fetch(endpoint,{
+          method:'post',
+          contentType:'application/json',
+          headers:{'x-circular-key':key},
+          payload:JSON.stringify(payload),
+          muteHttpExceptions:true
+        });
+        const code = response.getResponseCode();
+        const body = JSON.parse(response.getContentText() || '{}');
+        const item = body.results && body.results[0];
+        if (code >= 200 && code < 300 && item && item.status === 'sent') {
+          updateObjectRow_(sheet,'Queue ID',queueId,{
+            'Status':'ENVIADO','Email ID':item.resendId || '',
+            'Enviado em':new Date(),'Atualizado em':new Date()
+          });
+          results.push({queue_id:queueId,status:'sent',email_id:item.resendId || ''});
+        } else {
+          const error = (item && item.error) || body.error || ('HTTP ' + code);
+          updateObjectRow_(sheet,'Queue ID',queueId,{
+            'Status':attempts >= 3 ? 'FALHA' : 'APROVADO',
+            'Último erro':String(error).slice(0,500),'Atualizado em':new Date()
+          });
+          results.push({queue_id:queueId,status:'failed',error:error});
+        }
+      } catch (error) {
+        updateObjectRow_(sheet,'Queue ID',queueId,{
+          'Status':attempts >= 3 ? 'FALHA' : 'APROVADO',
+          'Último erro':String(error.message || error).slice(0,500),'Atualizado em':new Date()
+        });
+        results.push({queue_id:queueId,status:'failed',error:String(error.message || error)});
+      }
+    });
+    return {success:true,processed:results.length,results:results};
+  } finally {
+    lock.releaseLock();
+  }
 }
