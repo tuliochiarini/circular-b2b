@@ -1355,12 +1355,16 @@
     const isStrategicPaper=type==='compra' &&
       ['papel','papel e papelao'].includes(categoryNormalized) &&
       materialTokens.includes('papelao');
+    const isStrategicMetal=type==='compra' &&
+      ['metal','metais'].includes(categoryNormalized) &&
+      materialTokens.includes('latinhas') &&
+      materialTokens.includes('aluminio');
     const isSaoPaulo=/(^|[\s,/\-])sp($|[\s,/\-])|sao paulo/.test(cityNormalized);
 
     if(status && !['ativo','ativa','oficial','publicado','publicada','active'].includes(status)) return false;
     if(!material || !city || !['compra','venda','cessao','destinacao'].includes(type)) return false;
     if(isStrategicPlastic && category && !['plastico','plasticos'].includes(categoryNormalized)) return false;
-    if(!isStrategicPlastic && !isStrategicPaper) return false;
+    if(!isStrategicPlastic && !isStrategicPaper && !isStrategicMetal) return false;
     if(!isSaoPaulo) return false;
     if(['x','xx','xxx','teste','test','material teste'].includes(material)) return false;
     return true;
