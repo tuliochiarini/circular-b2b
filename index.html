@@ -1357,8 +1357,10 @@
       materialTokens.includes('papelao');
     const isStrategicMetal=type==='compra' &&
       ['metal','metais'].includes(categoryNormalized) &&
-      materialTokens.includes('latinhas') &&
-      materialTokens.includes('aluminio');
+      (
+        (materialTokens.includes('latinhas') && materialTokens.includes('aluminio')) ||
+        (materialTokens.includes('cobre') && materialTokens.includes('mel'))
+      );
     const isSaoPaulo=/(^|[\s,/\-])sp($|[\s,/\-])|sao paulo/.test(cityNormalized);
 
     if(status && !['ativo','ativa','oficial','publicado','publicada','active'].includes(status)) return false;
