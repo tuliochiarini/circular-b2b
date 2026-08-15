@@ -1340,16 +1340,26 @@
 
   function isOfficialOpportunity(o){
     const material=String(o.material||'').trim().toLowerCase();
+    const category=String(o.categoria||'').trim().toLowerCase();
     const city=String(o.cidadeUF||'').trim();
+    const cityNormalized=city.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
     const type=String(o.tipo||'').trim().toLowerCase();
     const status=String(o.status||'').trim().toLowerCase();
+    const materialTokens=material
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g,'')
+      .split(/[^a-z0-9]+/)
+      .filter(Boolean);
+    const isStrategicMaterial=materialTokens.includes('pp') || materialTokens.includes('pebd');
+    const isSaoPaulo=/(^|[\s,/\-])sp($|[\s,/\-])|sao paulo/.test(cityNormalized);
 
     if(status && !['ativo','ativa','oficial','publicado','publicada','active'].includes(status)) return false;
     if(!material || !city || !['compra','venda','cessao','destinacao'].includes(type)) return false;
+    if(category && !['plastico','plasticos'].includes(category.normalize('NFD').replace(/[\u0300-\u036f]/g,''))) return false;
+    if(!isStrategicMaterial || !isSaoPaulo) return false;
     if(['x','xx','xxx','teste','test','material teste'].includes(material)) return false;
     return true;
   }
-
   function renderOpportunities(){
     const grid=document.getElementById('opps');
 
