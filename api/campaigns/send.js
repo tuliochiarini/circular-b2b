@@ -5,6 +5,7 @@ const MAX_MESSAGES = 30;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEFAULT_FROM = 'Circular B2B <comercial@circularb2b.eco.br>';
 const DEFAULT_REPLY_TO = 'comercial.circularb2b@gmail.com';
+const OPT_OUT_TEXT = 'Se não quiser receber novos contatos da Circular B2B, responda a este e-mail com “remover”.';
 
 function validateMessages(messages) {
   if (!Array.isArray(messages) || messages.length === 0) {
@@ -18,7 +19,7 @@ function validateMessages(messages) {
   for (const message of messages) {
     if (!EMAIL_PATTERN.test(message?.to || '')) return 'Há um e-mail de destino inválido.';
     if (!message?.subject?.trim()) return 'Todas as mensagens precisam de assunto.';
-    if (!message?.text?.trim()) return 'Todas as mensagens precisam de conteúdo em texto.';
+    if (!message?.text?.trim()) return 'Todas as mensagens precisam de conteúdo.';
     if (!message?.externalId?.trim()) return 'Todas as mensagens precisam de externalId.';
 
     const normalizedEmail = message.to.trim().toLowerCase();
@@ -28,14 +29,52 @@ function validateMessages(messages) {
   return null;
 }
 
-function withOptOut(text) {
-  return `${text.trim()}\n\nSe não quiser receber novos contatos da Circular B2B, responda a este e-mail com “remover”.`;
+function looksLikeHtml(content) {
+  return /<([a-z][\w-]*)(?:\s[^>]*)?>[\s\S]*<\/\1>|<(br|hr|img|a)(?:\s[^>]*)?\/?\s*>/i.test(content);
+}
+
+function stripHtml(content) {
+  return content
+    .replace(/<br\s*\/?\s*>/gi, '\n')
+    .replace(/<\/p>/gi, '\n\n')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+function withOptOutText(text) {
+  return `${text.trim()}\n\n${OPT_OUT_TEXT}`;
+}
+
+function withOptOutHtml(html) {
+  return `${html.trim()}<p style="margin-top:32px;padding-top:16px;border-top:1px solid #dbe5df;color:#66756d;font-size:12px;line-height:1.5">${OPT_OUT_TEXT}</p>`;
 }
 
 async function sendMessage(message, campaignId) {
   const idempotencyKey = createHash('sha256')
     .update(`circular:${campaignId}:${message.externalId.trim()}`)
     .digest('hex');
+  const content = message.text.trim();
+  const isHtml = looksLikeHtml(content);
+  const emailBody = {
+    from: process.env.RESEND_FROM || DEFAULT_FROM,
+    reply_to: process.env.RESEND_REPLY_TO || DEFAULT_REPLY_TO,
+    to: [message.to.trim()],
+    subject: message.subject.trim(),
+    text: withOptOutText(isHtml ? stripHtml(content) : content),
+    tags: [
+      { name: 'campaign', value: campaignId },
+      { name: 'lead', value: message.externalId.trim().replace(/[^a-z0-9_-]/gi, '_').slice(0, 256) },
+    ],
+  };
+  if (isHtml) emailBody.html = withOptOutHtml(content);
+
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -43,17 +82,7 @@ async function sendMessage(message, campaignId) {
       'Content-Type': 'application/json',
       'Idempotency-Key': idempotencyKey,
     },
-    body: JSON.stringify({
-      from: process.env.RESEND_FROM || DEFAULT_FROM,
-      reply_to: process.env.RESEND_REPLY_TO || DEFAULT_REPLY_TO,
-      to: [message.to.trim()],
-      subject: message.subject.trim(),
-      text: withOptOut(message.text),
-      tags: [
-        { name: 'campaign', value: campaignId },
-        { name: 'lead', value: message.externalId.trim().replace(/[^a-z0-9_-]/gi, '_').slice(0, 256) },
-      ],
-    }),
+    body: JSON.stringify(emailBody),
   });
 
   const payload = await response.json().catch(() => ({}));
