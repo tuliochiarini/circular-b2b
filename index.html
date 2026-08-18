@@ -1351,7 +1351,7 @@
       .split(/[^a-z0-9]+/)
       .filter(Boolean);
     const categoryNormalized=category.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    const isStrategicPlastic=materialTokens.includes('pp') || materialTokens.includes('pebd');
+    const isStrategicPlastic=materialTokens.includes('pp') || materialTokens.includes('pebd') || materialTokens.includes('pead');
     const isStrategicPaper=type==='compra' &&
       ['papel','papel e papelao'].includes(categoryNormalized) &&
       materialTokens.includes('papelao');
